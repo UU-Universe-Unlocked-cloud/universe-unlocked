@@ -1,217 +1,1579 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="theme-color" content="#050714">
+<meta name="description"
+content="Explore space, science, technology, Islam, history, sports, and much more with Universe Unlocked.">
+
 <title>Universe Unlocked | Explore Everything</title>
+
 <style>
-:root{--bg:#050714;--panel:#101831;--panel2:#0b1228;--blue:#65e7ff;--purple:#a98bff;--text:#f4f7ff;--muted:#b6c2df;--line:#26365e;--green:#8df5c2}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.6}
-#stars{position:fixed;inset:0;width:100%;height:100%;z-index:-2;pointer-events:none}
-body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 15% 10%,#17235b80,transparent 40%),radial-gradient(ellipse at 85% 30%,#451d6580,transparent 40%)}
-a{color:inherit}
-header{position:sticky;top:0;z-index:20;background:#050714eF;border-bottom:1px solid var(--line);backdrop-filter:blur(16px)}
-.nav{max-width:1200px;margin:auto;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
-.brand{font-weight:900;letter-spacing:.5px;font-size:20px;color:var(--blue);text-decoration:none}
-.brand span{color:white}
-nav{display:flex;gap:15px;flex-wrap:wrap}
-nav a{text-decoration:none;color:var(--muted);font-size:14px}
-nav a:hover{color:var(--blue)}
-.wrap{max-width:1200px;margin:auto;padding:0 22px}
-.hero{min-height:570px;display:grid;place-items:center;text-align:center;padding:75px 22px 65px;position:relative;overflow:hidden}
-.orbit{width:260px;height:260px;border:1px solid #65e7ff55;border-radius:50%;position:absolute;top:38px;left:calc(50% - 130px);animation:spin 30s linear infinite;pointer-events:none}
-.orbit:before,.orbit:after{content:"";position:absolute;border:1px solid #a98bff55;border-radius:50%;inset:28px -24px;transform:rotate(55deg)}
-.orbit:after{inset:55px -44px;transform:rotate(-55deg)}
-@keyframes spin{to{transform:rotate(360deg)}}
-.hero-inner{max-width:850px;position:relative;z-index:1}
-.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:4px;color:var(--blue);font-weight:bold}
-h1{font-size:clamp(40px,7vw,78px);line-height:1.05;margin:18px 0;background:linear-gradient(100deg,#fff 15%,var(--blue),var(--purple));background-clip:text;-webkit-background-clip:text;color:transparent}
-.hero p{font-size:18px;color:var(--muted);max-width:700px;margin:0 auto 25px}
-.btn{display:inline-block;text-decoration:none;border:1px solid #4d6a9e;border-radius:10px;padding:11px 17px;font-weight:700;cursor:pointer;color:var(--text);background:#111d3b;transition:.2s;font-size:14px}
-.btn:hover{transform:translateY(-2px);border-color:var(--blue);box-shadow:0 8px 26px #00cfff20}
-.btn.primary{background:linear-gradient(100deg,var(--blue),#a7b9ff);border:0;color:#07101f}
-.btn.purple{background:linear-gradient(100deg,#8f73f9,#d19aff);border:0;color:#100b26}
-section{padding:62px 0;scroll-margin-top:85px}
-.section-head{text-align:center;margin-bottom:28px}
-.kicker{color:var(--blue);font-size:12px;letter-spacing:3px;text-transform:uppercase;font-weight:bold}
-h2{font-size:clamp(27px,4vw,39px);line-height:1.2;margin:8px 0}
-.section-head p{color:var(--muted);max-width:720px;margin:10px auto 0}
-.searchbar{display:flex;gap:10px;max-width:720px;margin:0 auto 28px}
-input,select{font:inherit;background:#0c142b;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:13px 14px;min-width:0}
-.searchbar input{flex:1}
-input:focus,select:focus{outline:2px solid #65e7ff66;border-color:var(--blue)}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-.card{background:linear-gradient(145deg,#111c38eF,#0a1024f2);border:1px solid var(--line);border-radius:16px;padding:20px;transition:.22s;min-width:0}
-.card:hover{transform:translateY(-4px);border-color:#65e7ff88}
-.icon{font-size:34px;margin-bottom:8px}
-.card h3{margin:3px 0 8px;font-size:18px}
-.card p{margin:0;color:var(--muted);font-size:14px}
-.card .btn{margin-top:15px}
-.feature{background:linear-gradient(130deg,#111d3feF,#20123beF);border:1px solid #3b4e81;border-radius:20px;padding:clamp(22px,4vw,38px);text-align:center;max-width:900px;margin:auto;box-shadow:0 20px 70px #0003}
-.feature .big{font-size:48px}
-.answer{display:none;color:var(--green);background:#0a281f;border:1px solid #286b55;padding:15px;border-radius:10px;margin:18px auto 0;max-width:720px}
-.answer.show{display:block}
-.split{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:stretch}
-.video-tile{background:linear-gradient(135deg,#151d42,#341d59);min-height:150px;display:grid;place-items:center;border-radius:12px;font-size:54px;margin-bottom:14px}
-.list{display:grid;gap:10px;text-align:left;max-width:700px;margin:20px auto}
-.list label{display:flex;gap:10px;align-items:flex-start;padding:12px;background:#0a142d;border:1px solid var(--line);border-radius:10px;cursor:pointer}
-.list input{margin-top:6px;accent-color:#65e7ff}
-.feedback{min-height:28px;color:var(--blue);font-weight:bold;margin:12px 0}
-.score{color:var(--muted);font-size:14px}
-.small-note{font-size:12px;color:var(--muted);margin-top:14px}
-footer{border-top:1px solid var(--line);padding:30px 0;text-align:center;background:#03050e}
-footer p{color:var(--muted);margin:5px}
-.hidden{display:none!important}
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:1fr}}
-@media(max-width:580px){.nav{justify-content:center}.brand{width:100%;text-align:center}nav{justify-content:center;gap:12px}.hero{min-height:520px}.grid{grid-template-columns:1fr}.searchbar{flex-direction:column}.orbit{top:55px;width:210px;height:210px;left:calc(50% - 105px)}}
+:root {
+  --bg: #050714;
+  --panel: #101831;
+  --panel2: #0b1228;
+  --blue: #65e7ff;
+  --purple: #a98bff;
+  --text: #f4f7ff;
+  --muted: #b6c2df;
+  --line: #26365e;
+  --green: #8df5c2;
+  --header: #050714ed;
+}
+
+body.light-mode {
+  --bg: #f1f5ff;
+  --panel: #ffffff;
+  --panel2: #e7edff;
+  --blue: #007d9e;
+  --purple: #7442c8;
+  --text: #111a35;
+  --muted: #465473;
+  --line: #cbd5ef;
+  --green: #08744c;
+  --header: #f1f5ffed;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  transition: background .25s, color .25s;
+}
+
+#stars {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  pointer-events: none;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 15% 10%, #17235b80, transparent 40%),
+    radial-gradient(ellipse at 85% 30%, #451d6580, transparent 40%);
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--header);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(16px);
+}
+
+.nav {
+  max-width: 1200px;
+  margin: auto;
+  padding: 13px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  font-weight: 900;
+  letter-spacing: .5px;
+  font-size: 20px;
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.brand span {
+  color: var(--text);
+}
+
+nav {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+nav a:hover {
+  color: var(--blue);
+}
+
+.extra-controls {
+  max-width: 1200px;
+  margin: 15px auto 0;
+  padding: 0 22px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.wrap {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 22px;
+}
+
+.hero {
+  min-height: 570px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 75px 22px 65px;
+  position: relative;
+  overflow: hidden;
+}
+
+.orbit {
+  width: 260px;
+  height: 260px;
+  border: 1px solid #65e7ff55;
+  border-radius: 50%;
+  position: absolute;
+  top: 38px;
+  left: calc(50% - 130px);
+  animation: spin 30s linear infinite;
+  pointer-events: none;
+}
+
+.orbit::before,
+.orbit::after {
+  content: "";
+  position: absolute;
+  border: 1px solid #a98bff55;
+  border-radius: 50%;
+  inset: 28px -24px;
+  transform: rotate(55deg);
+}
+
+.orbit::after {
+  inset: 55px -44px;
+  transform: rotate(-55deg);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hero-inner {
+  max-width: 850px;
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--blue);
+  font-weight: bold;
+}
+
+h1 {
+  font-size: clamp(40px, 7vw, 78px);
+  line-height: 1.05;
+  margin: 18px 0;
+  background: linear-gradient(100deg, var(--text) 15%, var(--blue), var(--purple));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.hero p {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 700px;
+  margin: 0 auto 25px;
+}
+
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 11px 17px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text);
+  background: var(--panel);
+  transition: .2s;
+  font-size: 14px;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--blue);
+  box-shadow: 0 8px 26px #00cfff20;
+}
+
+.btn.primary {
+  background: linear-gradient(100deg, var(--blue), #a7b9ff);
+  border: 0;
+  color: #07101f;
+}
+
+.btn.purple {
+  background: linear-gradient(100deg, #8f73f9, #d19aff);
+  border: 0;
+  color: #100b26;
+}
+
+section {
+  padding: 62px 0;
+  scroll-margin-top: 85px;
+}
+
+.section-head {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.kicker {
+  color: var(--blue);
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: clamp(27px, 4vw, 39px);
+  line-height: 1.2;
+  margin: 8px 0;
+}
+
+.section-head p {
+  color: var(--muted);
+  max-width: 720px;
+  margin: 10px auto 0;
+}
+
+.searchbar {
+  display: flex;
+  gap: 10px;
+  max-width: 720px;
+  margin: 0 auto 28px;
+}
+
+input {
+  background: var(--panel2);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 13px 14px;
+  min-width: 0;
+}
+
+.searchbar input {
+  flex: 1;
+}
+
+input:focus {
+  outline: 2px solid #65e7ff66;
+  border-color: var(--blue);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: linear-gradient(145deg, var(--panel), var(--panel2));
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+  transition: .22s;
+  min-width: 0;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--blue);
+}
+
+.icon {
+  font-size: 34px;
+  margin-bottom: 8px;
+}
+
+.card h3 {
+  margin: 3px 0 8px;
+  font-size: 18px;
+}
+
+.card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.card .btn {
+  margin-top: 15px;
+}
+
+.feature {
+  background: linear-gradient(130deg, var(--panel), var(--panel2));
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: clamp(22px, 4vw, 38px);
+  text-align: center;
+  max-width: 900px;
+  margin: auto;
+  box-shadow: 0 20px 70px #0003;
+}
+
+.feature .big {
+  font-size: 48px;
+}
+
+.answer {
+  display: none;
+  color: var(--green);
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  padding: 15px;
+  border-radius: 10px;
+  margin: 18px auto 0;
+  max-width: 720px;
+}
+
+.answer.show {
+  display: block;
+}
+
+.video-tile {
+  background: linear-gradient(135deg, #151d42, #341d59);
+  min-height: 150px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  font-size: 54px;
+  margin-bottom: 14px;
+}
+
+.list {
+  display: grid;
+  gap: 10px;
+  text-align: left;
+  max-width: 700px;
+  margin: 20px auto;
+}
+
+.list label {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.list input {
+  margin-top: 6px;
+  accent-color: var(--blue);
+}
+
+.feedback {
+  min-height: 28px;
+  color: var(--blue);
+  font-weight: bold;
+  margin: 12px 0;
+}
+
+.score,
+.small-note {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.favorite-button.saved {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+#backToTop {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--blue);
+  border-radius: 50%;
+  background: var(--panel);
+  color: var(--blue);
+  font-size: 25px;
+  display: none;
+  z-index: 50;
+  box-shadow: 0 5px 20px #0005;
+}
+
+#backToTop.visible {
+  display: block;
+}
+
+#toastMessage {
+  position: fixed;
+  left: 50%;
+  bottom: 25px;
+  transform: translateX(-50%);
+  padding: 12px 18px;
+  border-radius: 10px;
+  background: var(--panel);
+  border: 1px solid var(--blue);
+  color: var(--text);
+  z-index: 100;
+  display: none;
+  max-width: 90%;
+  text-align: center;
+}
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 30px 0;
+  text-align: center;
+  background: var(--panel2);
+}
+
+footer p {
+  color: var(--muted);
+  margin: 5px;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 580px) {
+  .nav {
+    justify-content: center;
+  }
+
+  .brand {
+    width: 100%;
+    text-align: center;
+  }
+
+  nav {
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .hero {
+    min-height: 520px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .searchbar {
+    flex-direction: column;
+  }
+
+  .extra-controls {
+    justify-content: center;
+  }
+
+  .orbit {
+    top: 55px;
+    width: 210px;
+    height: 210px;
+    left: calc(50% - 105px);
+  }
+
+  #backToTop {
+    right: 14px;
+    bottom: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
 </style>
 </head>
+
 <body>
+
 <canvas id="stars" aria-hidden="true"></canvas>
+
 <header>
   <div class="nav">
     <a class="brand" href="#home">✦ UNIVERSE <span>UNLOCKED</span></a>
+
     <nav aria-label="Main navigation">
-      <a href="#explore">Explore</a><a href="#library">Knowledge</a><a href="#videos">Videos</a>
-      <a href="#challenge">Challenge</a><a href="#competition">Competition</a><a href="#about">About</a>
+      <a href="#explore" data-en="Explore" data-ar="استكشف">Explore</a>
+      <a href="#library" data-en="Knowledge" data-ar="المعرفة">Knowledge</a>
+      <a href="#videos" data-en="Videos" data-ar="الفيديوهات">Videos</a>
+      <a href="#challenge" data-en="Challenge" data-ar="التحدي">Challenge</a>
+      <a href="#competition" data-en="Competition" data-ar="المسابقة">Competition</a>
+      <a href="#favorites" data-en="Favorites" data-ar="المفضلة">Favorites</a>
+      <a href="#about" data-en="About" data-ar="عن الموقع">About</a>
     </nav>
   </div>
 </header>
 
+<div class="extra-controls">
+  <button id="themeToggle" class="btn">☀️ Light Mode</button>
+  <button id="languageToggle" class="btn">🌐 العربية</button>
+</div>
+
 <main>
+
+<!-- HOME -->
 <section class="hero" id="home">
   <div class="orbit"></div>
+
   <div class="hero-inner">
-    <div class="eyebrow">Your universe of discovery</div>
-    <h1>Explore Everything.<br>Unlock Your Curiosity.</h1>
-    <p>Discover useful information, answer surprising questions, test your knowledge, join friendly challenges, and explore new worlds — all in one place.</p>
-    <a class="btn primary" href="#explore">Start Exploring ↓</a>
-    <a class="btn purple" href="https://www.youtube.com/channel/UCaFS3FO0Il2XlDxbo2RbHzg" target="_blank" rel="noopener noreferrer">▶ Visit Our YouTube</a>
+    <div class="eyebrow"
+         data-en="Your universe of discovery"
+         data-ar="عالمك للاكتشاف">
+      Your universe of discovery
+    </div>
+
+    <h1>
+      <span data-en="Explore Everything."
+            data-ar="اكتشف كل شيء.">Explore Everything.</span>
+      <br>
+      <span data-en="Unlock Your Curiosity."
+            data-ar="أطلق العنان لفضولك.">Unlock Your Curiosity.</span>
+    </h1>
+
+    <p data-en="Discover useful information, answer surprising questions, test your knowledge, and explore new worlds — all in one place."
+       data-ar="اكتشف معلومات مفيدة، وأجب عن أسئلة مدهشة، واختبر معلوماتك، واستكشف عوالم جديدة في مكان واحد.">
+      Discover useful information, answer surprising questions, test your knowledge, and explore new worlds — all in one place.
+    </p>
+
+    <a class="btn primary" href="#explore"
+       data-en="Start Exploring ↓"
+       data-ar="ابدأ الاستكشاف ↓">Start Exploring ↓</a>
+
+    <a class="btn purple"
+       href="https://www.youtube.com/channel/UCaFS3FO0Il2XlDxbo2RbHzg"
+       target="_blank" rel="noopener noreferrer">
+      ▶ Visit Our YouTube
+    </a>
   </div>
 </section>
 
+<!-- EXPLORE -->
 <section id="explore">
- <div class="wrap">
-  <div class="section-head"><div class="kicker">A world of topics</div><h2>What do you want to <span style="color:var(--blue)">discover?</span></h2><p>Choose a category or search the topics on this page. More topics can be added as your website grows.</p></div>
-  <div class="searchbar"><input id="topicSearch" type="search" placeholder="Search categories, e.g. animals, football, space..." aria-label="Search categories"><button class="btn" id="clearSearch">Clear</button></div>
-  <div class="grid" id="categoryGrid">
-   <article class="card category" data-search="space universe planets stars galaxies black holes"><div class="icon">🚀</div><h3>Space & Universe</h3><p>Planets, stars, galaxies, black holes, and cosmic mysteries.</p></article>
-   <article class="card category" data-search="science physics chemistry biology experiments"><div class="icon">🔬</div><h3>Science</h3><p>Discover how nature works through experiments and evidence.</p></article>
-   <article class="card category" data-search="technology computers coding ai robots inventions"><div class="icon">🤖</div><h3>Technology & AI</h3><p>Computers, coding, robotics, artificial intelligence, and inventions.</p></article>
-   <article class="card category" data-search="earth geography countries oceans weather nature animals"><div class="icon">🌍</div><h3>Earth & Nature</h3><p>Our planet, countries, oceans, weather, and wildlife.</p></article>
-   <article class="card category" data-search="sports football soccer olympics games"><div class="icon">⚽</div><h3>Sports</h3><p>Football, sports history, rules, records, and great moments.</p></article>
-   <article class="card category" data-search="history ancient civilizations discoveries"><div class="icon">🏛️</div><h3>History</h3><p>Ancient civilizations, important events, and historical discoveries.</p></article>
-   <article class="card category" data-search="islam quran islamic knowledge faith creation"><div class="icon">☪️</div><h3>Islam & Knowledge</h3><p>Learn from reliable Islamic sources and reflect on creation.</p></article>
-   <article class="card category" data-search="human body brain health learning memory"><div class="icon">🧠</div><h3>Human Body & Mind</h3><p>The brain, memory, senses, and how our bodies work.</p></article>
-   <article class="card category" data-search="math mathematics numbers puzzles logic"><div class="icon">➗</div><h3>Math & Puzzles</h3><p>Numbers, logic puzzles, patterns, and problem-solving.</p></article>
-   <article class="card category" data-search="books literature language stories writing"><div class="icon">📚</div><h3>Books & Languages</h3><p>Stories, vocabulary, writing, and languages around the world.</p></article>
-   <article class="card category" data-search="food cooking nutrition culture"><div class="icon">🍲</div><h3>Food & Culture</h3><p>Foods, traditions, and how people live around the world.</p></article>
-   <article class="card category" data-search="what if questions mysteries curiosity"><div class="icon">💭</div><h3>What If?</h3><p>Explore imaginative questions with science and careful reasoning.</p></article>
+  <div class="wrap">
+
+    <div class="section-head">
+      <div class="kicker">A WORLD OF TOPICS</div>
+      <h2 data-en="What do you want to discover?"
+          data-ar="ماذا تريد أن تكتشف؟">
+        What do you want to discover?
+      </h2>
+      <p data-en="Choose a category or search for a topic."
+         data-ar="اختر قسمًا أو ابحث عن موضوع.">
+        Choose a category or search for a topic.
+      </p>
+    </div>
+
+    <div class="searchbar">
+      <input id="topicSearch" type="search"
+        placeholder="Search topics..."
+        aria-label="Search topics">
+
+      <button class="btn" id="clearSearch">Clear</button>
+    </div>
+
+    <div class="grid" id="categoryGrid">
+
+      <article class="card category"
+        data-search="space universe planets stars galaxies black holes">
+        <div class="icon">🚀</div>
+        <h3>Space & Universe</h3>
+        <p>Planets, stars, galaxies, black holes, and cosmic mysteries.</p>
+      </article>
+
+      <article class="card category"
+        data-search="science physics chemistry biology experiments">
+        <div class="icon">🔬</div>
+        <h3>Science</h3>
+        <p>Discover how nature works through experiments and evidence.</p>
+      </article>
+
+      <article class="card category"
+        data-search="technology computers coding ai robots inventions">
+        <div class="icon">🤖</div>
+        <h3>Technology & AI</h3>
+        <p>Computers, coding, robotics, artificial intelligence, and inventions.</p>
+      </article>
+
+      <article class="card category"
+        data-search="earth geography countries oceans weather nature animals">
+        <div class="icon">🌍</div>
+        <h3>Earth & Nature</h3>
+        <p>Our planet, countries, oceans, weather, and wildlife.</p>
+      </article>
+
+      <article class="card category"
+        data-search="sports football soccer olympics games">
+        <div class="icon">⚽</div>
+        <h3>Sports</h3>
+        <p>Football, sports history, rules, records, and great moments.</p>
+      </article>
+
+      <article class="card category"
+        data-search="history ancient civilizations discoveries">
+        <div class="icon">🏛️</div>
+        <h3>History</h3>
+        <p>Ancient civilizations, important events, and discoveries.</p>
+      </article>
+
+      <article class="card category"
+        data-search="islam quran islamic knowledge faith creation">
+        <div class="icon">☪️</div>
+        <h3>Islam & Knowledge</h3>
+        <p>Learn from reliable Islamic sources and reflect on creation.</p>
+      </article>
+
+      <article class="card category"
+        data-search="human body brain health learning memory">
+        <div class="icon">🧠</div>
+        <h3>Human Body & Mind</h3>
+        <p>The brain, memory, senses, and how our bodies work.</p>
+      </article>
+
+      <article class="card category"
+        data-search="math mathematics numbers puzzles logic">
+        <div class="icon">➗</div>
+        <h3>Math & Puzzles</h3>
+        <p>Numbers, logic puzzles, patterns, and problem-solving.</p>
+      </article>
+
+      <article class="card category"
+        data-search="books literature language stories writing">
+        <div class="icon">📚</div>
+        <h3>Books & Languages</h3>
+        <p>Stories, vocabulary, writing, and languages around the world.</p>
+      </article>
+
+      <article class="card category"
+        data-search="food cooking nutrition culture">
+        <div class="icon">🍲</div>
+        <h3>Food & Culture</h3>
+        <p>Foods, traditions, and cultures from around the world.</p>
+      </article>
+
+      <article class="card category"
+        data-search="what if questions mysteries curiosity">
+        <div class="icon">💭</div>
+        <h3>What If?</h3>
+        <p>Explore imaginative questions with science and careful reasoning.</p>
+      </article>
+
+    </div>
+
+    <p id="noTopics" class="feedback hidden">
+      No category found. Try another search.
+    </p>
   </div>
-  <p id="noTopics" class="feedback hidden">No category found. Try another search.</p>
- </div>
 </section>
 
+<!-- KNOWLEDGE -->
 <section id="library">
- <div class="wrap">
-  <div class="section-head"><div class="kicker">Learn something new</div><h2>Knowledge <span style="color:var(--blue)">Spotlight</span></h2><p>Short starter facts to spark curiosity. Use trusted sources to research each subject in more depth.</p></div>
-  <div class="grid">
-   <article class="card"><div class="icon">☀️</div><h3>Our Sun</h3><p>The Sun is a star at the centre of our Solar System. Its gravity helps keep the planets in orbit.</p></article>
-   <article class="card"><div class="icon">🐙</div><h3>Ocean Life</h3><p>Octopuses have eight arms and remarkable abilities to explore their surroundings.</p></article>
-   <article class="card"><div class="icon">⚡</div><h3>Energy</h3><p>Energy can change forms. For example, a falling object changes gravitational potential energy into motion energy.</p></article>
-   <article class="card"><div class="icon">🛰️</div><h3>Satellites</h3><p>Satellites help people communicate, navigate, observe Earth, and study space.</p></article>
+  <div class="wrap">
+
+    <div class="section-head">
+      <div class="kicker">LEARN SOMETHING NEW</div>
+      <h2>Knowledge <span style="color:var(--blue)">Spotlight</span></h2>
+      <p>Short facts to spark your curiosity.</p>
+    </div>
+
+    <div class="grid">
+
+      <article class="card">
+        <div class="icon">☀️</div>
+        <h3>Our Sun</h3>
+        <p>The Sun is a star at the centre of our Solar System. Its gravity helps keep the planets in orbit.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">🐙</div>
+        <h3>Ocean Life</h3>
+        <p>Octopuses have eight arms and remarkable abilities to explore their surroundings.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">⚡</div>
+        <h3>Energy</h3>
+        <p>Energy can change forms. A falling object changes gravitational potential energy into kinetic energy.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">🛰️</div>
+        <h3>Satellites</h3>
+        <p>Satellites help people communicate, navigate, observe Earth, and study space.</p>
+      </article>
+
+    </div>
   </div>
- </div>
 </section>
 
+<!-- VIDEOS -->
 <section id="videos">
- <div class="wrap">
-  <div class="section-head"><div class="kicker">From our channel</div><h2>Watch <span style="color:var(--blue)">Universe Unlocked</span></h2><p>Visit your channel to watch the latest uploads. Replace the example video links below with your individual video URLs whenever you add videos.</p></div>
-  <div class="grid">
-   <article class="card"><div class="video-tile">🌑</div><h3>What If the Moon Disappeared?</h3><p>Explore how the Moon affects tides, nights, and Earth over time.</p><a class="btn" href="https://www.youtube.com/channel/UCaFS3FO0Il2XlDxbo2RbHzg" target="_blank" rel="noopener noreferrer">Find videos on our channel ↗</a></article>
-   <article class="card"><div class="video-tile">☀️</div><h3>What If the Sun Disappeared?</h3><p>Discover why sunlight matters to life on Earth.</p><a class="btn" href="https://www.youtube.com/channel/UCaFS3FO0Il2XlDxbo2RbHzg" target="_blank" rel="noopener noreferrer">Find videos on our channel ↗</a></article>
-   <article class="card"><div class="video-tile">🌐</div><h3>What If the Internet Stopped?</h3><p>Think about how people and services would be affected.</p><a class="btn" href="https://www.youtube.com/channel/UCaFS3FO0Il2XlDxbo2RbHzg" target="_blank" rel="noopener noreferrer">Find videos on our channel ↗</a></article>
-   <article class="card"><div class="video-tile">▶️</div><h3>All Channel Videos</h3><p>Open Universe Unlocked on YouTube to browse your videos.</p><a class="btn primary" href="https://www.youtube.com/channel/UCaFS3FO0Il2XlDxbo2RbHzg" target="_blank" rel="noopener noreferrer">Open YouTube Channel ↗</a></article>
+  <div class="wrap">
+
+    <div class="section-head">
+      <div class="kicker">FROM OUR CHANNEL</div>
+      <h2>Watch <span style="color:var(--blue)">Universe Unlocked</span></h2>
+      <p>Explore our video ideas and visit our YouTube channel.</p>
+    </div>
+
+    <div class="grid">
+
+      <article class="card">
+        <div class="video-tile">🌑</div>
+        <h3>What If the Moon Disappeared?</h3>
+        <p>Explore how the Moon affects tides, nights, and Earth over time.</p>
+        <a class="btn" href="https://www.youtube.com/channel/UCaFS3FO0Il2XlDxbo2RbHzg"
+           target="_blank" rel="noopener noreferrer">Visit Channel ↗</a>
+      </article>
+
+      <article class="card">
+        <div class="video-tile">☀️</div>
+        <h3>What If the Sun Disappeared?</h3>
+        <p>Discover why sunlight matters to life on Earth.</p>
+        <a class="btn" href="https://www.youtube.com/channel/UCaFS3FO0Il2XlDxbo2RbHzg"
+           target="_blank" rel="noopener noreferrer">Visit Channel ↗</a>
+      </article>
+
+      <article class="card">
+        <div class="video-tile">🌐</div>
+        <h3>What If the Internet Stopped?</h3>
+        <p>Think about how people and services would be affected.</p>
+        <a class="btn" href="https://www.youtube.com/channel/UCaFS3FO0Il2XlDxbo2RbHzg"
+           target="_blank" rel="noopener noreferrer">Visit Channel ↗</a>
+      </article>
+
+      <article class="card">
+        <div class="video-tile">▶️</div>
+        <h3>All Channel Videos</h3>
+        <p>Browse videos on the Universe Unlocked channel.</p>
+        <a class="btn primary"
+           href="https://www.youtube.com/channel/UCaFS3FO0Il2XlDxbo2RbHzg"
+           target="_blank" rel="noopener noreferrer">Open YouTube ↗</a>
+      </article>
+
+    </div>
   </div>
- </div>
 </section>
 
+<!-- DAILY QUESTION -->
 <section id="challenge">
- <div class="wrap">
-  <div class="section-head"><div class="kicker">Think before you reveal</div><h2>Question of the <span style="color:var(--blue)">Day</span></h2><p>Take a guess, then reveal the explanation.</p></div>
-  <div class="feature"><div class="big">🌙</div><h3>Why do we see different phases of the Moon?</h3><p>The Moon changes shape in the sky during the month. What causes this?</p><button class="btn primary" id="revealDaily">Reveal the answer</button><div class="answer" id="dailyAnswer">We see different portions of the Moon's sunlit half as the Moon travels around Earth. Earth's shadow is responsible for lunar eclipses, not the normal phases.</div></div>
- </div>
-</section>
+  <div class="wrap">
 
-<section id="competition">
- <div class="wrap">
-  <div class="section-head"><div class="kicker">Friendly knowledge challenge</div><h2>Universe <span style="color:var(--blue)">Competition</span></h2><p>Answer five questions, check your score, and challenge yourself to improve.</p></div>
-  <div class="feature">
-   <div class="big">🏆</div><div class="score" id="quizProgress">Question 1 of 5</div><h3 id="quizQuestion">Loading question...</h3>
-   <div class="list" id="quizOptions"></div><div class="feedback" id="quizFeedback" aria-live="polite"></div>
-   <button class="btn primary hidden" id="nextQuestion">Next question →</button><button class="btn purple hidden" id="restartQuiz">Play again ↻</button>
-   <p class="small-note">This is a local practice competition. Scores are not sent to a server or shared with other visitors.</p>
+    <div class="section-head">
+      <div class="kicker">THINK BEFORE YOU REVEAL</div>
+      <h2>Question of the <span style="color:var(--blue)">Day</span></h2>
+      <p>Take a guess, then reveal the explanation.</p>
+    </div>
+
+    <div class="feature">
+      <div class="big">🌙</div>
+
+      <h3>Why do we see different phases of the Moon?</h3>
+
+      <p>The Moon changes shape in the sky during the month. What causes this?</p>
+
+      <button class="btn primary" id="revealDaily">
+        Reveal the answer
+      </button>
+
+      <div class="answer" id="dailyAnswer">
+        We see different portions of the Moon's sunlit half as the Moon travels around Earth.
+        Earth's shadow causes lunar eclipses, not the normal phases.
+      </div>
+    </div>
   </div>
- </div>
 </section>
 
+<!-- QUIZ -->
+<section id="competition">
+  <div class="wrap">
+
+    <div class="section-head">
+      <div class="kicker">FRIENDLY KNOWLEDGE CHALLENGE</div>
+      <h2>Universe <span style="color:var(--blue)">Competition</span></h2>
+      <p>Answer five questions and see how much you know.</p>
+    </div>
+
+    <div class="feature">
+      <div class="big">🏆</div>
+
+      <div class="score" id="quizProgress">Question 1 of 5</div>
+
+      <h3 id="quizQuestion">Loading question...</h3>
+
+      <div class="list" id="quizOptions"></div>
+
+      <div class="feedback" id="quizFeedback" aria-live="polite"></div>
+
+      <button class="btn primary hidden" id="nextQuestion">
+        Next question →
+      </button>
+
+      <button class="btn purple hidden" id="restartQuiz">
+        Play again ↻
+      </button>
+
+      <p class="small-note">
+        Your scores are stored in this browser only.
+        They are not shared with other visitors.
+      </p>
+    </div>
+
+    <div class="feature" style="margin-top:20px">
+      <div class="big">📊</div>
+      <h3>My Learning Statistics</h3>
+      <p id="uuAttempts">Quiz attempts: 0</p>
+      <p id="uuBestScore">Best score: 0 / 5</p>
+      <button class="btn" id="resetStats">Reset my statistics</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- RANDOM FACT -->
 <section id="surprise">
- <div class="wrap">
-  <div class="section-head"><div class="kicker">A random discovery</div><h2>Surprise <span style="color:var(--blue)">Me!</span></h2><p>Tap the button for a little burst of knowledge.</p></div>
-  <div class="feature"><div class="big" id="factIcon">✨</div><h3 id="factTitle">Your next discovery is waiting</h3><p id="factText">You never know what you might learn next.</p><button class="btn primary" id="surpriseButton">Unlock a random fact</button></div>
- </div>
+  <div class="wrap">
+
+    <div class="section-head">
+      <div class="kicker">A RANDOM DISCOVERY</div>
+      <h2>Surprise <span style="color:var(--blue)">Me!</span></h2>
+      <p>Tap the button to discover something interesting.</p>
+    </div>
+
+    <div class="feature">
+      <div class="big" id="factIcon">✨</div>
+      <h3 id="factTitle">Your next discovery is waiting</h3>
+      <p id="factText">You never know what you might learn next.</p>
+
+      <button class="btn primary" id="surpriseButton">
+        Unlock a random fact
+      </button>
+    </div>
+
+  </div>
 </section>
 
-<section id="about">
- <div class="wrap"><div class="feature"><div class="kicker">Curiosity has no limits</div><h2>About <span style="color:var(--blue)">Universe Unlocked</span></h2><p style="color:var(--muted);max-width:720px;margin:15px auto">A place to explore all kinds of topics, ask big questions, learn useful facts, and enjoy friendly challenges. From space and science to sports, history, technology, and more — there is always something new to discover.</p><a class="btn primary" href="https://www.youtube.com/channel/UCaFS3FO0Il2XlDxbo2RbHzg" target="_blank" rel="noopener noreferrer">Subscribe on YouTube ↗</a></div></div>
+<!-- FAVORITES -->
+<section id="favorites">
+  <div class="wrap">
+
+    <div class="section-head">
+      <div class="kicker">YOUR PERSONAL COLLECTION</div>
+      <h2>My <span style="color:var(--blue)">Favorites</span> ⭐</h2>
+      <p>Save your favorite categories and find them here.</p>
+    </div>
+
+    <div class="grid" id="favoritesGrid"></div>
+
+    <p id="noFavorites" class="feedback">
+      You haven't saved any favorites yet.
+      Choose a category and tap its favorite button!
+    </p>
+
+  </div>
 </section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+
+    <div class="feature">
+      <div class="kicker">CURIOSITY HAS NO LIMITS</div>
+
+      <h2>About <span style="color:var(--blue)">Universe Unlocked</span></h2>
+
+      <p style="color:var(--muted);max-width:720px;margin:15px auto">
+        A place to explore all kinds of topics, ask big questions, learn useful facts,
+        and enjoy friendly challenges. From space and science to sports, history,
+        technology, Islam, and more, there is always something new to discover.
+      </p>
+
+      <a class="btn primary"
+         href="https://www.youtube.com/channel/UCaFS3FO0Il2XlDxbo2RbHzg"
+         target="_blank" rel="noopener noreferrer">
+        Subscribe on YouTube ↗
+      </a>
+    </div>
+
+  </div>
+</section>
+
 </main>
 
-<footer><div class="wrap"><a class="brand" href="#home">✦ UNIVERSE UNLOCKED</a><p>Explore. Discover. Understand.</p><p>Made for curious minds.</p><p class="small-note">© <span id="year"></span> Universe Unlocked</p></div></footer>
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#home">✦ UNIVERSE UNLOCKED</a>
+    <p>Explore. Discover. Understand.</p>
+    <p>Made for curious minds.</p>
+    <p class="small-note">
+      © <span id="year"></span> Universe Unlocked
+    </p>
+  </div>
+</footer>
+
+<div id="toastMessage" role="status" aria-live="polite"></div>
+
+<button id="backToTop" title="Back to top" aria-label="Back to top">
+  ↑
+</button>
 
 <script>
-// Twinkling moving star field
-const canvas=document.getElementById('stars'),ctx=canvas.getContext('2d');let stars=[];
-function resizeStars(){canvas.width=innerWidth*devicePixelRatio;canvas.height=innerHeight*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);stars=Array.from({length:Math.min(170,Math.floor(innerWidth*innerHeight/6500))},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.5+.3,s:Math.random()*.22+.04,a:Math.random()*.6+.25}))}
-function drawStars(){ctx.clearRect(0,0,innerWidth,innerHeight);for(const s of stars){ctx.globalAlpha=s.a;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();s.y-=s.s;if(s.y<0){s.y=innerHeight;s.x=Math.random()*innerWidth}}ctx.globalAlpha=1;requestAnimationFrame(drawStars)}
-addEventListener('resize',resizeStars);resizeStars();drawStars();
+"use strict";
 
-// Search the category cards
-const search=document.getElementById('topicSearch');
-function filterTopics(){const q=search.value.toLowerCase().trim();let count=0;document.querySelectorAll('.category').forEach(card=>{const show=card.dataset.search.includes(q)||card.textContent.toLowerCase().includes(q);card.classList.toggle('hidden',!show);if(show)count++});document.getElementById('noTopics').classList.toggle('hidden',count!==0)}
-search.addEventListener('input',filterTopics);document.getElementById('clearSearch').addEventListener('click',()=>{search.value='';filterTopics();search.focus()});
+// ================================================
+// HELPER FUNCTIONS
+// ================================================
 
-// Daily question
-document.getElementById('revealDaily').addEventListener('click',()=>{document.getElementById('dailyAnswer').classList.add('show');document.getElementById('revealDaily').textContent='Answer revealed ✓'});
+const $ = id => document.getElementById(id);
 
-// Quiz / local competition
-const questions=[
- {q:'Which planet is called the Red Planet?',o:['Venus','Mars','Jupiter','Neptune'],a:1,e:'Mars looks reddish because iron-rich minerals on its surface have rusted.'},
- {q:'Which star is closest to Earth?',o:['Sirius','Polaris','The Sun','Vega'],a:2,e:'The Sun is the star at the centre of our Solar System.'},
- {q:'Which ocean is the largest?',o:['Atlantic','Indian','Arctic','Pacific'],a:3,e:'The Pacific Ocean is the largest ocean on Earth.'},
- {q:'What do plants absorb from the air for photosynthesis?',o:['Carbon dioxide','Helium','Neon','Hydrogen'],a:0,e:'Plants use carbon dioxide, water, and light to make sugars.'},
- {q:'Which force keeps planets in orbit around the Sun?',o:['Sound','Gravity','Friction','Electricity'],a:1,e:'Gravity is the main force keeping planets in orbit around the Sun.'}
-];let qi=0,score=0,locked=false;
-const $=id=>document.getElementById(id);
-function loadQ(){locked=false;const q=questions[qi];$('quizProgress').textContent=`Question ${qi+1} of ${questions.length} · Score: ${score}`;$('quizQuestion').textContent=q.q;$('quizFeedback').textContent='';$('nextQuestion').classList.add('hidden');$('restartQuiz').classList.add('hidden');const box=$('quizOptions');box.innerHTML='';q.o.forEach((label,i)=>{const l=document.createElement('label');const radio=document.createElement('input');radio.type='radio';radio.name='answer';radio.value=i;const span=document.createElement('span');span.textContent=label;l.append(radio,span);l.addEventListener('click',()=>choose(i));box.appendChild(l)})}
-function choose(i){if(locked)return;locked=true;const q=questions[qi];if(i===q.a){score++;$('quizFeedback').textContent='Correct! ✨ '+q.e}else{$('quizFeedback').textContent='Good try! Correct answer: '+q.o[q.a]+'. '+q.e}$('quizProgress').textContent=`Question ${qi+1} of ${questions.length} · Score: ${score}`;document.querySelectorAll('#quizOptions input').forEach(r=>r.disabled=true);if(qi<questions.length-1){$('nextQuestion').classList.remove('hidden')}else{$('quizQuestion').textContent='Competition complete!';$('quizFeedback').textContent=`Final score: ${score} / ${questions.length}. ${score===5?'Excellent work!':score>=3?'Well done — keep learning!':'Keep exploring and try again!'}`;$('restartQuiz').classList.remove('hidden')}}
-$('nextQuestion').addEventListener('click',()=>{qi++;loadQ()});$('restartQuiz').addEventListener('click',()=>{qi=0;score=0;loadQ()});loadQ();
+function showToast(message) {
+  const toast = $("toastMessage");
 
-// Random facts
-const facts=[
- ['🌌','A galaxy of stars','The Milky Way is the galaxy that contains our Solar System.'],
- ['🌊','The deep ocean','Much of the deep ocean remains difficult to explore because of its extreme pressure and darkness.'],
- ['🪐','A giant planet','Jupiter is the largest planet in our Solar System.'],
- ['🐝','Tiny but important','Many flowering plants depend on pollinators, including bees, to reproduce.'],
- ['💡','Light travels fast','Light travels through a vacuum at about 300,000 kilometres per second.'],
- ['🧭','Finding direction','A compass needle aligns with Earth’s magnetic field, helping people find directions.'],
- ['🌱','Plants and sunlight','Photosynthesis lets plants use light energy to make sugars from water and carbon dioxide.'],
- ['🛰️','Eyes in the sky','Satellites help with weather forecasts, navigation, communication, and observing Earth.']
-];let last=-1;
-$('surpriseButton').addEventListener('click',()=>{let i;do{i=Math.floor(Math.random()*facts.length)}while(i===last);last=i;$('factIcon').textContent=facts[i][0];$('factTitle').textContent=facts[i][1];$('factText').textContent=facts[i][2]});
-$('year').textContent=new Date().getFullYear();
+  toast.textContent = message;
+  toast.style.display = "block";
+
+  clearTimeout(showToast.timer);
+
+  showToast.timer = setTimeout(() => {
+    toast.style.display = "none";
+  }, 2500);
+}
+
+function getSaved(key, fallback) {
+  try {
+    const value = localStorage.getItem(key);
+    return value === null ? fallback : JSON.parse(value);
+  } catch (error) {
+    return fallback;
+  }
+}
+
+function saveValue(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    showToast("Your browser could not save this preference.");
+  }
+}
+
+// ================================================
+// ANIMATED STAR BACKGROUND
+// ================================================
+
+const canvas = $("stars");
+const ctx = canvas.getContext("2d");
+
+let stars = [];
+let animationId = null;
+
+function resizeStars() {
+  const ratio = Math.min(window.devicePixelRatio || 1, 2);
+
+  canvas.width = innerWidth * ratio;
+  canvas.height = innerHeight * ratio;
+
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+  const count = Math.min(
+    170,
+    Math.floor(innerWidth * innerHeight / 6500)
+  );
+
+  stars = Array.from({ length: count }, () => ({
+    x: Math.random() * innerWidth,
+    y: Math.random() * innerHeight,
+    r: Math.random() * 1.5 + 0.3,
+    speed: Math.random() * 0.22 + 0.04,
+    alpha: Math.random() * 0.6 + 0.25
+  }));
+}
+
+function drawStars() {
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+  for (const star of stars) {
+    ctx.globalAlpha = star.alpha;
+    ctx.fillStyle = "#ffffff";
+
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+    ctx.fill();
+
+    star.y -= star.speed;
+
+    if (star.y < 0) {
+      star.y = innerHeight;
+      star.x = Math.random() * innerWidth;
+    }
+  }
+
+  ctx.globalAlpha = 1;
+
+  if (!document.hidden) {
+    animationId = requestAnimationFrame(drawStars);
+  }
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    cancelAnimationFrame(animationId);
+  } else {
+    drawStars();
+  }
+});
+
+window.addEventListener("resize", resizeStars);
+
+resizeStars();
+drawStars();
+
+// ================================================
+// DARK AND LIGHT MODE
+// ================================================
+
+const themeToggle = $("themeToggle");
+
+function updateThemeButton() {
+  const light = document.body.classList.contains("light-mode");
+
+  themeToggle.textContent = light
+    ? "🌙 Dark Mode"
+    : "☀️ Light Mode";
+
+  document.querySelector('meta[name="theme-color"]').content =
+    light ? "#f1f5ff" : "#050714";
+}
+
+if (getSaved("uu-theme", "dark") === "light") {
+  document.body.classList.add("light-mode");
+}
+
+updateThemeButton();
+
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
+
+  const theme = document.body.classList.contains("light-mode")
+    ? "light"
+    : "dark";
+
+  saveValue("uu-theme", theme);
+  updateThemeButton();
+});
+
+// ================================================
+// ENGLISH / ARABIC LANGUAGE SWITCH
+// ================================================
+
+let currentLanguage = getSaved("uu-language", "en");
+
+function applyLanguage(language) {
+  currentLanguage = language;
+
+  document.documentElement.lang = language;
+  document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+
+  document.querySelectorAll("[data-en][data-ar]").forEach(element => {
+    element.textContent = element.dataset[language];
+  });
+
+  $("languageToggle").textContent =
+    language === "ar" ? "🌐 English" : "🌐 العربية";
+
+  $("topicSearch").placeholder =
+    language === "ar" ? "ابحث عن الأقسام..." : "Search topics...";
+
+  $("topicSearch").setAttribute(
+    "aria-label",
+    language === "ar" ? "ابحث عن الأقسام" : "Search topics"
+  );
+
+  $("clearSearch").textContent =
+    language === "ar" ? "مسح" : "Clear";
+
+  saveValue("uu-language", language);
+}
+
+$("languageToggle").addEventListener("click", () => {
+  applyLanguage(currentLanguage === "en" ? "ar" : "en");
+
+  showToast(
+    currentLanguage === "ar"
+      ? "تم تغيير اللغة. بعض المحتويات لا تزال بالإنجليزية."
+      : "Language changed. Some content is still in English."
+  );
+});
+
+applyLanguage(currentLanguage);
+
+// ================================================
+// CATEGORY SEARCH
+// ================================================
+
+const search = $("topicSearch");
+
+function filterTopics() {
+  const query = search.value.toLowerCase().trim();
+  let count = 0;
+
+  document.querySelectorAll(".category").forEach(card => {
+    const searchable = (
+      card.dataset.search + " " + card.textContent
+    ).toLowerCase();
+
+    const visible = searchable.includes(query);
+
+    card.classList.toggle("hidden", !visible);
+
+    if (visible) count++;
+  });
+
+  $("noTopics").classList.toggle("hidden", count !== 0);
+}
+
+search.addEventListener("input", filterTopics);
+
+$("clearSearch").addEventListener("click", () => {
+  search.value = "";
+  filterTopics();
+  search.focus();
+});
+
+// ================================================
+// FAVORITE CATEGORIES
+// ================================================
+
+let favorites = getSaved("uu-favorites", []);
+
+if (!Array.isArray(favorites)) {
+  favorites = [];
+}
+
+function renderFavorites() {
+  const grid = $("favoritesGrid");
+  grid.innerHTML = "";
+
+  const validFavorites = favorites.filter(id =>
+    Array.from(document.querySelectorAll(".category"))
+      .some(card => card.dataset.favoriteId === id)
+  );
+
+  favorites = validFavorites;
+
+  for (const id of favorites) {
+    const original = Array.from(
+      document.querySelectorAll(".category")
+    ).find(card => card.dataset.favoriteId === id);
+
+    if (!original) continue;
+
+    const clone = original.cloneNode(true);
+
+    clone.querySelectorAll(".favorite-button").forEach(button => {
+      button.remove();
+    });
+
+    grid.appendChild(clone);
+  }
+
+  $("noFavorites").classList.toggle("hidden", favorites.length > 0);
+}
+
+document.querySelectorAll(".category").forEach((card, index) => {
+  const title = card.querySelector("h3");
+  const id = "category-" + index;
+
+  card.dataset.favoriteId = id;
+
+  const button = document.createElement("button");
+
+  button.type = "button";
+  button.className = "btn favorite-button";
+  button.style.marginTop = "12px";
+
+  function updateButton() {
+    const saved = favorites.includes(id);
+
+    button.textContent = saved
+      ? "⭐ Saved Favorite"
+      : "☆ Add to Favorites";
+
+    button.classList.toggle("saved", saved);
+    button.setAttribute("aria-pressed", String(saved));
+  }
+
+  updateButton();
+
+  button.addEventListener("click", () => {
+    if (favorites.includes(id)) {
+      favorites = favorites.filter(item => item !== id);
+      showToast("Removed " + title.textContent + " from favorites.");
+    } else {
+      favorites.push(id);
+      showToast("Added " + title.textContent + " to favorites!");
+    }
+
+    saveValue("uu-favorites", favorites);
+
+    updateButton();
+    renderFavorites();
+  });
+
+  card.appendChild(button);
+});
+
+renderFavorites();
+
+// ================================================
+// DAILY QUESTION
+// ================================================
+
+$("revealDaily").addEventListener("click", () => {
+  $("dailyAnswer").classList.add("show");
+
+  $("revealDaily").textContent = "Answer revealed ✓";
+});
+
+// ================================================
+// QUIZ QUESTIONS
+// ================================================
+
+const questions = [
+  {
+    q: "Which planet is called the Red Planet?",
+    o: ["Venus", "Mars", "Jupiter", "Neptune"],
+    a: 1,
+    e: "Mars looks reddish because iron-rich minerals on its surface have rusted."
+  },
+  {
+    q: "Which star is closest to Earth?",
+    o: ["Sirius", "Polaris", "The Sun", "Vega"],
+    a: 2,
+    e: "The Sun is the star at the centre of our Solar System."
+  },
+  {
+    q: "Which ocean is the largest?",
+    o: ["Atlantic", "Indian", "Arctic", "Pacific"],
+    a: 3,
+    e: "The Pacific Ocean is the largest ocean on Earth."
+  },
+  {
+    q: "What do plants absorb from the air for photosynthesis?",
+    o: ["Carbon dioxide", "Helium", "Neon", "Hydrogen"],
+    a: 0,
+    e: "Plants use carbon dioxide, water, and light to make sugars."
+  },
+  {
+    q: "Which force keeps planets in orbit around the Sun?",
+    o: ["Sound", "Gravity", "Friction", "Electricity"],
+    a: 1,
+    e: "Gravity is the main force keeping planets in orbit around the Sun."
+  }
+];
+
+let qi = 0;
+let score = 0;
+let locked = false;
+
+let quizAttempts = Number(getSaved("uu-quiz-attempts", 0)) || 0;
+let bestQuizScore = Number(getSaved("uu-best-score", 0)) || 0;
+
+function updateStats() {
+  $("uuAttempts").textContent = "Quiz attempts: " + quizAttempts;
+  $("uuBestScore").textContent =
+    "Best score: " + bestQuizScore + " / " + questions.length;
+}
+
+function loadQuestion() {
+  locked = false;
+
+  const question = questions[qi];
+
+  $("quizProgress").textContent =
+    `Question ${qi + 1} of ${questions.length} · Score: ${score}`;
+
+  $("quizQuestion").textContent = question.q;
+  $("quizFeedback").textContent = "";
+
+  $("nextQuestion").classList.add("hidden");
+  $("restartQuiz").classList.add("hidden");
+
+  const box = $("quizOptions");
+  box.innerHTML = "";
+
+  question.o.forEach((label, index) => {
+    const row = document.createElement("label");
+    const radio = document.createElement("input");
+    const text = document.createElement("span");
+
+    radio.type = "radio";
+    radio.name = "answer";
+    radio.value = index;
+
+    text.textContent = label;
+
+    row.append(radio, text);
+
+    row.addEventListener("click", () => {
+      chooseAnswer(index);
+    });
+
+    box.appendChild(row);
+  });
+}
+
+function chooseAnswer(index) {
+  if (locked) return;
+
+  locked = true;
+
+  const question = questions[qi];
+  const correct = index === question.a;
+
+  if (correct) {
+    score++;
+    $("quizFeedback").textContent = "Correct! ✨ " + question.e;
+  } else {
+    $("quizFeedback").textContent =
+      "Good try! Correct answer: " +
+      question.o[question.a] + ". " + question.e;
+  }
+
+  $("quizProgress").textContent =
+    `Question ${qi + 1} of ${questions.length} · Score: ${score}`;
+
+  document.querySelectorAll("#quizOptions input").forEach(radio => {
+    radio.disabled = true;
+
+    if (Number(radio.value) === index) {
+      radio.checked = true;
+    }
+  });
+
+  if (qi < questions.length - 1) {
+    $("nextQuestion").classList.remove("hidden");
+  } else {
+    finishQuiz();
+  }
+}
+
+function finishQuiz() {
+  $("quizQuestion").textContent = "Competition complete!";
+
+  $("quizFeedback").textContent =
+    `Final score: ${score} / ${questions.length}. ` +
+    (score === questions.length
+      ? "Excellent work!"
+      : score >= 3
+        ? "Well done — keep learning!"
+        : "Keep exploring and try again!");
+
+  $("restartQuiz").classList.remove("hidden");
+
+  quizAttempts++;
+
+  if (score > bestQuizScore) {
+    bestQuizScore = score;
+  }
+
+  saveValue("uu-quiz-attempts", quizAttempts);
+  saveValue("uu-best-score", bestQuizScore);
+
+  updateStats();
+}
+
+$("nextQuestion").addEventListener("click", () => {
+  qi++;
+  loadQuestion();
+});
+
+$("restartQuiz").addEventListener("click", () => {
+  qi = 0;
+  score = 0;
+  loadQuestion();
+});
+
+$("resetStats").addEventListener("click", () => {
+  const confirmed = confirm(
+    "Are you sure you want to reset your quiz statistics?"
+  );
+
+  if (!confirmed) return;
+
+  quizAttempts = 0;
+  bestQuizScore = 0;
+
+  saveValue("uu-quiz-attempts", 0);
+  saveValue("uu-best-score", 0);
+
+  updateStats();
+  showToast("Your quiz statistics have been reset.");
+});
+
+loadQuestion();
+updateStats();
+
+// ================================================
+// RANDOM FACTS
+// ================================================
+
+const facts = [
+  [
+    "🌌",
+    "A galaxy of stars",
+    "The Milky Way is the galaxy that contains our Solar System."
+  ],
+  [
+    "🌊",
+    "The deep ocean",
+    "The deep ocean has extreme pressure and very little sunlight."
+  ],
+  [
+    "🪐",
+    "A giant planet",
+    "Jupiter is the largest planet in our Solar System."
+  ],
+  [
+    "🐝",
+    "Tiny but important",
+    "Many flowering plants depend on pollinators, including bees."
+  ],
+  [
+    "💡",
+    "Light travels fast",
+    "Light travels through a vacuum at about 300,000 kilometres per second."
+  ],
+  [
+    "🧭",
+    "Finding direction",
+    "A compass needle aligns with Earth's magnetic field."
+  ],
+  [
+    "🌱",
+    "Plants and sunlight",
+    "Photosynthesis lets plants use light energy to make sugars."
+  ],
+  [
+    "🛰️",
+    "Eyes in the sky",
+    "Satellites help with weather forecasts, navigation, and communication."
+  ],
+  [
+    "🌙",
+    "The Moon",
+    "The Moon takes about 27.3 days to orbit Earth relative to the stars."
+  ],
+  [
+    "🌍",
+    "Our home planet",
+    "Earth is the only planet currently known to support life."
+  ]
+];
+
+let lastFact = -1;
+
+$("surpriseButton").addEventListener("click", () => {
+  let index;
+
+  do {
+    index = Math.floor(Math.random() * facts.length);
+  } while (index === lastFact && facts.length > 1);
+
+  lastFact = index;
+
+  $("factIcon").textContent = facts[index][0];
+  $("factTitle").textContent = facts[index][1];
+  $("factText").textContent = facts[index][2];
+});
+
+// ================================================
+// BACK TO TOP
+// ================================================
+
+const backToTop = $("backToTop");
+
+window.addEventListener("scroll", () => {
+  backToTop.classList.toggle("visible", window.scrollY > 300);
+});
+
+backToTop.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
+
+// ================================================
+// FOOTER YEAR
+// ================================================
+
+$("year").textContent = new Date().getFullYear();
+
 </script>
+
 </body>
 </html>
