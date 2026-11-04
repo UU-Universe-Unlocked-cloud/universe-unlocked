@@ -1,1327 +1,1136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080b1c">
-  <meta name="description" content="Universe Unlocked — Explore space, science, technology, nature, history, and more.">
-  <title>Universe Unlocked | Explore Everything</title>
-
-  <style>
-    :root {
-      --bg: #080b1c;
-      --card: #121a32;
-      --text: #f5f7ff;
-      --muted: #aab6d5;
-      --accent: #7c5cff;
-      --cyan: #39d9ff;
-      --border: #293451;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button, input, select {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .stars {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 15% 20%, #ffffff8a 1px, transparent 2px),
-        radial-gradient(circle at 80% 35%, #39d9ff8a 1px, transparent 2px),
-        radial-gradient(circle at 45% 70%, #ffffff7a 1px, transparent 2px),
-        radial-gradient(circle at 90% 85%, #7c5cff8a 1px, transparent 2px);
-      background-size: 130px 130px, 190px 190px, 160px 160px, 220px 220px;
-      animation: starsMove 35s linear infinite;
-    }
-
-    @keyframes starsMove {
-      from { background-position: 0 0, 0 0, 0 0, 0 0; }
-      to { background-position: 300px 500px, -400px 300px, 200px -300px, -300px -400px; }
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: #080b1ceF;
-      backdrop-filter: blur(15px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    nav {
-      max-width: 1250px;
-      margin: auto;
-      padding: 15px 22px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-
-    .logo {
-      font-size: 1.25rem;
-      font-weight: 900;
-      letter-spacing: -1px;
-    }
-
-    .logo span {
-      color: var(--cyan);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      font-size: .9rem;
-    }
-
-    .nav-links a:hover {
-      color: var(--cyan);
-    }
-
-    .button {
-      display: inline-block;
-      border: 0;
-      border-radius: 12px;
-      padding: 11px 17px;
-      background: linear-gradient(110deg, var(--accent), #385cff);
-      color: white;
-      font-weight: 700;
-      transition: transform .2s, filter .2s;
-    }
-
-    .button:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.15);
-    }
-
-    .button.secondary {
-      background: var(--card);
-      border: 1px solid var(--border);
-    }
-
-    main {
-      max-width: 1250px;
-      margin: auto;
-      padding: 24px 22px 60px;
-    }
-
-    .hero {
-      min-height: 440px;
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      align-items: center;
-      gap: 30px;
-      padding: 45px 0;
-    }
-
-    .eyebrow {
-      color: var(--cyan);
-      text-transform: uppercase;
-      font-size: .8rem;
-      font-weight: 800;
-      letter-spacing: 3px;
-    }
-
-    h1 {
-      font-size: clamp(2.5rem, 6vw, 5rem);
-      line-height: 1.05;
-      margin: 18px 0;
-      letter-spacing: -3px;
-    }
-
-    h1 span {
-      background: linear-gradient(90deg, var(--cyan), #a58aff, #ff83d5);
-      color: transparent;
-      background-clip: text;
-    }
-
-    .hero p {
-      color: var(--muted);
-      max-width: 650px;
-      font-size: 1.08rem;
-      margin-bottom: 25px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .planet-area {
-      display: grid;
-      place-items: center;
-      min-height: 300px;
-    }
-
-    .planet {
-      width: min(280px, 65vw);
-      aspect-ratio: 1;
-      border-radius: 50%;
-      position: relative;
-      background:
-        radial-gradient(circle at 30% 25%, #b8ffff, transparent 12%),
-        radial-gradient(circle at 35% 30%, #39d9ff, #3153c9 45%, #171c57 75%);
-      box-shadow: 0 0 50px #39d9ff55, 0 0 120px #7c5cff33;
-      animation: float 5s ease-in-out infinite;
-    }
-
-    .planet::after {
-      content: "";
-      position: absolute;
-      width: 145%;
-      height: 28%;
-      left: -22%;
-      top: 37%;
-      border: 5px solid #b9c8ff99;
-      border-radius: 50%;
-      transform: rotate(-25deg);
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(-4deg); }
-      50% { transform: translateY(-15px) rotate(4deg); }
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-      margin: 15px 0 55px;
-    }
-
-    .stat {
-      background: #121a32cc;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.8rem;
-      color: var(--cyan);
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: .9rem;
-    }
-
-    section {
-      margin: 55px 0;
-      scroll-margin-top: 100px;
-    }
-
-    .section-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 15px;
-      flex-wrap: wrap;
-      margin-bottom: 22px;
-    }
-
-    h2 {
-      font-size: clamp(1.7rem, 4vw, 2.5rem);
-      line-height: 1.2;
-    }
-
-    .section-heading p {
-      color: var(--muted);
-      margin-top: 6px;
-    }
-
-    .search-bar {
-      width: 100%;
-      max-width: 440px;
-      padding: 13px 16px;
-      border-radius: 12px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: var(--text);
-      outline: none;
-    }
-
-    .search-bar:focus {
-      border-color: var(--cyan);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 17px;
-    }
-
-    .card {
-      background: linear-gradient(145deg, #151e39, #0e1428);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 23px;
-      transition: transform .25s, border-color .25s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      border-color: var(--cyan);
-    }
-
-    .icon {
-      font-size: 2.3rem;
-      margin-bottom: 12px;
-    }
-
-    .card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 8px;
-    }
-
-    .card p {
-      color: var(--muted);
-      font-size: .94rem;
-      margin-bottom: 17px;
-    }
-
-    .tag {
-      display: inline-block;
-      color: var(--cyan);
-      background: #39d9ff13;
-      border: 1px solid #39d9ff35;
-      padding: 4px 9px;
-      border-radius: 20px;
-      font-size: .75rem;
-      margin-bottom: 12px;
-    }
-
-    .dashboard {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-
-    .panel {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 24px;
-    }
-
-    .panel h3 {
-      margin-bottom: 12px;
-    }
-
-    .panel p {
-      color: var(--muted);
-    }
-
-    .mission {
-      margin-top: 16px;
-      padding: 15px;
-      background: #080b1c;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-    }
-
-    .progress {
-      height: 9px;
-      background: #27314c;
-      border-radius: 20px;
-      overflow: hidden;
-      margin: 12px 0;
-    }
-
-    .progress div {
-      height: 100%;
-      width: 0;
-      background: linear-gradient(90deg, var(--accent), var(--cyan));
-      transition: width .4s;
-    }
-
-    .quiz-question {
-      font-size: 1.15rem;
-      margin: 15px 0;
-    }
-
-    .answers {
-      display: grid;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-
-    .answer {
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: #080b1c;
-      color: var(--text);
-      text-align: left;
-    }
-
-    .answer:hover {
-      border-color: var(--cyan);
-    }
-
-    .answer:disabled {
-      cursor: default;
-      opacity: .8;
-    }
-
-    .notice {
-      color: var(--muted);
-      font-size: .85rem;
-      margin-top: 12px;
-    }
-
-    .leaderboard-row {
-      display: grid;
-      grid-template-columns: 45px 1fr auto;
-      align-items: center;
-      gap: 12px;
-      padding: 13px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .rank {
-      color: var(--cyan);
-      font-weight: 900;
-    }
-
-    .points {
-      color: #ffd479;
-      font-weight: 800;
-    }
-
-    .profile-form {
-      display: grid;
-      gap: 12px;
-      margin-top: 15px;
-    }
-
-    .profile-form input,
-    .profile-form select {
-      width: 100%;
-      background: #080b1c;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--text);
-      padding: 12px;
-    }
-
-    .profile-form select option {
-      background: var(--bg);
-    }
-
-    .fact-box {
-      background: linear-gradient(120deg, #1a2550, #171332);
-      border: 1px solid #514b91;
-      border-radius: 18px;
-      padding: 25px;
-    }
-
-    .fact-box p {
-      margin: 12px 0 18px;
-      color: var(--muted);
-      font-size: 1.05rem;
-    }
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 30px 20px;
-      text-align: center;
-      color: var(--muted);
-    }
-
-    footer a {
-      color: var(--cyan);
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    @media (max-width: 850px) {
-      .hero {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-
-      .hero p {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .hero-buttons {
-        justify-content: center;
-      }
-
-      .planet-area {
-        min-height: 260px;
-      }
-
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .dashboard {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 520px) {
-      nav {
-        justify-content: center;
-      }
-
-      .nav-links {
-        justify-content: center;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      main {
-        padding-left: 15px;
-        padding-right: 15px;
-      }
-
-      h1 {
-        letter-spacing: -1.5px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b1c">
+<meta name="description" content="Universe Unlocked: Explore space, science, technology, nature, history and more.">
+<title>Universe Unlocked</title>
+
+<style>
+:root {
+  --bg:#080b1c;
+  --card:#121a32;
+  --text:#f5f7ff;
+  --muted:#aab6d5;
+  --accent:#7c5cff;
+  --cyan:#39d9ff;
+  --border:#293451;
+}
+
+* { box-sizing:border-box; margin:0; padding:0; }
+
+html { scroll-behavior:smooth; }
+
+body {
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+a { color:inherit; text-decoration:none; }
+
+button,input,select { font:inherit; }
+
+button { cursor:pointer; }
+
+.stars {
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 15% 20%,#fff 1px,transparent 2px),
+    radial-gradient(circle at 80% 35%,#39d9ff 1px,transparent 2px),
+    radial-gradient(circle at 45% 70%,#fff 1px,transparent 2px);
+  background-size:130px 130px,190px 190px,160px 160px;
+  animation:stars 35s linear infinite;
+}
+
+@keyframes stars {
+  to { background-position:300px 500px,-400px 300px,200px -300px; }
+}
+
+header {
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:#080b1cef;
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--border);
+}
+
+nav {
+  max-width:1250px;
+  margin:auto;
+  padding:15px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+.logo { font-size:1.25rem; font-weight:900; }
+.logo span { color:var(--cyan); }
+
+.nav-links {
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+.nav-links a { color:var(--muted); font-size:.9rem; }
+.nav-links a:hover { color:var(--cyan); }
+
+.button {
+  display:inline-block;
+  border:0;
+  border-radius:12px;
+  padding:11px 17px;
+  background:linear-gradient(110deg,var(--accent),#385cff);
+  color:white;
+  font-weight:bold;
+  transition:.2s;
+}
+
+.button:hover { transform:translateY(-2px); filter:brightness(1.15); }
+
+.button.secondary {
+  background:var(--card);
+  border:1px solid var(--border);
+}
+
+main { max-width:1250px; margin:auto; padding:24px 22px 60px; }
+
+.hero {
+  min-height:440px;
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  align-items:center;
+  gap:30px;
+  padding:45px 0;
+}
+
+.eyebrow {
+  color:var(--cyan);
+  text-transform:uppercase;
+  font-size:.8rem;
+  font-weight:800;
+  letter-spacing:3px;
+}
+
+h1 {
+  font-size:clamp(2.5rem,6vw,5rem);
+  line-height:1.05;
+  margin:18px 0;
+  letter-spacing:-3px;
+}
+
+h1 span {
+  background:linear-gradient(90deg,var(--cyan),#a58aff,#ff83d5);
+  color:transparent;
+  background-clip:text;
+}
+
+.hero p {
+  color:var(--muted);
+  max-width:650px;
+  font-size:1.08rem;
+  margin-bottom:25px;
+}
+
+.hero-buttons { display:flex; gap:12px; flex-wrap:wrap; }
+
+.planet-area { display:grid; place-items:center; min-height:300px; }
+
+.planet {
+  width:min(280px,65vw);
+  aspect-ratio:1;
+  border-radius:50%;
+  position:relative;
+  background:
+    radial-gradient(circle at 30% 25%,#b8ffff,transparent 12%),
+    radial-gradient(circle at 35% 30%,#39d9ff,#3153c9 45%,#171c57 75%);
+  box-shadow:0 0 50px #39d9ff55,0 0 120px #7c5cff33;
+  animation:float 5s ease-in-out infinite;
+}
+
+.planet::after {
+  content:"";
+  position:absolute;
+  width:145%;
+  height:28%;
+  left:-22%;
+  top:37%;
+  border:5px solid #b9c8ff99;
+  border-radius:50%;
+  transform:rotate(-25deg);
+}
+
+@keyframes float {
+  0%,100% { transform:translateY(0) rotate(-4deg); }
+  50% { transform:translateY(-15px) rotate(4deg); }
+}
+
+.stats {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin:15px 0 55px;
+}
+
+.stat {
+  background:#121a32cc;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px;
+  text-align:center;
+}
+
+.stat strong { display:block; font-size:1.8rem; color:var(--cyan); }
+.stat span { color:var(--muted); font-size:.9rem; }
+
+section { margin:55px 0; scroll-margin-top:100px; }
+
+.section-heading {
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-bottom:22px;
+}
+
+h2 { font-size:clamp(1.7rem,4vw,2.5rem); line-height:1.2; }
+
+.section-heading p { color:var(--muted); margin-top:6px; }
+
+.search-bar {
+  width:100%;
+  max-width:440px;
+  padding:13px 16px;
+  border-radius:12px;
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text);
+  outline:none;
+}
+
+.search-bar:focus { border-color:var(--cyan); }
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:17px;
+}
+
+.card {
+  background:linear-gradient(145deg,#151e39,#0e1428);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:23px;
+  transition:.25s;
+}
+
+.card:hover { transform:translateY(-5px); border-color:var(--cyan); }
+
+.icon { font-size:2.3rem; margin-bottom:12px; }
+.card h3 { font-size:1.2rem; margin-bottom:8px; }
+.card p { color:var(--muted); font-size:.94rem; margin-bottom:17px; }
+
+.tag {
+  display:inline-block;
+  color:var(--cyan);
+  background:#39d9ff13;
+  border:1px solid #39d9ff35;
+  padding:4px 9px;
+  border-radius:20px;
+  font-size:.75rem;
+  margin-bottom:12px;
+}
+
+.dashboard { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+
+.panel {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:24px;
+}
+
+.panel h3 { margin-bottom:12px; }
+.panel p { color:var(--muted); }
+
+.mission {
+  margin-top:16px;
+  padding:15px;
+  background:#080b1c;
+  border-radius:12px;
+  border:1px solid var(--border);
+}
+
+.progress {
+  height:9px;
+  background:#27314c;
+  border-radius:20px;
+  overflow:hidden;
+  margin:12px 0;
+}
+
+.progress div {
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--accent),var(--cyan));
+  transition:width .4s;
+}
+
+.quiz-question { font-size:1.15rem; margin:15px 0; }
+.answers { display:grid; gap:10px; margin-bottom:15px; }
+
+.answer {
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#080b1c;
+  color:var(--text);
+  text-align:left;
+}
+
+.answer:hover { border-color:var(--cyan); }
+.answer:disabled { cursor:default; opacity:.8; }
+
+.notice { color:var(--muted); font-size:.85rem; margin-top:12px; }
+
+.leaderboard-row {
+  display:grid;
+  grid-template-columns:45px 1fr auto;
+  align-items:center;
+  gap:12px;
+  padding:13px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.rank { color:var(--cyan); font-weight:900; }
+.points { color:#ffd479; font-weight:800; }
+
+.profile-form { display:grid; gap:12px; margin-top:15px; }
+
+.profile-form input,.profile-form select {
+  width:100%;
+  background:#080b1c;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--text);
+  padding:12px;
+}
+
+.profile-form select option { background:var(--bg); }
+
+.fact-box {
+  background:linear-gradient(120deg,#1a2550,#171332);
+  border:1px solid #514b91;
+  border-radius:18px;
+  padding:25px;
+}
+
+.fact-box p { margin:12px 0 18px; color:var(--muted); font-size:1.05rem; }
+
+#daily-discovery {
+  background:linear-gradient(135deg,#101a3d,#35145c);
+  border:1px solid #725bff;
+  border-radius:20px;
+  padding:30px;
+  text-align:center;
+}
+
+#daily-discovery h2 { color:var(--cyan); margin-bottom:15px; }
+
+#daily-discovery p { color:#dce5ff; }
+
+#daily-discovery button {
+  margin:15px 5px 0;
+  padding:12px 20px;
+  border:0;
+  border-radius:10px;
+  background:var(--cyan);
+  color:#10152d;
+  font-weight:bold;
+}
+
+#discovery-result {
+  margin-top:20px;
+  padding:15px;
+  border-radius:12px;
+  background:#ffffff12;
+}
+
+footer {
+  border-top:1px solid var(--border);
+  padding:30px 20px;
+  text-align:center;
+  color:var(--muted);
+}
+
+footer a { color:var(--cyan); }
+.hidden { display:none!important; }
+
+@media(max-width:850px) {
+  .hero { grid-template-columns:1fr; text-align:center; }
+  .hero p { margin-left:auto; margin-right:auto; }
+  .hero-buttons { justify-content:center; }
+  .planet-area { min-height:260px; }
+  .grid { grid-template-columns:repeat(2,1fr); }
+  .stats { grid-template-columns:repeat(2,1fr); }
+  .dashboard { grid-template-columns:1fr; }
+}
+
+@media(max-width:520px) {
+  nav { justify-content:center; }
+  .nav-links { justify-content:center; }
+  .grid { grid-template-columns:1fr; }
+  main { padding-left:15px; padding-right:15px; }
+  h1 { letter-spacing:-1.5px; }
+}
+</style>
 </head>
 
 <body>
-  <div class="stars"></div>
+<div class="stars"></div>
 
-  <header>
-    <nav>
-      <a class="logo" href="#home">UNIVERSE <span>UNLOCKED</span></a>
+<header>
+<nav>
+  <a class="logo" href="#home">UNIVERSE <span>UNLOCKED</span></a>
 
-      <div class="nav-links">
-        <a href="#explore">Explore</a>
-        <a href="#missions">Missions</a>
-        <a href="#quiz">Quiz</a>
-        <a href="#leaderboard">Leaderboard</a>
-        <a href="#profile">Profile</a>
+  <div class="nav-links">
+    <a href="#explore">Explore</a>
+    <a href="#missions">Missions</a>
+    <a href="#daily-discovery">Daily Mission</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#leaderboard">Leaderboard</a>
+    <a href="#profile">Profile</a>
+  </div>
+
+  <button class="button secondary" id="themeButton">Change Theme</button>
+</nav>
+</header>
+
+<main>
+
+<section class="hero" id="home">
+  <div>
+    <div class="eyebrow">Your journey starts here</div>
+    <h1>Unlock the <span>Unknown.</span></h1>
+    <p>
+      Explore the universe, discover amazing science, investigate history,
+      learn about technology, and challenge your mind.
+      There is always something new to discover.
+    </p>
+
+    <div class="hero-buttons">
+      <a class="button" href="#explore">Start Exploring →</a>
+      <a class="button secondary" href="#quiz">Challenge Yourself</a>
+    </div>
+  </div>
+
+  <div class="planet-area">
+    <div class="planet"></div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><strong id="exploredCount">0</strong><span>Topics Explored</span></div>
+  <div class="stat"><strong id="xpCount">0</strong><span>Experience Points</span></div>
+  <div class="stat"><strong id="levelCount">1</strong><span>Explorer Level</span></div>
+  <div class="stat"><strong id="badgeCount">0</strong><span>Badges Earned</span></div>
+</div>
+
+<section id="explore">
+  <div class="section-heading">
+    <div>
+      <h2>Explore Everything</h2>
+      <p>Choose a field and begin your discovery.</p>
+    </div>
+    <input class="search-bar" id="searchInput" type="search" placeholder="Search topics...">
+  </div>
+
+  <div class="grid" id="topicGrid">
+
+    <article class="card" data-topic="space planets stars galaxies">
+      <div class="icon">🌌</div><span class="tag">THE COSMOS</span>
+      <h3>Space & Astronomy</h3>
+      <p>Discover planets, stars, galaxies, black holes, and the mysteries of the cosmos.</p>
+      <button class="button" data-explore="Space & Astronomy">Explore Topic</button>
+    </article>
+
+    <article class="card" data-topic="science physics chemistry biology">
+      <div class="icon">🔬</div><span class="tag">EXPERIMENT</span>
+      <h3>Science</h3>
+      <p>Investigate matter, energy, forces, living things, and how our world works.</p>
+      <button class="button" data-explore="Science">Explore Topic</button>
+    </article>
+
+    <article class="card" data-topic="technology computers artificial intelligence">
+      <div class="icon">🤖</div><span class="tag">THE FUTURE</span>
+      <h3>Technology & AI</h3>
+      <p>Explore computers, robotics, artificial intelligence, and future inventions.</p>
+      <button class="button" data-explore="Technology & AI">Explore Topic</button>
+    </article>
+
+    <article class="card" data-topic="nature animals oceans earth">
+      <div class="icon">🌍</div><span class="tag">OUR PLANET</span>
+      <h3>Nature & Earth</h3>
+      <p>Discover ecosystems, oceans, weather, wildlife, and our changing planet.</p>
+      <button class="button" data-explore="Nature & Earth">Explore Topic</button>
+    </article>
+
+    <article class="card" data-topic="history civilizations ancient egypt">
+      <div class="icon">🏛️</div><span class="tag">THE PAST</span>
+      <h3>History</h3>
+      <p>Travel through ancient civilizations, inventions, discoveries, and historical events.</p>
+      <button class="button" data-explore="History">Explore Topic</button>
+    </article>
+
+    <article class="card" data-topic="mathematics numbers geometry logic">
+      <div class="icon">🧮</div><span class="tag">THINK SMART</span>
+      <h3>Mathematics</h3>
+      <p>Test your logic and uncover the patterns behind numbers and shapes.</p>
+      <button class="button" data-explore="Mathematics">Explore Topic</button>
+    </article>
+
+    <article class="card" data-topic="human body health biology">
+      <div class="icon">🧠</div><span class="tag">YOU</span>
+      <h3>Human Body</h3>
+      <p>Learn how the brain, heart, senses, muscles, and body systems work.</p>
+      <button class="button" data-explore="Human Body">Explore Topic</button>
+    </article>
+
+    <article class="card" data-topic="engineering inventions machines">
+      <div class="icon">⚙️</div><span class="tag">BUILD IT</span>
+      <h3>Engineering</h3>
+      <p>Explore structures, machines, spacecraft, bridges, and clever designs.</p>
+      <button class="button" data-explore="Engineering">Explore Topic</button>
+    </article>
+
+    <article class="card" data-topic="religion islam quran values">
+      <div class="icon">📖</div><span class="tag">REFLECTION</span>
+      <h3>Islam & Knowledge</h3>
+      <p>Explore Islamic knowledge, values, history, and reflections on creation.</p>
+      <button class="button" data-explore="Islam & Knowledge">Explore Topic</button>
+    </article>
+
+    <article class="card" data-topic="oceans marine life deep sea">
+      <div class="icon">🌊</div><span class="tag">DEEP BLUE</span>
+      <h3>Ocean Mysteries</h3>
+      <p>Discover underwater ecosystems, deep-sea creatures, and ocean exploration.</p>
+      <button class="button" data-explore="Ocean Mysteries">Explore Topic</button>
+    </article>
+
+    <article class="card" data-topic="football sports athletes">
+      <div class="icon">⚽</div><span class="tag">GAME ON</span>
+      <h3>Sports</h3>
+      <p>Learn about football, sporting records, tactics, and athletic science.</p>
+      <button class="button" data-explore="Sports">Explore Topic</button>
+    </article>
+
+    <article class="card" data-topic="inventions future discoveries">
+      <div class="icon">💡</div><span class="tag">BIG IDEAS</span>
+      <h3>Inventions & Ideas</h3>
+      <p>Investigate remarkable inventions and imagine solutions to future challenges.</p>
+      <button class="button" data-explore="Inventions & Ideas">Explore Topic</button>
+    </article>
+
+  </div>
+  <p class="notice" id="searchMessage"></p>
+</section>
+
+<section id="missions">
+  <div class="section-heading">
+    <div>
+      <h2>Your Explorer Dashboard</h2>
+      <p>Complete activities, collect experience, and build your learning progress.</p>
+    </div>
+  </div>
+
+  <div class="dashboard">
+    <div class="panel">
+      <h3>🚀 Daily Mission</h3>
+      <p>Explore three different topics to complete today's mission.</p>
+
+      <div class="mission">
+        <strong id="missionProgress">0 of 3 topics explored</strong>
+        <div class="progress"><div id="missionBar"></div></div>
+        <p id="missionReward">Reward: 30 XP</p>
       </div>
 
-      <button class="button secondary" id="themeButton" type="button">
-        Change Theme
+      <button class="button" id="claimMission" style="margin-top:15px">
+        Claim Mission Reward
       </button>
-    </nav>
-  </header>
-
-  <main>
-    <section class="hero" id="home">
-      <div>
-        <div class="eyebrow">Your journey starts here</div>
-        <h1>Unlock the <span>Unknown.</span></h1>
-        <p>
-          Explore the universe, discover amazing science, investigate history,
-          learn about technology, and challenge your mind. There is always
-          something new to discover.
-        </p>
-
-        <div class="hero-buttons">
-          <a class="button" href="#explore">Start Exploring →</a>
-          <a class="button secondary" href="#quiz">Challenge Yourself</a>
-        </div>
-      </div>
-
-      <div class="planet-area">
-        <div class="planet" aria-label="Animated fictional planet"></div>
-      </div>
-    </section>
-
-    <div class="stats">
-      <div class="stat">
-        <strong id="exploredCount">0</strong>
-        <span>Topics Explored</span>
-      </div>
-
-      <div class="stat">
-        <strong id="xpCount">0</strong>
-        <span>Experience Points</span>
-      </div>
-
-      <div class="stat">
-        <strong id="levelCount">1</strong>
-        <span>Explorer Level</span>
-      </div>
-
-      <div class="stat">
-        <strong id="badgeCount">0</strong>
-        <span>Badges Earned</span>
-      </div>
+      <p class="notice" id="missionMessage"></p>
     </div>
 
-    <section id="explore">
-      <div class="section-heading">
-        <div>
-          <h2>Explore Everything</h2>
-          <p>Choose a field and begin your discovery.</p>
-        </div>
+    <div class="panel">
+      <h3>🏅 Your Achievements</h3>
+      <div id="badges"></div>
+    </div>
+  </div>
+</section>
 
-        <input
-          class="search-bar"
-          id="searchInput"
-          type="search"
-          placeholder="Search topics..."
-          aria-label="Search topics"
-        >
-      </div>
+<section id="daily-discovery">
+  <h2>🌌 Daily Universe Mission</h2>
+  <p>Every day brings a new mystery. Choose a mission, discover something amazing, and challenge your mind!</p>
 
-      <div class="grid" id="topicGrid">
-        <article class="card" data-topic="space planets stars galaxies">
-          <div class="icon">🌌</div>
-          <span class="tag">THE COSMOS</span>
-          <h3>Space & Astronomy</h3>
-          <p>Discover planets, stars, galaxies, black holes, and the mysteries of the cosmos.</p>
-          <button class="button" data-explore="Space & Astronomy">Explore Topic</button>
-        </article>
+  <div id="discovery-result">Your mission is waiting for you.</div>
 
-        <article class="card" data-topic="science physics chemistry biology">
-          <div class="icon">🔬</div>
-          <span class="tag">EXPERIMENT</span>
-          <h3>Science</h3>
-          <p>Investigate matter, energy, forces, living things, and how our world works.</p>
-          <button class="button" data-explore="Science">Explore Topic</button>
-        </article>
+  <button onclick="startUniverseMission()">🚀 Start My Mission</button>
+  <button onclick="revealUniverseFact()">💡 Reveal a Space Fact</button>
+</section>
 
-        <article class="card" data-topic="technology computers artificial intelligence">
-          <div class="icon">🤖</div>
-          <span class="tag">THE FUTURE</span>
-          <h3>Technology & AI</h3>
-          <p>Explore computers, robotics, artificial intelligence, and future inventions.</p>
-          <button class="button" data-explore="Technology & AI">Explore Topic</button>
-        </article>
+<section id="quiz">
+  <div class="section-heading">
+    <div>
+      <h2>Knowledge Challenge</h2>
+      <p>Answer questions to earn experience points.</p>
+    </div>
+  </div>
 
-        <article class="card" data-topic="nature animals oceans earth">
-          <div class="icon">🌍</div>
-          <span class="tag">OUR PLANET</span>
-          <h3>Nature & Earth</h3>
-          <p>Discover ecosystems, oceans, weather, wildlife, and our changing planet.</p>
-          <button class="button" data-explore="Nature & Earth">Explore Topic</button>
-        </article>
+  <div class="panel">
+    <span class="tag" id="quizCategory">SCIENCE QUIZ</span>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="answers" id="quizAnswers"></div>
+    <p id="quizFeedback"></p>
+    <button class="button" id="nextQuestion">Next Question</button>
+    <p class="notice">Your quiz progress is saved in this browser.</p>
+  </div>
+</section>
 
-        <article class="card" data-topic="history civilizations ancient egypt">
-          <div class="icon">🏛️</div>
-          <span class="tag">THE PAST</span>
-          <h3>History</h3>
-          <p>Travel through ancient civilizations, inventions, discoveries, and historical events.</p>
-          <button class="button" data-explore="History">Explore Topic</button>
-        </article>
+<section id="leaderboard">
+  <div class="section-heading">
+    <div>
+      <h2>🏆 Explorer Leaderboard</h2>
+      <p>Compare your progress with the demo scores below.</p>
+    </div>
+  </div>
 
-        <article class="card" data-topic="mathematics numbers geometry logic">
-          <div class="icon">🧮</div>
-          <span class="tag">THINK SMART</span>
-          <h3>Mathematics</h3>
-          <p>Test your logic and uncover the patterns behind numbers and shapes.</p>
-          <button class="button" data-explore="Mathematics">Explore Topic</button>
-        </article>
+  <div class="panel">
+    <div id="leaderboardList"></div>
+    <p class="notice">
+      This is a local demonstration leaderboard with sample players.
+      A real shared leaderboard requires a secure online database and authentication.
+    </p>
+  </div>
+</section>
 
-        <article class="card" data-topic="human body health biology">
-          <div class="icon">🧠</div>
-          <span class="tag">YOU</span>
-          <h3>Human Body</h3>
-          <p>Learn how the brain, heart, senses, muscles, and other body systems work.</p>
-          <button class="button" data-explore="Human Body">Explore Topic</button>
-        </article>
+<section id="profile">
+  <div class="section-heading">
+    <div>
+      <h2>Your Explorer Profile</h2>
+      <p>Choose a nickname and avatar for this browser.</p>
+    </div>
+  </div>
 
-        <article class="card" data-topic="engineering inventions machines">
-          <div class="icon">⚙️</div>
-          <span class="tag">BUILD IT</span>
-          <h3>Engineering</h3>
-          <p>Explore structures, machines, spacecraft, bridges, and clever designs.</p>
-          <button class="button" data-explore="Engineering">Explore Topic</button>
-        </article>
+  <div class="panel">
+    <h3>👤 Profile Settings</h3>
 
-        <article class="card" data-topic="religion islam quran values">
-          <div class="icon">📖</div>
-          <span class="tag">REFLECTION</span>
-          <h3>Islam & Knowledge</h3>
-          <p>Explore Islamic knowledge, values, history, and reflections on creation.</p>
-          <button class="button" data-explore="Islam & Knowledge">Explore Topic</button>
-        </article>
+    <form class="profile-form" id="profileForm">
+      <input id="nickname" maxlength="20" placeholder="Explorer nickname" required>
 
-        <article class="card" data-topic="oceans marine life deep sea">
-          <div class="icon">🌊</div>
-          <span class="tag">DEEP BLUE</span>
-          <h3>Ocean Mysteries</h3>
-          <p>Discover underwater ecosystems, deep-sea creatures, and ocean exploration.</p>
-          <button class="button" data-explore="Ocean Mysteries">Explore Topic</button>
-        </article>
+      <select id="avatar">
+        <option value="🚀">🚀 Rocket Explorer</option>
+        <option value="🪐">🪐 Planet Scientist</option>
+        <option value="🔭">🔭 Sky Observer</option>
+        <option value="🧠">🧠 Knowledge Seeker</option>
+        <option value="🤖">🤖 Technology Explorer</option>
+        <option value="🌍">🌍 Earth Discoverer</option>
+      </select>
 
-        <article class="card" data-topic="football sports athletes">
-          <div class="icon">⚽</div>
-          <span class="tag">GAME ON</span>
-          <h3>Sports</h3>
-          <p>Learn about football, sporting records, tactics, and athletic science.</p>
-          <button class="button" data-explore="Sports">Explore Topic</button>
-        </article>
+      <button class="button" type="submit">Save Profile</button>
+    </form>
 
-        <article class="card" data-topic="inventions future discoveries">
-          <div class="icon">💡</div>
-          <span class="tag">BIG IDEAS</span>
-          <h3>Inventions & Ideas</h3>
-          <p>Investigate remarkable inventions and imagine solutions to future challenges.</p>
-          <button class="button" data-explore="Inventions & Ideas">Explore Topic</button>
-        </article>
-      </div>
+    <p class="notice" id="profileMessage"></p>
+    <p class="notice">
+      Do not enter your real name, address, school, phone number, or other private information.
+      This demo does not create an online account.
+    </p>
+  </div>
+</section>
 
-      <p class="notice" id="searchMessage" aria-live="polite"></p>
-    </section>
+<section id="daily-fact">
+  <div class="section-heading">
+    <div>
+      <h2>💫 Amazing Fact</h2>
+      <p>A little discovery can lead to a big question.</p>
+    </div>
+  </div>
 
-    <section id="missions">
-      <div class="section-heading">
-        <div>
-          <h2>Your Explorer Dashboard</h2>
-          <p>Complete activities, collect experience, and build your learning streak.</p>
-        </div>
-      </div>
+  <div class="fact-box">
+    <span class="tag">DID YOU KNOW?</span>
+    <p id="factText"></p>
+    <button class="button" id="newFact">Discover Another Fact</button>
+  </div>
+</section>
 
-      <div class="dashboard">
-        <div class="panel">
-          <h3>🚀 Daily Mission</h3>
-          <p>Explore three different topics to complete today's mission.</p>
+<section id="youtube">
+  <div class="panel">
+    <h2>📺 Universe Unlocked on YouTube</h2>
+    <p style="margin:12px 0 20px">
+      Discover more questions about space, science, our world, and the unknown.
+    </p>
 
-          <div class="mission">
-            <strong id="missionProgress">0 of 3 topics explored</strong>
-            <div class="progress">
-              <div id="missionBar"></div>
-            </div>
-            <p id="missionReward">Reward: 30 XP</p>
-          </div>
+    <a class="button"
+       href="https://www.youtube.com/channel/UCaFS3FO0Il2XlDxbo2RbHzg"
+       target="_blank" rel="noopener noreferrer">
+      Visit Our YouTube Channel →
+    </a>
+  </div>
+</section>
 
-          <button class="button" id="claimMission" type="button" style="margin-top:15px">
-            Claim Mission Reward
-          </button>
-          <p class="notice" id="missionMessage" aria-live="polite"></p>
-        </div>
+</main>
 
-        <div class="panel">
-          <h3>🏅 Your Achievements</h3>
-          <div id="badges">
-            <div class="mission">🔭 <strong>First Discovery</strong><br><small>Explore your first topic.</small></div>
-            <div class="mission">🧠 <strong>Curious Mind</strong><br><small>Earn 100 XP.</small></div>
-            <div class="mission">🌟 <strong>Rising Explorer</strong><br><small>Reach level 5.</small></div>
-            <div class="mission">🎯 <strong>Quiz Champion</strong><br><small>Answer five questions correctly.</small></div>
-          </div>
-        </div>
-      </div>
-    </section>
+<footer>
+  <p><strong>UNIVERSE UNLOCKED</strong> — Keep questioning. Keep discovering.</p>
+  <p style="margin-top:8px">Made for curious minds everywhere.</p>
+</footer>
 
-    <section id="quiz">
-      <div class="section-heading">
-        <div>
-          <h2>Knowledge Challenge</h2>
-          <p>Answer the question to earn experience points.</p>
-        </div>
-      </div>
+<script>
+"use strict";
 
-      <div class="panel">
-        <span class="tag" id="quizCategory">SCIENCE QUIZ</span>
-        <div class="quiz-question" id="quizQuestion"></div>
-        <div class="answers" id="quizAnswers"></div>
-        <p id="quizFeedback" aria-live="polite"></p>
-        <button class="button" id="nextQuestion" type="button">Next Question</button>
-        <p class="notice">Questions are for learning and fun. Your score is saved in this browser.</p>
-      </div>
-    </section>
+const STORAGE_KEY = "universeUnlockedProgressV2";
 
-    <section id="leaderboard">
-      <div class="section-heading">
-        <div>
-          <h2>🏆 Explorer Leaderboard</h2>
-          <p>Compare your progress with the demo scores below.</p>
-        </div>
-      </div>
+const defaultState = {
+  nickname:"Explorer",
+  avatar:"🚀",
+  xp:0,
+  explored:[],
+  correctAnswers:0,
+  missionClaimed:false,
+  lastMissionDate:new Date().toDateString(),
+  darkTheme:true
+};
 
-      <div class="panel">
-        <div id="leaderboardList"></div>
-        <p class="notice">
-          This version has a local leaderboard with sample entries. It is not a real
-          global leaderboard: shared rankings and real accounts require a secure
-          online database and authentication service.
-        </p>
-      </div>
-    </section>
+function loadState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    if (!saved || typeof saved !== "object") return {...defaultState};
 
-    <section id="profile">
-      <div class="section-heading">
-        <div>
-          <h2>Your Explorer Profile</h2>
-          <p>Choose a nickname and avatar for this browser.</p>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h3>👤 Profile Settings</h3>
-
-        <form class="profile-form" id="profileForm">
-          <input
-            id="nickname"
-            maxlength="20"
-            placeholder="Explorer nickname"
-            autocomplete="nickname"
-            required
-          >
-
-          <select id="avatar" aria-label="Choose an avatar">
-            <option value="🚀">🚀 Rocket Explorer</option>
-            <option value="🪐">🪐 Planet Scientist</option>
-            <option value="🔭">🔭 Sky Observer</option>
-            <option value="🧠">🧠 Knowledge Seeker</option>
-            <option value="🤖">🤖 Technology Explorer</option>
-            <option value="🌍">🌍 Earth Discoverer</option>
-          </select>
-
-          <button class="button" type="submit">Save Profile</button>
-        </form>
-
-        <p class="notice" id="profileMessage" aria-live="polite"></p>
-        <p class="notice">
-          Do not enter your real name, address, school, phone number, or other private
-          information. This demo does not create a secure online account.
-        </p>
-      </div>
-    </section>
-
-    <section id="daily-fact">
-      <div class="section-heading">
-        <div>
-          <h2>💫 Amazing Fact</h2>
-          <p>A little discovery can lead to a big question.</p>
-        </div>
-      </div>
-
-      <div class="fact-box">
-        <span class="tag">DID YOU KNOW?</span>
-        <p id="factText"></p>
-        <button class="button" id="newFact" type="button">Discover Another Fact</button>
-      </div>
-    </section>
-
-    <section id="youtube">
-      <div class="panel">
-        <h2>📺 Universe Unlocked on YouTube</h2>
-        <p style="margin:12px 0 20px">
-          Discover more questions about space, science, our world, and the unknown.
-        </p>
-        <a
-          class="button"
-          href="https://www.youtube.com/channel/UCaFS3FO0Il2XlDxbo2RbHzg"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Visit Our YouTube Channel →
-        </a>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <p><strong>UNIVERSE UNLOCKED</strong> — Keep questioning. Keep discovering.</p>
-    <p style="margin-top:8px">Made for curious minds everywhere.</p>
-  </footer>
-
-  <script>
-    "use strict";
-
-    const STORAGE_KEY = "universeUnlockedProgressV1";
-
-    const defaultState = {
-      nickname: "Explorer",
-      avatar: "🚀",
-      xp: 0,
-      explored: [],
-      correctAnswers: 0,
-      quizCount: 0,
-      missionClaimed: false,
-      lastMissionDate: new Date().toDateString(),
-      darkTheme: true
+    return {
+      ...defaultState,
+      ...saved,
+      explored:Array.isArray(saved.explored) ? saved.explored : []
     };
+  } catch {
+    return {...defaultState};
+  }
+}
 
-    function loadState() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+let state = loadState();
 
-        if (!saved || typeof saved !== "object") {
-          return { ...defaultState };
-        }
+const quizQuestions = [
+  {
+    category:"ASTRONOMY",
+    question:"Which planet is known for its prominent ring system?",
+    answers:["Mars","Saturn","Mercury","Venus"],
+    correct:1,
+    explanation:"Saturn is famous for its extensive system of rings."
+  },
+  {
+    category:"PHYSICS",
+    question:"What is the SI unit of force?",
+    answers:["Watt","Joule","Newton","Metre"],
+    correct:2,
+    explanation:"Force is measured in newtons."
+  },
+  {
+    category:"EARTH SCIENCE",
+    question:"Which gas makes up most of Earth's atmosphere?",
+    answers:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"],
+    correct:1,
+    explanation:"Nitrogen makes up about 78% of Earth's atmosphere."
+  },
+  {
+    category:"BIOLOGY",
+    question:"Which organ pumps blood around the human body?",
+    answers:["Lungs","Brain","Heart","Stomach"],
+    correct:2,
+    explanation:"The heart pumps blood through the circulatory system."
+  },
+  {
+    category:"SPACE",
+    question:"What is the closest star to Earth?",
+    answers:["Sirius","The Sun","Proxima Centauri","Polaris"],
+    correct:1,
+    explanation:"The Sun is our closest star."
+  },
+  {
+    category:"MATHEMATICS",
+    question:"What is 12 × 8?",
+    answers:["86","92","96","108"],
+    correct:2,
+    explanation:"12 multiplied by 8 equals 96."
+  },
+  {
+    category:"OCEANS",
+    question:"Which is the largest ocean on Earth?",
+    answers:["Atlantic","Indian","Arctic","Pacific"],
+    correct:3,
+    explanation:"The Pacific Ocean is the largest ocean on Earth."
+  },
+  {
+    category:"TECHNOLOGY",
+    question:"What does CPU commonly stand for?",
+    answers:[
+      "Central Processing Unit",
+      "Computer Power Utility",
+      "Central Program User",
+      "Core Performance Unit"
+    ],
+    correct:0,
+    explanation:"CPU stands for Central Processing Unit."
+  }
+];
 
-        return {
-          ...defaultState,
-          ...saved,
-          explored: Array.isArray(saved.explored) ? saved.explored : []
-        };
-      } catch {
-        return { ...defaultState };
-      }
-    }
+const facts = [
+  "A day on Venus is longer than its year.",
+  "Light from the Sun takes about 8 minutes and 20 seconds to reach Earth.",
+  "Octopuses have three hearts and blue blood.",
+  "Jupiter is the largest planet in our Solar System.",
+  "Some deep-sea animals produce their own light through bioluminescence.",
+  "The Moon is moving slowly away from Earth by a few centimetres each year.",
+  "Plants use photosynthesis to convert light energy into chemical energy.",
+  "Sound needs a medium such as air, water, or a solid to travel through."
+];
 
-    let state = loadState();
+const missions = [
+  "Discover how black holes affect nearby objects.",
+  "Find out why the Moon changes its appearance.",
+  "Learn how astronauts live aboard the ISS.",
+  "Investigate how stars are born.",
+  "Discover why Mars looks red.",
+  "Learn how scientists search for planets beyond our Solar System.",
+  "Investigate what causes solar and lunar eclipses.",
+  "Discover how spacecraft travel through space."
+];
 
-    function saveState() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      } catch {
-        // The site remains usable even if browser storage is unavailable.
-      }
-    }
+const spaceFacts = [
+  "The Sun is a star at the center of our Solar System.",
+  "Jupiter is the largest planet in our Solar System.",
+  "The Moon takes about 27.3 days to orbit Earth relative to the stars.",
+  "Space contains enormous clouds of gas and dust where stars can form.",
+  "Mars has two small moons named Phobos and Deimos.",
+  "Saturn's rings are made mostly of countless particles of ice and rock."
+];
 
-    const topics = [
-      "Space & Astronomy",
-      "Science",
-      "Technology & AI",
-      "Nature & Earth",
-      "History",
-      "Mathematics",
-      "Human Body",
-      "Engineering",
-      "Islam & Knowledge",
-      "Ocean Mysteries",
-      "Sports",
-      "Inventions & Ideas"
-    ];
+const demoPlayers = [
+  {name:"NovaExplorer",xp:450},
+  {name:"GalaxyMind",xp:380},
+  {name:"CosmicLearner",xp:310},
+  {name:"StarSeeker",xp:260},
+  {name:"PlanetPilot",xp:190}
+];
 
-    const quizQuestions = [
-      {
-        category: "ASTRONOMY",
-        question: "Which planet is known for its prominent ring system?",
-        answers: ["Mars", "Saturn", "Mercury", "Venus"],
-        correct: 1,
-        explanation: "Saturn is famous for its extensive system of rings."
-      },
-      {
-        category: "PHYSICS",
-        question: "What is the SI unit of force?",
-        answers: ["Watt", "Joule", "Newton", "Metre"],
-        correct: 2,
-        explanation: "Force is measured in newtons, named after Isaac Newton."
-      },
-      {
-        category: "EARTH SCIENCE",
-        question: "Which gas makes up most of Earth's atmosphere?",
-        answers: ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"],
-        correct: 1,
-        explanation: "Nitrogen makes up about 78% of Earth's atmosphere."
-      },
-      {
-        category: "BIOLOGY",
-        question: "Which organ pumps blood around the human body?",
-        answers: ["Lungs", "Brain", "Heart", "Stomach"],
-        correct: 2,
-        explanation: "The heart pumps blood through the circulatory system."
-      },
-      {
-        category: "SPACE",
-        question: "What is the closest star to Earth?",
-        answers: ["Sirius", "The Sun", "Proxima Centauri", "Polaris"],
-        correct: 1,
-        explanation: "The Sun is our closest star."
-      },
-      {
-        category: "MATHEMATICS",
-        question: "What is 12 × 8?",
-        answers: ["86", "92", "96", "108"],
-        correct: 2,
-        explanation: "12 multiplied by 8 equals 96."
-      },
-      {
-        category: "OCEANS",
-        question: "Which is the largest ocean on Earth?",
-        answers: ["Atlantic", "Indian", "Arctic", "Pacific"],
-        correct: 3,
-        explanation: "The Pacific Ocean is the largest ocean on Earth."
-      },
-      {
-        category: "TECHNOLOGY",
-        question: "What does CPU commonly stand for?",
-        answers: [
-          "Central Processing Unit",
-          "Computer Power Utility",
-          "Central Program User",
-          "Core Performance Unit"
-        ],
-        correct: 0,
-        explanation: "CPU stands for Central Processing Unit."
-      }
-    ];
+let currentQuestion = -1;
+let questionAnswered = false;
 
-    const facts = [
-      "A day on Venus is longer than its year. Venus rotates very slowly on its axis.",
-      "Light from the Sun takes about 8 minutes and 20 seconds to reach Earth.",
-      "Octopuses have three hearts and blue blood.",
-      "Earth's atmosphere becomes gradually thinner with increasing altitude.",
-      "Jupiter is the largest planet in our Solar System.",
-      "Some deep-sea animals produce their own light through bioluminescence.",
-      "The Moon is moving slowly away from Earth by a few centimetres each year.",
-      "A teaspoon of neutron-star material would have an enormous mass under Earth's gravity.",
-      "Plants use photosynthesis to convert light energy into chemical energy.",
-      "Sound needs a medium such as air, water, or a solid to travel through."
-    ];
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+  } catch {}
+}
 
-    const demoPlayers = [
-      { name: "NovaExplorer", xp: 450 },
-      { name: "GalaxyMind", xp: 380 },
-      { name: "CosmicLearner", xp: 310 },
-      { name: "StarSeeker", xp: 260 },
-      { name: "PlanetPilot", xp: 190 }
-    ];
+function getLevel() {
+  return Math.floor(state.xp / 100) + 1;
+}
 
-    let currentQuestion = -1;
-    let questionAnswered = false;
-    let missionRewardClaimed = false;
+function getBadges() {
+  let count = 0;
+  if (state.explored.length >= 1) count++;
+  if (state.xp >= 100) count++;
+  if (getLevel() >= 5) count++;
+  if (state.correctAnswers >= 5) count++;
+  return count;
+}
 
-    function getLevel(xp) {
-      return Math.floor(xp / 100) + 1;
-    }
+function updateMissionDate() {
+  const today = new Date().toDateString();
+  if (state.lastMissionDate !== today) {
+    state.lastMissionDate = today;
+    state.missionClaimed = false;
+  }
+}
 
-    function getBadges() {
-      let count = 0;
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g,char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  })[char]);
+}
 
-      if (state.explored.length >= 1) count++;
-      if (state.xp >= 100) count++;
-      if (getLevel(state.xp) >= 5) count++;
-      if (state.correctAnswers >= 5) count++;
+function renderBadges() {
+  const badges = [
+    ["🔭","First Discovery","Explore your first topic.",state.explored.length >= 1],
+    ["🧠","Curious Mind","Earn 100 XP.",state.xp >= 100],
+    ["🌟","Rising Explorer","Reach level 5.",getLevel() >= 5],
+    ["🎯","Quiz Champion","Answer five questions correctly.",state.correctAnswers >= 5]
+  ];
 
-      return count;
-    }
+  document.getElementById("badges").innerHTML = badges.map(b => `
+    <div class="mission" style="opacity:${b[3] ? 1 : .55}">
+      ${b[0]} <strong>${b[1]}</strong> ${b[3] ? "✓" : "🔒"}<br>
+      <small>${b[2]}</small>
+    </div>
+  `).join("");
+}
 
-    function updateMissionDate() {
-      const today = new Date().toDateString();
+function renderLeaderboard() {
+  const players = [
+    ...demoPlayers,
+    {name:state.avatar+" "+state.nickname,xp:state.xp,current:true}
+  ];
 
-      if (state.lastMissionDate !== today) {
-        state.lastMissionDate = today;
-        state.missionClaimed = false;
-      }
-    }
+  players.sort((a,b) => b.xp-a.xp);
 
-    function renderStats() {
-      document.getElementById("exploredCount").textContent = state.explored.length;
-      document.getElementById("xpCount").textContent = state.xp;
-      document.getElementById("levelCount").textContent = getLevel(state.xp);
-      document.getElementById("badgeCount").textContent = getBadges();
+  document.getElementById("leaderboardList").innerHTML = players.map((p,i) => `
+    <div class="leaderboard-row">
+      <span class="rank">#${i+1}</span>
+      <strong>${escapeHTML(p.name)}${p.current ? " (You)" : ""}</strong>
+      <span class="points">${p.xp} XP</span>
+    </div>
+  `).join("");
+}
 
-      const progress = Math.min(state.explored.length, 3);
-      document.getElementById("missionProgress").textContent =
-        `${progress} of 3 topics explored`;
+function renderStats() {
+  document.getElementById("exploredCount").textContent = state.explored.length;
+  document.getElementById("xpCount").textContent = state.xp;
+  document.getElementById("levelCount").textContent = getLevel();
+  document.getElementById("badgeCount").textContent = getBadges();
 
-      document.getElementById("missionBar").style.width =
-        `${(progress / 3) * 100}%`;
+  const progress = Math.min(state.explored.length,3);
 
-      document.getElementById("claimMission").disabled =
-        state.explored.length < 3 || state.missionClaimed;
+  document.getElementById("missionProgress").textContent =
+    `${progress} of 3 topics explored`;
 
-      document.getElementById("claimMission").textContent =
-        state.missionClaimed ? "Mission Completed ✓" : "Claim Mission Reward";
+  document.getElementById("missionBar").style.width =
+    `${progress/3*100}%`;
 
-      document.getElementById("missionReward").textContent =
-        state.missionClaimed
-          ? "You claimed today's reward."
-          : "Reward: 30 XP";
+  document.getElementById("claimMission").disabled =
+    state.explored.length < 3 || state.missionClaimed;
 
-      document.getElementById("nickname").value = state.nickname;
-      document.getElementById("avatar").value = state.avatar;
-      document.getElementById("profileHeading");
-      renderBadges();
-      renderLeaderboard();
-    }
+  document.getElementById("claimMission").textContent =
+    state.missionClaimed ? "Mission Completed ✓" : "Claim Mission Reward";
 
-    function renderBadges() {
-      const badgeItems = [
-        {
-          icon: "🔭",
-          name: "First Discovery",
-          description: "Explore your first topic.",
-          earned: state.explored.length >= 1
-        },
-        {
-          icon: "🧠",
-          name: "Curious Mind",
-          description: "Earn 100 XP.",
-          earned: state.xp >= 100
-        },
-        {
-          icon: "🌟",
-          name: "Rising Explorer",
-          description: "Reach level 5.",
-          earned: getLevel(state.xp) >= 5
-        },
-        {
-          icon: "🎯",
-          name: "Quiz Champion",
-          description: "Answer five questions correctly.",
-          earned: state.correctAnswers >= 5
-        }
-      ];
+  document.getElementById("missionReward").textContent =
+    state.missionClaimed ? "You claimed today's reward." : "Reward: 30 XP";
 
-      document.getElementById("badges").innerHTML = badgeItems.map(badge => `
-        <div class="mission" style="opacity:${badge.earned ? 1 : .55}">
-          ${badge.icon} <strong>${badge.name}</strong>
-          ${badge.earned ? "✓" : "🔒"}<br>
-          <small>${badge.description}</small>
-        </div>
-      `).join("");
-    }
+  document.getElementById("nickname").value = state.nickname;
+  document.getElementById("avatar").value = state.avatar;
 
-    function escapeHTML(value) {
-      return String(value).replace(/[&<>"']/g, char => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-      })[char]);
-    }
+  renderBadges();
+  renderLeaderboard();
+}
 
-    function renderLeaderboard() {
-      const players = [
-        ...demoPlayers,
-        { name: `${state.avatar} ${state.nickname}`, xp: state.xp, current: true }
-      ];
+function awardXP(amount) {
+  state.xp += amount;
+  saveState();
+  renderStats();
+}
 
-      players.sort((a, b) => b.xp - a.xp);
+/* TOPIC EXPLORATION */
 
-      document.getElementById("leaderboardList").innerHTML =
-        players.map((player, index) => `
-          <div class="leaderboard-row">
-            <span class="rank">#${index + 1}</span>
-            <strong>${escapeHTML(player.name)}${player.current ? " (You)" : ""}</strong>
-            <span class="points">${player.xp} XP</span>
-          </div>
-        `).join("");
-    }
+document.querySelectorAll("[data-explore]").forEach(button => {
+  button.addEventListener("click",() => {
+    const topic = button.dataset.explore;
 
-    function awardXP(amount) {
-      state.xp += amount;
-      saveState();
-      renderStats();
-    }
-
-    document.querySelectorAll("[data-explore]").forEach(button => {
-      button.addEventListener("click", () => {
-        const topic = button.dataset.explore;
-
-        if (!state.explored.includes(topic)) {
-          state.explored.push(topic);
-          awardXP(20);
-        }
-
-        document.getElementById("missionMessage").textContent =
-          `You selected ${topic}. You earned 20 XP for a new topic, if it was your first visit.`;
-
-        if (state.explored.length >= 3 && !state.missionClaimed) {
-          document.getElementById("missionMessage").textContent +=
-            " Your daily mission is ready to claim!";
-        }
-
-        saveState();
-        renderStats();
-      });
-    });
-
-    document.getElementById("searchInput").addEventListener("input", event => {
-      const query = event.target.value.toLowerCase().trim();
-      let visibleCount = 0;
-
-      document.querySelectorAll("#topicGrid .card").forEach(card => {
-        const matches = card.dataset.topic.includes(query) ||
-          card.textContent.toLowerCase().includes(query);
-
-        card.classList.toggle("hidden", !matches);
-
-        if (matches) visibleCount++;
-      });
-
-      document.getElementById("searchMessage").textContent =
-        visibleCount === 0 ? "No topics found. Try another search." : "";
-    });
-
-    document.getElementById("claimMission").addEventListener("click", () => {
-      updateMissionDate();
-
-      if (state.explored.length < 3) {
-        document.getElementById("missionMessage").textContent =
-          "Explore three topics before claiming your reward.";
-        return;
-      }
-
-      if (state.missionClaimed) {
-        document.getElementById("missionMessage").textContent =
-          "You have already claimed today's reward.";
-        return;
-      }
-
-      state.missionClaimed = true;
-      awardXP(30);
+    if (!state.explored.includes(topic)) {
+      state.explored.push(topic);
+      awardXP(20);
 
       document.getElementById("missionMessage").textContent =
-        "Mission complete! You earned 30 XP.";
-
-      saveState();
-      renderStats();
-    });
-
-    function showQuestion() {
-      questionAnswered = false;
-
-      let next = Math.floor(Math.random() * quizQuestions.length);
-
-      if (quizQuestions.length > 1 && next === currentQuestion) {
-        next = (next + 1) % quizQuestions.length;
-      }
-
-      currentQuestion = next;
-      const question = quizQuestions[currentQuestion];
-
-      document.getElementById("quizCategory").textContent = question.category;
-      document.getElementById("quizQuestion").textContent = question.question;
-      document.getElementById("quizFeedback").textContent = "";
-
-      const answers = document.getElementById("quizAnswers");
-      answers.replaceChildren();
-
-      question.answers.forEach((answer, index) => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "answer";
-        button.textContent = answer;
-
-        button.addEventListener("click", () => {
-          if (questionAnswered) return;
-
-          questionAnswered = true;
-          state.quizCount++;
-
-          if (index === question.correct) {
-            state.correctAnswers++;
-            state.xp += 15;
-            document.getElementById("quizFeedback").textContent =
-              `Correct! ${question.explanation} +15 XP`;
-          } else {
-            document.getElementById("quizFeedback").textContent =
-              `Not quite. ${question.explanation}`;
-          }
-
-          answers.querySelectorAll("button").forEach((answerButton, answerIndex) => {
-            answerButton.disabled = true;
-
-            if (answerIndex === question.correct) {
-              answerButton.style.borderColor = "#48e5a4";
-            }
-          });
-
-          saveState();
-          renderStats();
-        });
-
-        answers.appendChild(button);
-      });
+        `You discovered ${topic}! You earned 20 XP.`;
+    } else {
+      document.getElementById("missionMessage").textContent =
+        `You have already explored ${topic}.`;
     }
 
-    document.getElementById("nextQuestion").addEventListener("click", showQuestion);
-
-    document.getElementById("profileForm").addEventListener("submit", event => {
-      event.preventDefault();
-
-      const nickname = document.getElementById("nickname").value.trim();
-      const avatar = document.getElementById("avatar").value;
-
-      if (!nickname) {
-        document.getElementById("profileMessage").textContent =
-          "Please choose a nickname.";
-        return;
-      }
-
-      state.nickname = nickname.slice(0, 20);
-      state.avatar = avatar;
-
-      saveState();
-      renderStats();
-
-      document.getElementById("profileMessage").textContent =
-        "Profile saved in this browser.";
-    });
-
-    document.getElementById("newFact").addEventListener("click", () => {
-      showRandomFact();
-    });
-
-    function showRandomFact() {
-      const fact = facts[Math.floor(Math.random() * facts.length)];
-      document.getElementById("factText").textContent = fact;
-    }
-
-    document.getElementById("themeButton").addEventListener("click", () => {
-      state.darkTheme = !state.darkTheme;
-
-      if (!state.darkTheme) {
-        document.documentElement.style.setProperty("--bg", "#eef2ff");
-        document.documentElement.style.setProperty("--card", "#ffffff");
-        document.documentElement.style.setProperty("--text", "#17213b");
-        document.documentElement.style.setProperty("--muted", "#52607a");
-        document.documentElement.style.setProperty("--border", "#d1d9ed");
-      } else {
-        document.documentElement.style.setProperty("--bg", "#080b1c");
-        document.documentElement.style.setProperty("--card", "#121a32");
-        document.documentElement.style.setProperty("--text", "#f5f7ff");
-        document.documentElement.style.setProperty("--muted", "#aab6d5");
-        document.documentElement.style.setProperty("--border", "#293451");
-      }
-
-      saveState();
-    });
-
-    updateMissionDate();
-    renderStats();
-    showQuestion();
-    showRandomFact();
     saveState();
-  </script>
+    renderStats();
+  });
+});
+
+/* SEARCH */
+
+document.getElementById("searchInput").addEventListener("input",event => {
+  const query = event.target.value.toLowerCase().trim();
+  let visible = 0;
+
+  document.querySelectorAll("#topicGrid .card").forEach(card => {
+    const matches =
+      card.dataset.topic.includes(query) ||
+      card.textContent.toLowerCase().includes(query);
+
+    card.classList.toggle("hidden",!matches);
+    if (matches) visible++;
+  });
+
+  document.getElementById("searchMessage").textContent =
+    visible === 0 ? "No topics found. Try another search." : "";
+});
+
+/* DAILY MISSION REWARD */
+
+document.getElementById("claimMission").addEventListener("click",() => {
+  updateMissionDate();
+
+  if (state.explored.length < 3 || state.missionClaimed) return;
+
+  state.missionClaimed = true;
+  awardXP(30);
+
+  document.getElementById("missionMessage").textContent =
+    "Mission complete! You earned 30 XP.";
+
+  saveState();
+  renderStats();
+});
+
+/* DAILY UNIVERSE MISSION */
+
+function startUniverseMission() {
+  const mission = missions[Math.floor(Math.random()*missions.length)];
+
+  document.getElementById("discovery-result").textContent =
+    "🎯 YOUR MISSION: " + mission;
+}
+
+function revealUniverseFact() {
+  const fact = spaceFacts[Math.floor(Math.random()*spaceFacts.length)];
+
+  document.getElementById("discovery-result").textContent =
+    "✨ AMAZING FACT: " + fact;
+}
+
+/* QUIZ */
+
+function showQuestion() {
+  questionAnswered = false;
+
+  let next = Math.floor(Math.random()*quizQuestions.length);
+
+  if (quizQuestions.length > 1 && next === currentQuestion) {
+    next = (next+1)%quizQuestions.length;
+  }
+
+  currentQuestion = next;
+
+  const q = quizQuestions[currentQuestion];
+
+  document.getElementById("quizCategory").textContent = q.category;
+  document.getElementById("quizQuestion").textContent = q.question;
+  document.getElementById("quizFeedback").textContent = "";
+
+  const answers = document.getElementById("quizAnswers");
+  answers.replaceChildren();
+
+  q.answers.forEach((answer,index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "answer";
+    button.textContent = answer;
+
+    button.addEventListener("click",() => {
+      if (questionAnswered) return;
+
+      questionAnswered = true;
+
+      if (index === q.correct) {
+        state.correctAnswers++;
+        state.xp += 15;
+
+        document.getElementById("quizFeedback").textContent =
+          "Correct! "+q.explanation+" +15 XP";
+      } else {
+        document.getElementById("quizFeedback").textContent =
+          "Not quite. "+q.explanation;
+      }
+
+      answers.querySelectorAll("button").forEach((b,i) => {
+        b.disabled = true;
+        if (i === q.correct) b.style.borderColor = "#48e5a4";
+      });
+
+      saveState();
+      renderStats();
+    });
+
+    answers.appendChild(button);
+  });
+}
+
+document.getElementById("nextQuestion").addEventListener("click",showQuestion);
+
+/* PROFILE */
+
+document.getElementById("profileForm").addEventListener("submit",event => {
+  event.preventDefault();
+
+  const nickname = document.getElementById("nickname").value.trim();
+  const avatar = document.getElementById("avatar").value;
+
+  if (!nickname) return;
+
+  state.nickname = nickname.slice(0,20);
+  state.avatar = avatar;
+
+  saveState();
+  renderStats();
+
+  document.getElementById("profileMessage").textContent =
+    "Profile saved in this browser.";
+});
+
+/* AMAZING FACTS */
+
+function showRandomFact() {
+  const fact = facts[Math.floor(Math.random()*facts.length)];
+  document.getElementById("factText").textContent = fact;
+}
+
+document.getElementById("newFact").addEventListener("click",showRandomFact);
+
+/* THEME */
+
+document.getElementById("themeButton").addEventListener("click",() => {
+  state.darkTheme = !state.darkTheme;
+
+  if (!state.darkTheme) {
+    document.documentElement.style.setProperty("--bg","#eef2ff");
+    document.documentElement.style.setProperty("--card","#ffffff");
+    document.documentElement.style.setProperty("--text","#17213b");
+    document.documentElement.style.setProperty("--muted","#52607a");
+    document.documentElement.style.setProperty("--border","#d1d9ed");
+  } else {
+    document.documentElement.style.setProperty("--bg","#080b1c");
+    document.documentElement.style.setProperty("--card","#121a32");
+    document.documentElement.style.setProperty("--text","#f5f7ff");
+    document.documentElement.style.setProperty("--muted","#aab6d5");
+    document.documentElement.style.setProperty("--border","#293451");
+  }
+
+  saveState();
+});
+
+/* START WEBSITE */
+
+updateMissionDate();
+renderStats();
+showQuestion();
+showRandomFact();
+saveState();
+</script>
+
 </body>
 </html>
