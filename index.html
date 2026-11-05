@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#070b1c">
-<meta name="description" content="Universe Unlocked — Explore, discover and learn about everything.">
+<meta name="description" content="Universe Unlocked — Explore science, space, technology, history, nature, mathematics and the world around us.">
 <title>Universe Unlocked | Explore Everything</title>
 
 <style>
@@ -25,9 +25,10 @@
     --shadow:0 15px 45px rgba(0,0,0,.25);
 }
 
-* {box-sizing:border-box;margin:0;padding:0}
-html {scroll-behavior:smooth}
-body {
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+body{
     font-family:Arial,Helvetica,sans-serif;
     background:
         radial-gradient(ellipse at 10% 10%,rgba(52,99,190,.2),transparent 35%),
@@ -37,7 +38,8 @@ body {
     line-height:1.65;
     overflow-x:hidden;
 }
-body.light {
+
+body.light{
     --bg:#edf3ff;
     --bg2:#e2eaff;
     --panel:#fff;
@@ -47,86 +49,126 @@ body.light {
     --border:rgba(20,40,80,.15);
     --shadow:0 12px 35px rgba(40,60,100,.12);
 }
-button,input,textarea,select {font:inherit}
-button {cursor:pointer}
-a {color:inherit;text-decoration:none}
-button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible {
+
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+
+button:focus-visible,a:focus-visible,
+input:focus-visible,textarea:focus-visible{
     outline:3px solid var(--blue);
     outline-offset:3px;
 }
-#starfield {position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.55}
 
-header {
+#starfield{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-1;
+    opacity:.55;
+}
+
+header{
     position:sticky;
     top:0;
     z-index:100;
-    background:rgba(7,11,28,.93);
+    background:rgba(7,11,28,.91);
     backdrop-filter:blur(18px);
     border-bottom:1px solid var(--border);
 }
-body.light header {background:rgba(237,243,255,.94)}
-.header-inner {
+
+body.light header{background:rgba(237,243,255,.92)}
+
+.header-inner{
     width:min(1450px,94%);
     margin:auto;
     min-height:76px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:18px;
+    gap:20px;
 }
-.brand {
+
+.brand{
     display:flex;
     align-items:center;
     gap:12px;
     font-weight:900;
-    font-size:18px;
+    font-size:19px;
     letter-spacing:.5px;
 }
-.brand-logo {
-    width:45px;height:45px;
-    display:grid;place-items:center;
+
+.brand-logo{
+    width:45px;
+    height:45px;
+    display:grid;
+    place-items:center;
     border-radius:14px;
     background:linear-gradient(135deg,var(--blue),var(--purple));
-    color:white;font-size:23px;
+    color:white;
+    font-size:23px;
+    box-shadow:0 5px 25px rgba(80,130,255,.3);
 }
-.brand span {color:var(--blue)}
-nav {display:flex;align-items:center;flex-wrap:wrap;gap:5px}
-nav a {color:var(--muted);font-size:12px;padding:8px;border-radius:8px}
-nav a:hover {background:var(--panel2);color:var(--blue)}
-.header-actions {display:flex;gap:8px}
-.icon-button {
-    width:39px;height:39px;
+
+.brand span{color:var(--blue)}
+
+nav{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+nav a{
+    color:var(--muted);
+    font-size:13px;
+    padding:8px 10px;
+    border-radius:8px;
+}
+
+nav a:hover{background:var(--panel2);color:var(--blue)}
+
+.header-actions{display:flex;gap:8px;align-items:center}
+
+.icon-button{
+    width:39px;
+    height:39px;
     border:1px solid var(--border);
     background:var(--panel);
     color:var(--text);
     border-radius:11px;
 }
-.menu-button {display:none}
 
-.container {width:min(1250px,91%);margin:auto}
-.hero {
-    min-height:570px;
+.menu-button{display:none}
+.container{width:min(1250px,91%);margin:auto}
+
+.hero{
+    min-height:590px;
     display:grid;
     grid-template-columns:1.2fr .8fr;
     align-items:center;
     gap:40px;
-    padding:80px 0 60px;
+    padding:85px 0 65px;
 }
-.eyebrow {
+
+.eyebrow{
     color:var(--blue);
     font-weight:bold;
     text-transform:uppercase;
     letter-spacing:3px;
     font-size:12px;
-    margin-bottom:15px;
+    margin-bottom:17px;
 }
-.hero h1 {
+
+.hero h1{
     font-size:clamp(42px,7vw,76px);
     line-height:1.08;
     letter-spacing:-2px;
-    margin-bottom:22px;
+    margin-bottom:24px;
 }
-.gradient {
+
+.gradient{
     background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));
     background-size:200%;
     -webkit-background-clip:text;
@@ -134,202 +176,388 @@ nav a:hover {background:var(--panel2);color:var(--blue)}
     color:transparent;
     animation:gradientMove 7s linear infinite;
 }
-@keyframes gradientMove {to{background-position:200% center}}
-.hero-description {max-width:650px;color:var(--muted);font-size:17px;margin-bottom:26px}
-.button {
-    border:0;border-radius:10px;padding:12px 18px;
-    color:white;background:linear-gradient(110deg,#328cff,#875cff);
-    font-weight:bold;display:inline-flex;align-items:center;justify-content:center;
-    gap:8px;transition:.2s;
+
+@keyframes gradientMove{to{background-position:200% center}}
+
+.hero-description{
+    max-width:650px;
+    color:var(--muted);
+    font-size:17px;
+    margin-bottom:28px;
 }
-.button:hover {transform:translateY(-2px);filter:brightness(1.12)}
-.button.secondary {color:var(--text);background:var(--panel2);border:1px solid var(--border)}
-.button.success {background:linear-gradient(110deg,#159d76,#43d7a2)}
-.button.danger {background:linear-gradient(110deg,#c74663,#ff7979)}
-.button.small {padding:8px 12px;font-size:12px}
-.hero-visual {min-height:350px;position:relative;display:grid;place-items:center}
-.planet {
-    width:min(280px,70vw);aspect-ratio:1;border-radius:50%;
+
+.button{
+    border:0;
+    border-radius:10px;
+    padding:12px 19px;
+    color:white;
+    background:linear-gradient(110deg,#328cff,#875cff);
+    font-weight:bold;
+    transition:.2s;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+.button:hover{transform:translateY(-2px);filter:brightness(1.12)}
+.button.secondary{color:var(--text);background:var(--panel2);border:1px solid var(--border)}
+.button.success{background:linear-gradient(110deg,#159d76,#43d7a2)}
+.button.danger{background:linear-gradient(110deg,#c74663,#ff7979)}
+.button.small{padding:8px 12px;font-size:12px}
+
+.hero-visual{
+    min-height:370px;
+    position:relative;
+    display:grid;
+    place-items:center;
+}
+
+.planet{
+    width:min(290px,70vw);
+    aspect-ratio:1;
+    border-radius:50%;
     background:
         radial-gradient(circle at 30% 25%,#b7eaff,transparent 12%),
         radial-gradient(circle at 65% 65%,#2469bd,transparent 30%),
         radial-gradient(circle at 35% 70%,#1e9d91,transparent 30%),
         linear-gradient(140deg,#6bd7ff,#314bb2 55%,#121b54);
-    box-shadow:inset -35px -20px 60px rgba(0,0,0,.6),0 0 75px rgba(64,156,255,.35);
+    box-shadow:inset -35px -20px 60px rgba(0,0,0,.6),
+    0 0 75px rgba(64,156,255,.35);
     animation:floatPlanet 7s ease-in-out infinite;
 }
-@keyframes floatPlanet {50%{transform:translateY(-18px) rotate(5deg)}}
-.orbit {
-    position:absolute;width:350px;height:145px;
-    border:2px solid rgba(110,170,255,.5);border-radius:50%;transform:rotate(-25deg);
+
+@keyframes floatPlanet{50%{transform:translateY(-18px) rotate(5deg)}}
+
+.orbit{
+    position:absolute;
+    width:360px;
+    height:150px;
+    border:2px solid rgba(110,170,255,.5);
+    border-radius:50%;
+    transform:rotate(-25deg);
 }
-.orbit:after {
-    content:"";width:16px;height:16px;border-radius:50%;
-    position:absolute;top:12px;left:60px;background:var(--gold);
+
+.orbit:after{
+    content:"";
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    position:absolute;
+    top:12px;
+    left:60px;
+    background:var(--gold);
     box-shadow:0 0 25px var(--gold);
 }
-.hero-label {
-    position:absolute;bottom:5px;right:0;background:var(--panel);
-    border:1px solid var(--border);border-radius:12px;padding:12px 16px;
-    color:var(--muted);font-size:13px;
+
+.hero-label{
+    position:absolute;
+    bottom:10px;
+    right:5px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:12px 16px;
+    box-shadow:var(--shadow);
+    color:var(--muted);
+    font-size:13px;
 }
-.section {padding:60px 0;scroll-margin-top:90px}
-.section-heading {
-    display:flex;justify-content:space-between;align-items:end;
-    gap:20px;margin-bottom:24px;
+
+.section{padding:65px 0;scroll-margin-top:90px}
+
+.section-heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:20px;
+    margin-bottom:25px;
 }
-.section-title {font-size:clamp(25px,4vw,36px);line-height:1.2}
-.section-subtitle {color:var(--muted);margin-top:8px;max-width:750px}
-.grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:17px}
-.card {
+
+.section-title{font-size:clamp(25px,4vw,36px);line-height:1.2}
+.section-subtitle{color:var(--muted);margin-top:8px;max-width:750px}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:17px;
+}
+
+.card{
     background:linear-gradient(145deg,var(--panel),var(--bg2));
-    border:1px solid var(--border);border-radius:17px;padding:21px;
-    box-shadow:var(--shadow);transition:.2s;
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:21px;
+    box-shadow:var(--shadow);
+    transition:transform .2s,border-color .2s;
 }
-.card:hover {transform:translateY(-5px);border-color:var(--blue)}
-.card-icon {font-size:33px;margin-bottom:12px;display:block}
-.card h3 {font-size:18px;margin-bottom:8px}
-.card p {font-size:13px;color:var(--muted)}
-.card-footer {margin-top:17px;display:flex;justify-content:space-between;align-items:center;gap:8px}
-.tag {
-    display:inline-block;padding:4px 9px;border-radius:30px;font-size:11px;
-    color:var(--blue);background:rgba(66,186,255,.1);
+
+.card:hover{transform:translateY(-5px);border-color:var(--blue)}
+.card-icon{font-size:33px;margin-bottom:12px;display:block}
+.card h3{font-size:18px;margin-bottom:8px}
+.card p{font-size:13px;color:var(--muted)}
+.card-footer{margin-top:17px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+
+.tag{
+    display:inline-block;
+    padding:4px 9px;
+    border-radius:30px;
+    font-size:11px;
+    color:var(--blue);
+    background:rgba(66,186,255,.1);
     border:1px solid rgba(66,186,255,.18);
 }
-.stats-grid {display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:30px}
-.stat {
-    padding:20px;border:1px solid var(--border);border-radius:14px;
-    background:var(--panel);text-align:center;
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:35px;
 }
-.stat strong {font-size:28px;display:block;color:var(--blue)}
-.stat span {font-size:12px;color:var(--muted)}
-.input {
-    width:100%;background:var(--bg2);border:1px solid var(--border);
-    color:var(--text);padding:12px 14px;border-radius:10px;
+
+.stat{
+    padding:20px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:var(--panel);
+    text-align:center;
 }
-textarea.input {min-height:120px;resize:vertical}
-.filter-row {display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
-.filter {
-    padding:8px 13px;border-radius:30px;border:1px solid var(--border);
-    color:var(--muted);background:var(--panel);font-size:12px;
+
+.stat strong{font-size:29px;display:block;color:var(--blue)}
+.stat span{font-size:12px;color:var(--muted)}
+
+.input{
+    width:100%;
+    background:var(--bg2);
+    border:1px solid var(--border);
+    color:var(--text);
+    padding:12px 14px;
+    border-radius:10px;
 }
-.filter.active {background:var(--blue);color:#071326;border-color:var(--blue)}
-.feature-banner {
-    padding:34px;border-radius:20px;
+
+textarea.input{min-height:120px;resize:vertical}
+.filter-row{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
+
+.filter{
+    padding:8px 13px;
+    border-radius:30px;
+    border:1px solid var(--border);
+    color:var(--muted);
+    background:var(--panel);
+    font-size:12px;
+}
+
+.filter.active{background:var(--blue);color:#071326;border-color:var(--blue)}
+
+.feature-banner{
+    padding:35px;
+    border-radius:20px;
     background:linear-gradient(115deg,#142e5d,#32245e,#182b52);
     border:1px solid rgba(130,160,255,.25);
-    display:flex;align-items:center;justify-content:space-between;
-    gap:25px;flex-wrap:wrap;box-shadow:var(--shadow);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:25px;
+    flex-wrap:wrap;
+    box-shadow:var(--shadow);
 }
-.feature-banner h2 {font-size:28px;margin-bottom:8px}
-.feature-banner p {color:#c2cce4;max-width:650px}
-.panel {
-    background:var(--panel);border:1px solid var(--border);
-    border-radius:17px;padding:24px;box-shadow:var(--shadow);margin-bottom:18px;
+
+.feature-banner h2{font-size:28px;margin-bottom:8px}
+.feature-banner p{color:#c2cce4;max-width:650px}
+
+.panel{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:24px;
+    box-shadow:var(--shadow);
+    margin-bottom:18px;
 }
-.panel h3 {margin-bottom:12px}
-.two-columns {display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.muted {color:var(--muted);font-size:13px}
-.hidden {display:none!important}
-.form-stack {display:grid;gap:11px}
-.message {font-size:13px;margin-top:10px;color:var(--green);overflow-wrap:anywhere}
-.error {color:var(--red)}
-.warning {color:var(--gold)}
-.leaderboard-row {
-    display:grid;grid-template-columns:48px 1fr auto;gap:12px;
-    align-items:center;padding:13px 10px;border-bottom:1px solid var(--border);
+
+.panel h3{margin-bottom:12px}
+.two-columns{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.muted{color:var(--muted);font-size:13px}
+.hidden{display:none!important}
+.form-stack{display:grid;gap:10px}
+.message{font-size:13px;margin-top:10px;color:var(--green)}
+.error{color:var(--red)}
+.warning{color:var(--gold)}
+
+.leaderboard-row{
+    display:grid;
+    grid-template-columns:55px 1fr auto;
+    gap:12px;
+    align-items:center;
+    padding:14px 10px;
+    border-bottom:1px solid var(--border);
 }
-.leaderboard-row:first-child {background:rgba(255,209,102,.08);border-radius:10px}
-.rank {font-weight:900;font-size:20px;color:var(--gold)}
-.player-name {font-weight:bold;overflow-wrap:anywhere}
-.player-points {color:var(--green);font-weight:bold}
-.leaderboard-note {font-size:12px;color:var(--muted);margin-top:12px}
-.question {font-size:21px;font-weight:bold;margin:14px 0 20px}
-.answer-list {display:grid;gap:10px}
-.answer {
-    padding:13px 15px;text-align:left;background:var(--bg2);
-    border:1px solid var(--border);border-radius:10px;color:var(--text);
+
+.leaderboard-row:first-child{background:rgba(255,209,102,.07);border-radius:10px}
+.rank{font-weight:900;font-size:20px;color:var(--gold)}
+.player-name{font-weight:bold}
+.player-points{color:var(--green);font-weight:bold}
+.leaderboard-note{font-size:12px;color:var(--muted);margin-top:12px}
+
+.question{font-size:21px;font-weight:bold;margin:14px 0 20px}
+.answer-list{display:grid;gap:10px}
+
+.answer{
+    padding:13px 15px;
+    text-align:left;
+    background:var(--bg2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    color:var(--text);
 }
-.answer:hover {border-color:var(--blue)}
-.answer.correct {border-color:var(--green);background:rgba(72,214,160,.12)}
-.answer.wrong {border-color:var(--red);background:rgba(255,115,115,.12)}
-.quiz-progress,.progress-track {
-    height:9px;background:var(--bg2);border-radius:20px;overflow:hidden;margin:14px 0;
+
+.answer:hover{border-color:var(--blue)}
+.answer.correct{border-color:var(--green);background:rgba(72,214,160,.12)}
+.answer.wrong{border-color:var(--red);background:rgba(255,115,115,.12)}
+
+.quiz-progress{
+    height:8px;
+    background:var(--bg2);
+    border-radius:20px;
+    overflow:hidden;
+    margin:15px 0;
 }
-.quiz-progress div,.progress-fill {
-    height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--purple));
+
+.quiz-progress div{
+    height:100%;
+    width:0;
+    background:linear-gradient(90deg,var(--blue),var(--purple));
     transition:width .3s;
 }
-.badges {display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
-.badge {text-align:center;padding:17px 10px;border-radius:13px;background:var(--bg2);border:1px solid var(--border)}
-.badge-icon {font-size:30px;display:block}
-.badge small {color:var(--muted)}
-.badge.locked {opacity:.4;filter:grayscale(1)}
-.fact-box {
+
+.badges{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+    gap:12px;
+}
+
+.badge{
+    text-align:center;
+    padding:17px 10px;
+    border-radius:13px;
+    background:var(--bg2);
+    border:1px solid var(--border);
+}
+
+.badge .badge-icon{font-size:30px;display:block}
+.badge small{color:var(--muted)}
+.badge.locked{opacity:.4;filter:grayscale(1)}
+
+.progress-track{
+    width:100%;
+    height:12px;
+    border-radius:20px;
+    overflow:hidden;
+    background:var(--bg2);
+    margin:12px 0;
+}
+
+.progress-fill{
+    height:100%;
+    background:linear-gradient(90deg,var(--blue),var(--purple));
+    width:0;
+    transition:width .3s;
+}
+
+.article-card{display:flex;gap:15px;align-items:flex-start}
+.article-number{
+    min-width:38px;
+    height:38px;
+    display:grid;
+    place-items:center;
+    border-radius:10px;
+    background:var(--panel2);
+    color:var(--blue);
+    font-weight:bold;
+}
+
+.article-card p{color:var(--muted);font-size:13px}
+
+.fact-box{
     background:linear-gradient(120deg,rgba(66,186,255,.12),rgba(154,117,255,.12));
-    border:1px solid var(--border);border-radius:16px;padding:25px;min-height:130px;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:25px;
+    min-height:130px;
 }
-.fact-box strong {color:var(--gold)}
-.article-card {display:flex;gap:15px;align-items:flex-start}
-.article-number {
-    min-width:38px;height:38px;display:grid;place-items:center;
-    border-radius:10px;background:var(--panel2);color:var(--blue);font-weight:bold;
+
+.fact-box strong{color:var(--gold)}
+.timer-display{font-size:52px;font-weight:900;text-align:center;letter-spacing:3px;margin:15px 0}
+.timer-controls{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.storage-number{font-size:25px;color:var(--blue);font-weight:bold}
+
+table{width:100%;border-collapse:collapse;min-width:400px}
+th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--blue);font-size:12px}
+td{font-size:13px}
+.table-wrap{overflow-x:auto}
+
+footer{
+    padding:50px 5%;
+    border-top:1px solid var(--border);
+    text-align:center;
+    color:var(--muted);
+    margin-top:60px;
 }
-.article-card p {color:var(--muted);font-size:13px}
-.timer-display {font-size:52px;font-weight:900;text-align:center;letter-spacing:3px;margin:15px 0}
-.timer-controls {display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
-.storage-number {font-size:25px;color:var(--blue);font-weight:bold}
-.table-wrap {overflow-x:auto}
-table {width:100%;border-collapse:collapse;min-width:500px}
-th,td {padding:12px;text-align:left;border-bottom:1px solid var(--border)}
-th {color:var(--blue);font-size:12px}
-td {font-size:13px}
-footer {
-    padding:50px 5%;border-top:1px solid var(--border);
-    text-align:center;color:var(--muted);margin-top:60px;
+
+.footer-links{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:18px;
+    margin:18px 0;
+    font-size:13px;
 }
-.footer-links {display:flex;justify-content:center;flex-wrap:wrap;gap:18px;margin:18px 0;font-size:13px}
-.toast {
-    position:fixed;bottom:20px;right:20px;z-index:200;padding:14px 19px;
-    border-radius:12px;background:var(--panel2);border:1px solid var(--blue);
-    box-shadow:var(--shadow);max-width:320px;transform:translateY(130px);
-    opacity:0;transition:.3s;
+
+.toast{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    z-index:200;
+    padding:14px 19px;
+    border-radius:12px;
+    background:var(--panel2);
+    border:1px solid var(--blue);
+    box-shadow:var(--shadow);
+    max-width:320px;
+    transform:translateY(130px);
+    opacity:0;
+    transition:.3s;
 }
-.toast.show {transform:translateY(0);opacity:1}
-.account-badge {display:inline-block;padding:6px 10px;border-radius:20px;background:rgba(72,214,160,.12);color:var(--green);font-size:12px}
-.avatar {
-    width:65px;height:65px;border-radius:50%;display:grid;place-items:center;
-    font-size:28px;background:linear-gradient(135deg,var(--blue),var(--purple));
-    margin-bottom:14px;
-}
-.auth-tabs {display:flex;gap:8px;margin:15px 0}
-.auth-tab {flex:1}
-.password-wrap {position:relative}
-.password-wrap input {padding-right:75px}
-.password-toggle {
-    position:absolute;right:8px;top:50%;transform:translateY(-50%);
-    border:0;background:transparent;color:var(--blue);font-size:12px;
-}
-@media(max-width:950px) {
-    nav {display:none}
-    .menu-button {display:block}
-    nav.open {
-        display:flex;position:absolute;top:76px;left:0;right:0;
-        padding:15px;background:var(--panel);border-bottom:1px solid var(--border);
+
+.toast.show{transform:translateY(0);opacity:1}
+
+@media(max-width:950px){
+    nav{display:none}
+    .menu-button{display:block}
+    nav.open{
+        display:flex;
+        position:absolute;
+        top:76px;
+        left:0;
+        right:0;
+        padding:15px;
+        background:var(--panel);
+        border-bottom:1px solid var(--border);
         justify-content:center;
     }
-    .hero {grid-template-columns:1fr;text-align:center;padding-top:60px}
-    .hero-description {margin-left:auto;margin-right:auto}
-    .hero-visual {min-height:300px}
+    .hero{grid-template-columns:1fr;text-align:center;padding-top:65px}
+    .hero-description{margin-left:auto;margin-right:auto}
+    .hero-visual{min-height:300px}
 }
-@media(max-width:650px) {
-    .stats-grid {grid-template-columns:repeat(2,1fr)}
-    .two-columns {grid-template-columns:1fr}
-    .section {padding:42px 0}
-    .section-heading {align-items:flex-start;flex-direction:column}
-    .feature-banner {padding:23px}
-    .header-inner {width:94%}
-    .brand {font-size:14px}
+
+@media(max-width:650px){
+    .stats-grid{grid-template-columns:repeat(2,1fr)}
+    .two-columns{grid-template-columns:1fr}
+    .section{padding:45px 0}
+    .section-heading{align-items:flex-start;flex-direction:column}
+    .leaderboard-row{grid-template-columns:40px 1fr auto}
+    .feature-banner{padding:24px}
+    .header-inner{width:94%}
+    .brand{font-size:14px}
 }
 </style>
 </head>
@@ -351,8 +579,7 @@ footer {
         <a href="#quiz">Quizzes</a>
         <a href="#leaderboard">Leaderboard</a>
         <a href="#achievements">Achievements</a>
-        <a href="#profile">Account</a>
-        <a href="#notes">Notebook</a>
+        <a href="#profile">Profile</a>
     </nav>
 
     <div class="header-actions">
@@ -369,13 +596,15 @@ footer {
         <div class="eyebrow">A universe of knowledge</div>
         <h1>Discover More.<br><span class="gradient">Know Everything.</span></h1>
         <p class="hero-description">
-            Welcome to Universe Unlocked — a place where curiosity becomes discovery.
-            Explore space, science, technology, history, mathematics, nature,
-            engineering, sports and the world around us.
+            Welcome to Universe Unlocked — a place where curiosity
+            becomes discovery. Explore the mysteries of space,
+            understand science, learn technology, discover history,
+            solve mathematical challenges and unlock new knowledge.
         </p>
         <a class="button" href="#explore">🚀 Start Exploring</a>
         <a class="button secondary" href="#quiz">🧠 Take a Challenge</a>
     </div>
+
     <div class="hero-visual">
         <div class="orbit"></div>
         <div class="planet"></div>
@@ -384,9 +613,9 @@ footer {
 </section>
 
 <section class="stats-grid">
-    <div class="stat"><strong id="topicCount">0</strong><span>Learning Categories</span></div>
-    <div class="stat"><strong id="questionCount">0</strong><span>Quiz Questions</span></div>
-    <div class="stat"><strong id="localPoints">0</strong><span>Your Practice Points</span></div>
+    <div class="stat"><strong id="topicCount">24</strong><span>Learning Categories</span></div>
+    <div class="stat"><strong id="questionCount">20</strong><span>Quiz Questions</span></div>
+    <div class="stat"><strong id="localPoints">0</strong><span>Your Local Points</span></div>
     <div class="stat"><strong id="visitCount">1</strong><span>Your Visits</span></div>
 </section>
 
@@ -399,6 +628,7 @@ footer {
         </div>
         <button class="button secondary" id="newFactButton">New Fact ↻</button>
     </div>
+
     <div class="fact-box">
         <strong id="factCategory">SPACE DISCOVERY</strong>
         <h3 id="dailyFact" style="margin-top:8px">A day on Venus is longer than its year.</h3>
@@ -413,7 +643,7 @@ footer {
         <div>
             <div class="eyebrow">Your learning adventure</div>
             <h2>Become a Universe Explorer</h2>
-            <p>Complete challenges, collect achievements, build your knowledge and compete with learners around the world.</p>
+            <p>Complete challenges, collect achievements, build your knowledge and compete with other learners.</p>
         </div>
         <a href="#leaderboard" class="button">🏆 See the Rankings</a>
     </div>
@@ -424,11 +654,13 @@ footer {
         <div>
             <div class="eyebrow">Explore the world</div>
             <h2 class="section-title">Explore Knowledge</h2>
-            <p class="section-subtitle">Search through our learning categories.</p>
+            <p class="section-subtitle">Twenty-four categories to begin your journey.</p>
         </div>
     </div>
+
     <input class="input" id="topicSearch" type="search"
-           placeholder="🔎 Search space, science, football, history...">
+           placeholder="🔎 Search for space, science, football, history...">
+
     <div class="filter-row" id="topicFilters">
         <button class="filter active" data-filter="all">All</button>
         <button class="filter" data-filter="science">Science</button>
@@ -437,8 +669,9 @@ footer {
         <button class="filter" data-filter="learning">Learning</button>
         <button class="filter" data-filter="sports">Sports</button>
     </div>
+
     <div class="grid" id="topicGrid"></div>
-    <p class="muted hidden" id="noTopics">No categories found.</p>
+    <p class="muted hidden" id="noTopics" style="margin-top:20px">No categories found. Try another search.</p>
 </section>
 
 <section class="section" id="articles">
@@ -446,7 +679,7 @@ footer {
         <div>
             <div class="eyebrow">Knowledge library</div>
             <h2 class="section-title">Featured Learning Guides</h2>
-            <p class="section-subtitle">Explore introductions to fascinating subjects.</p>
+            <p class="section-subtitle">Short introductions to interesting subjects.</p>
         </div>
     </div>
     <div class="grid" id="articleGrid"></div>
@@ -465,26 +698,21 @@ footer {
         <div class="panel">
             <div style="display:flex;justify-content:space-between;gap:10px">
                 <span class="tag" id="quizCategory">SPACE</span>
-                <span class="muted" id="quizCounter">Question 1</span>
+                <span class="muted" id="quizCounter">Question 1 / 20</span>
             </div>
             <div class="quiz-progress"><div id="quizProgress"></div></div>
             <div class="question" id="questionText"></div>
             <div class="answer-list" id="answerList"></div>
-            <p class="message" id="quizFeedback" aria-live="polite"></p>
-            <div style="display:flex;justify-content:space-between;margin-top:20px;gap:10px">
-                <button class="button secondary" id="restartQuiz">↻ Restart</button>
-                <button class="button hidden" id="nextQuestion">Next →</button>
-            </div>
+            <p id="quizFeedback" class="message" aria-live="polite"></p>
+            <button class="button hidden" id="nextQuestion">Next Question →</button>
+            <button class="button secondary" id="restartQuiz">Restart Challenge</button>
         </div>
+
         <div class="panel">
-            <h3>🏅 Your Quiz Performance</h3>
-            <div class="stat" style="margin:15px 0">
-                <strong id="quizScore">0</strong><span>Correct answers this round</span>
-            </div>
-            <div class="stat" style="margin:15px 0">
-                <strong id="quizAccuracy">0%</strong><span>Accuracy</span>
-            </div>
-            <p class="muted">Sign in to save your points to your online account.</p>
+            <h3>Your Challenge Statistics</h3>
+            <div class="stat"><strong id="quizScore">0</strong><span>Correct in this challenge</span></div>
+            <div class="stat" style="margin-top:12px"><strong id="quizAccuracy">0%</strong><span>Overall accuracy</span></div>
+            <p class="muted" style="margin-top:15px">Correct answers earn practice points.</p>
         </div>
     </div>
 </section>
@@ -492,9 +720,9 @@ footer {
 <section class="section" id="missions">
     <div class="section-heading">
         <div>
-            <div class="eyebrow">Small steps, big discoveries</div>
-            <h2 class="section-title">🎯 Explorer Missions</h2>
-            <p class="section-subtitle">Complete activities and earn points.</p>
+            <div class="eyebrow">Your adventure</div>
+            <h2 class="section-title">🚀 Explorer Missions</h2>
+            <p class="section-subtitle">Complete missions and earn practice points.</p>
         </div>
     </div>
     <div class="grid" id="missionGrid"></div>
@@ -503,9 +731,9 @@ footer {
 <section class="section" id="achievements">
     <div class="section-heading">
         <div>
-            <div class="eyebrow">Celebrate learning</div>
-            <h2 class="section-title">🏆 Achievements & Badges</h2>
-            <p class="section-subtitle">Unlock badges as you explore and learn.</p>
+            <div class="eyebrow">Celebrate your progress</div>
+            <h2 class="section-title">🏅 Achievements</h2>
+            <p class="section-subtitle">Unlock badges as you learn and explore.</p>
         </div>
     </div>
     <div class="badges" id="badgeGrid"></div>
@@ -514,111 +742,59 @@ footer {
 <section class="section" id="leaderboard">
     <div class="section-heading">
         <div>
-            <div class="eyebrow">Global community</div>
-            <h2 class="section-title">🌍 Global Leaderboard</h2>
-            <p class="section-subtitle">Compete with registered Universe Unlocked explorers.</p>
+            <div class="eyebrow">The explorer community</div>
+            <h2 class="section-title">🏆 Global Leaderboard</h2>
+            <p class="section-subtitle">Discover the highest-scoring Universe Explorers.</p>
         </div>
-        <button class="button secondary" id="refreshLeaderboard">↻ Refresh</button>
     </div>
-    <div class="two-columns">
-        <div class="panel">
-            <h3>🏆 Top 50 Explorers</h3>
-            <div id="leaderboardList"><p class="muted">Connect Firebase to load real accounts.</p></div>
-            <p class="leaderboard-note" id="leaderboardStatus">Waiting for online database connection.</p>
+
+    <div class="panel">
+        <div id="leaderboardList">
+            <p class="muted">Connect Firebase to load the online leaderboard.</p>
         </div>
-        <div class="panel">
-            <h3>⭐ Your Position</h3>
-            <div class="stat"><strong id="myRank">—</strong><span>Your online ranking</span></div>
-            <div class="stat" style="margin-top:14px">
-                <strong id="myOnlinePoints">0</strong><span>Your online points</span>
-            </div>
-            <p class="muted" style="margin-top:15px">Your public nickname is displayed, not your email address.</p>
-        </div>
+        <p class="leaderboard-note">
+            The online leaderboard requires Firebase Authentication and Firestore.
+        </p>
     </div>
 </section>
 
-<!-- ACCOUNT AREA -->
 <section class="section" id="profile">
     <div class="section-heading">
         <div>
             <div class="eyebrow">Your personal space</div>
-            <h2 class="section-title">👤 Explorer Account</h2>
-            <p class="section-subtitle">Create an account once, then log in again whenever you return.</p>
+            <h2 class="section-title">👤 Explorer Profile</h2>
+            <p class="section-subtitle">Create your account and keep track of your learning.</p>
         </div>
     </div>
 
     <div class="two-columns">
         <div class="panel" id="authPanel">
-            <h3>Welcome to Universe Unlocked</h3>
-            <p class="muted">Create a new account or log in to an existing account.</p>
+            <h3 id="authTitle">Join Universe Unlocked</h3>
+            <p class="muted" style="margin-bottom:15px">Create an account or sign in.</p>
 
-            <div class="auth-tabs">
-                <button class="button auth-tab" id="showSignup">Create Account</button>
-                <button class="button secondary auth-tab" id="showLogin">Log In</button>
+            <div class="form-stack">
+                <input class="input" id="nickname" maxlength="20" placeholder="Public nickname">
+                <input class="input" id="email" type="email" autocomplete="email" placeholder="Email address">
+                <input class="input" id="password" type="password" autocomplete="new-password" placeholder="Password">
+
+                <button class="button" id="registerButton">Create Account</button>
+                <button class="button secondary" id="loginButton">Log In</button>
+
+                <button class="button secondary" id="forgotPasswordButton">Forgot Password?</button>
+                <p id="authMessage" class="message" aria-live="polite"></p>
             </div>
-
-            <form class="form-stack" id="signupForm">
-                <label class="muted" for="signupNickname">Public nickname</label>
-                <input class="input" id="signupNickname" maxlength="20"
-                       autocomplete="nickname" placeholder="Choose a nickname" required>
-
-                <label class="muted" for="signupEmail">Email address</label>
-                <input class="input" id="signupEmail" type="email"
-                       autocomplete="email" placeholder="you@example.com" required>
-
-                <label class="muted" for="signupPassword">Password</label>
-                <div class="password-wrap">
-                    <input class="input" id="signupPassword" type="password"
-                           autocomplete="new-password" minlength="8"
-                           placeholder="At least 8 characters" required>
-                    <button class="password-toggle" type="button" data-toggle="signupPassword">Show</button>
-                </div>
-
-                <label class="muted" for="signupConfirm">Confirm password</label>
-                <input class="input" id="signupConfirm" type="password"
-                       autocomplete="new-password" placeholder="Enter password again" required>
-
-                <button class="button" id="registerButton" type="submit">Create My Account</button>
-            </form>
-
-            <form class="form-stack hidden" id="loginForm">
-                <label class="muted" for="loginEmail">Email address</label>
-                <input class="input" id="loginEmail" type="email"
-                       autocomplete="email" placeholder="Your account email" required>
-
-                <label class="muted" for="loginPassword">Password</label>
-                <div class="password-wrap">
-                    <input class="input" id="loginPassword" type="password"
-                           autocomplete="current-password" placeholder="Your password" required>
-                    <button class="password-toggle" type="button" data-toggle="loginPassword">Show</button>
-                </div>
-
-                <button class="button" id="loginButton" type="submit">Log In</button>
-                <button class="button secondary" id="forgotPassword" type="button">Forgot Password?</button>
-            </form>
-
-            <p id="authMessage" class="message" aria-live="polite"></p>
-            <p class="muted" style="margin-top:14px">
-                Use an email address you are allowed to use. Never share your password with anyone.
-            </p>
         </div>
 
         <div class="panel hidden" id="userPanel">
-            <div class="avatar" id="profileAvatar">🌟</div>
-            <span class="account-badge">✓ Account connected</span>
-            <h3 style="margin-top:14px">Welcome, <span id="userName">Explorer</span>!</h3>
-            <p class="muted">Your Universe Unlocked account is active.</p>
-
+            <h3>Welcome, <span id="userName">Explorer</span>!</h3>
+            <p class="muted">Your online learning profile</p>
             <div class="stat" style="margin:18px 0">
-                <strong id="userPoints">0</strong><span>Online Points</span>
+                <strong id="userPoints">0</strong>
+                <span>Online Points</span>
             </div>
-
-            <p class="muted" id="accountEmail"></p>
-            <p class="message" id="accountMessage"></p>
-
-            <button class="button danger" id="logoutButton" style="margin-top:18px">
-                Log Out
-            </button>
+            <p class="tag">Universe Explorer</p>
+            <p id="accountMessage" class="message"></p>
+            <button class="button danger" id="logoutButton" style="margin-top:18px">Log Out</button>
         </div>
 
         <div class="panel">
@@ -635,9 +811,7 @@ footer {
                 <div class="article-number">03</div>
                 <div><strong>Correct Answers</strong><p id="correctAnswers">0 answers</p></div>
             </div>
-            <button class="button secondary" id="resetLocalProgress" style="margin-top:20px">
-                Reset Local Progress
-            </button>
+            <button class="button secondary" id="resetLocalProgress" style="margin-top:20px">Reset Local Progress</button>
         </div>
     </div>
 </section>
@@ -647,13 +821,14 @@ footer {
         <div>
             <div class="eyebrow">Your notebook</div>
             <h2 class="section-title">📝 Discovery Notebook</h2>
-            <p class="section-subtitle">Record your thoughts, ideas and discoveries.</p>
+            <p class="section-subtitle">Record your thoughts, ideas and interesting discoveries.</p>
         </div>
     </div>
+
     <div class="panel">
         <input class="input" id="noteTitle" placeholder="Note title">
-        <textarea class="input" id="noteContent" placeholder="Write your discovery here..."></textarea>
-        <button class="button" id="saveNote">Save Note</button>
+        <textarea class="input" id="noteContent" placeholder="Write your discovery here..." style="margin-top:10px"></textarea>
+        <button class="button" id="saveNote" style="margin-top:10px">Save Note</button>
         <p class="message" id="noteMessage"></p>
         <h3 style="margin-top:25px">Your Saved Notes</h3>
         <div id="notesList" class="grid"></div>
@@ -665,14 +840,13 @@ footer {
         <div>
             <div class="eyebrow">Personal resources</div>
             <h2 class="section-title">📁 My Learning Library</h2>
-            <p class="section-subtitle">Save files in this browser's local database.</p>
+            <p class="section-subtitle">Select files to keep in this browser's local database.</p>
         </div>
     </div>
+
     <div class="panel">
         <input type="file" id="fileInput" multiple class="input">
-        <p class="muted" style="margin-top:10px">
-            These files are saved on this device and browser. They are not automatically uploaded to your online account.
-        </p>
+        <p class="muted">Files are saved locally on this device, not shared with other users. Browser storage limits apply.</p>
         <div id="fileList" style="margin-top:18px"></div>
     </div>
 </section>
@@ -682,17 +856,18 @@ footer {
         <div>
             <div class="eyebrow">Storage information</div>
             <h2 class="section-title">💾 Storage Monitor</h2>
-            <p class="section-subtitle">Monitor browser storage usage.</p>
+            <p class="section-subtitle">Monitor browser storage and your 8 GB target.</p>
         </div>
     </div>
+
     <div class="panel">
         <h3>8 GB Storage Goal</h3>
         <div class="progress-track"><div class="progress-fill" id="storageBar"></div></div>
         <div class="storage-number" id="storageUsed">Checking storage...</div>
         <p class="muted" id="storageQuota"></p>
         <p class="muted" style="margin-top:12px">
-            The 8 GB figure is a target, not a guaranteed allocation. Browser storage depends on the device and browser.
-            An HTML file does not itself contain 8 GB of storage.
+            The 8 GB figure is a target, not a guaranteed allocation.
+            The browser decides the actual available quota.
         </p>
         <button class="button secondary" id="refreshStorage" style="margin-top:17px">Refresh Storage</button>
     </div>
@@ -703,9 +878,10 @@ footer {
         <div>
             <div class="eyebrow">Focus and learning</div>
             <h2 class="section-title">⏱️ Focus Timer</h2>
-            <p class="section-subtitle">Set aside time for reading and learning.</p>
+            <p class="section-subtitle">Set aside some time for reading and learning.</p>
         </div>
     </div>
+
     <div class="panel">
         <div class="timer-display" id="timerDisplay">25:00</div>
         <div class="timer-controls">
@@ -722,9 +898,10 @@ footer {
         <div>
             <div class="eyebrow">Keep exploring</div>
             <h2 class="section-title">🌐 Learning Resources</h2>
-            <p class="section-subtitle">Visit educational websites and scientific organizations.</p>
+            <p class="section-subtitle">Explore educational websites and scientific organizations.</p>
         </div>
     </div>
+
     <div class="grid">
         <a class="card" href="https://science.nasa.gov/" target="_blank" rel="noopener noreferrer">
             <span class="card-icon">🚀</span><h3>NASA Science</h3>
@@ -750,14 +927,6 @@ footer {
             <span class="card-icon">➗</span><h3>Math Is Fun</h3>
             <p>Explore mathematical ideas and practice problems.</p><span class="tag">Mathematics</span>
         </a>
-        <a class="card" href="https://www.nasa.gov/" target="_blank" rel="noopener noreferrer">
-            <span class="card-icon">🛰️</span><h3>NASA</h3>
-            <p>Discover space exploration and NASA missions.</p><span class="tag">Exploration</span>
-        </a>
-        <a class="card" href="https://www.noaa.gov/" target="_blank" rel="noopener noreferrer">
-            <span class="card-icon">🌦️</span><h3>NOAA</h3>
-            <p>Explore weather, oceans and climate science.</p><span class="tag">Earth</span>
-        </a>
     </div>
 </section>
 
@@ -767,7 +936,7 @@ footer {
         <h2 class="section-title">What is Universe Unlocked?</h2>
         <p class="muted" style="margin-top:15px">
             Universe Unlocked is an educational discovery platform designed to make learning exciting.
-            Its mission is to encourage curiosity, scientific thinking, creativity and exploration.
+            Its mission is to encourage curiosity, scientific thinking, creativity and the exploration of knowledge.
         </p>
         <div class="grid" style="margin-top:22px">
             <div><h3>🔭 Explore</h3><p class="muted">Discover new ideas and subjects.</p></div>
@@ -787,10 +956,8 @@ footer {
     </div>
     <p style="margin-top:14px">Explore. Discover. Learn. Unlock your curiosity.</p>
     <div class="footer-links">
-        <a href="#home">Home</a>
-        <a href="#explore">Explore</a>
-        <a href="#quiz">Challenges</a>
-        <a href="#leaderboard">Leaderboard</a>
+        <a href="#home">Home</a><a href="#explore">Explore</a>
+        <a href="#quiz">Challenges</a><a href="#leaderboard">Leaderboard</a>
         <a href="#about">About</a>
     </div>
     <p>© 2026 Universe Unlocked. All rights reserved.</p>
@@ -799,7 +966,7 @@ footer {
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script type="module">
-import { initializeApp }
+import {initializeApp}
 from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
 
 import {
@@ -808,9 +975,9 @@ import {
     signInWithEmailAndPassword,
     signOut,
     onAuthStateChanged,
-    sendPasswordResetEmail,
-    updateProfile
-} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+    sendPasswordResetEmail
+}
+from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
 
 import {
     getFirestore,
@@ -823,35 +990,25 @@ import {
     orderBy,
     limit,
     onSnapshot,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+    serverTimestamp,
+    increment
+}
+from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 
-/*
-==========================================================
-FIREBASE SETUP
-==========================================================
 
-1. Create a Firebase project.
-2. Add a Web App to the project.
-3. Copy its Firebase configuration into the object below.
-4. In Firebase Authentication, enable Email/Password.
-5. Create a Firestore database.
-6. Publish the Firestore rules provided after this HTML code.
-
-Never put private service-account keys in this HTML file.
-The Firebase web configuration is not a private server key.
-*/
+// =====================================================
+// FIREBASE CONFIGURATION
+// Replace these values with your Firebase Web App config.
+// =====================================================
 
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
     projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    storageBucket: "YOUR_PROJECT.firebasestorage.app",
+    messagingSenderId: "YOUR_SENDER_ID",
     appId: "YOUR_APP_ID"
 };
-
-const $ = id => document.getElementById(id);
 
 let app = null;
 let auth = null;
@@ -860,934 +1017,1180 @@ let currentUser = null;
 let currentProfile = null;
 let unsubscribeLeaderboard = null;
 
-const firebaseConfigured =
+const firebaseReady =
     firebaseConfig.apiKey !== "YOUR_API_KEY" &&
     firebaseConfig.projectId !== "YOUR_PROJECT_ID";
 
-function showToast(message) {
+if(firebaseReady){
+    try{
+        app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+        db = getFirestore(app);
+        activateFirebase();
+    }catch(error){
+        console.error(error);
+        showToast("Firebase connection failed.");
+    }
+}
+
+
+// =====================================================
+// GENERAL HELPERS
+// =====================================================
+
+const $ = id => document.getElementById(id);
+
+function showToast(message){
     const toast = $("toast");
     toast.textContent = message;
     toast.classList.add("show");
-    clearTimeout(showToast.timer);
-    showToast.timer = setTimeout(() => toast.classList.remove("show"),3500);
+    clearTimeout(showToast.timeout);
+    showToast.timeout = setTimeout(()=>toast.classList.remove("show"),3000);
 }
 
-function showAuthMessage(message,isError=false) {
-    $("authMessage").textContent = message;
-    $("authMessage").classList.toggle("error",isError);
-}
-
-function escapeHTML(value) {
-    return String(value).replace(/[&<>"']/g,character => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+function escapeHTML(value){
+    return String(value).replace(/[&<>"']/g,character=>({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
     })[character]);
 }
 
-function readLocal(key,fallback) {
-    try {
+function readLocal(key,fallback){
+    try{
         const value = localStorage.getItem(key);
         return value === null ? fallback : JSON.parse(value);
-    } catch {
+    }catch{
         return fallback;
     }
 }
 
-function writeLocal(key,value) {
-    try {
+function writeLocal(key,value){
+    try{
         localStorage.setItem(key,JSON.stringify(value));
-    } catch {
+    }catch{
         showToast("Browser storage is full or unavailable.");
     }
 }
 
-/* Star background */
+
+// =====================================================
+// STARFIELD BACKGROUND
+// =====================================================
+
 const canvas = $("starfield");
-const ctx = canvas.getContext("2d");
+const context = canvas.getContext("2d");
 let stars = [];
 
-function resizeStars() {
+function resizeStars(){
     canvas.width = window.innerWidth * devicePixelRatio;
     canvas.height = window.innerHeight * devicePixelRatio;
-    ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
-    stars = Array.from({length:130},() => ({
-        x:Math.random()*innerWidth,
-        y:Math.random()*innerHeight,
+
+    context.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+
+    stars = Array.from({length:130},()=>({
+        x:Math.random()*window.innerWidth,
+        y:Math.random()*window.innerHeight,
         radius:Math.random()*1.5,
         speed:Math.random()*.35,
         alpha:Math.random()
     }));
 }
 
-function drawStars() {
-    ctx.clearRect(0,0,innerWidth,innerHeight);
-    stars.forEach(star => {
+function drawStars(){
+    context.clearRect(0,0,window.innerWidth,window.innerHeight);
+
+    stars.forEach(star=>{
         star.y += star.speed;
-        if(star.y > innerHeight) {
-            star.y=0;
-            star.x=Math.random()*innerWidth;
+
+        if(star.y > window.innerHeight){
+            star.y = 0;
+            star.x = Math.random()*window.innerWidth;
         }
-        ctx.beginPath();
-        ctx.arc(star.x,star.y,star.radius,0,Math.PI*2);
-        ctx.fillStyle=`rgba(190,220,255,${star.alpha})`;
-        ctx.fill();
+
+        context.beginPath();
+        context.arc(star.x,star.y,star.radius,0,Math.PI*2);
+        context.fillStyle = `rgba(190,220,255,${star.alpha})`;
+        context.fill();
     });
+
     requestAnimationFrame(drawStars);
 }
+
 resizeStars();
 drawStars();
 window.addEventListener("resize",resizeStars);
 
-/* Navigation and theme */
-$("menuButton").addEventListener("click",() => $("navigation").classList.toggle("open"));
-document.querySelectorAll("nav a").forEach(link => {
-    link.addEventListener("click",() => $("navigation").classList.remove("open"));
+
+// =====================================================
+// NAVIGATION AND THEME
+// =====================================================
+
+$("menuButton").addEventListener("click",()=>{
+    $("navigation").classList.toggle("open");
 });
 
-$("themeButton").addEventListener("click",() => {
+document.querySelectorAll("nav a").forEach(link=>{
+    link.addEventListener("click",()=>$("navigation").classList.remove("open"));
+});
+
+$("themeButton").addEventListener("click",()=>{
     document.body.classList.toggle("light");
-    localStorage.setItem("uu_theme",document.body.classList.contains("light")?"light":"dark");
-});
-if(localStorage.getItem("uu_theme")==="light") document.body.classList.add("light");
-
-/* Account form switching */
-function showSignupForm() {
-    $("signupForm").classList.remove("hidden");
-    $("loginForm").classList.add("hidden");
-    $("showSignup").classList.remove("secondary");
-    $("showLogin").classList.add("secondary");
-    showAuthMessage("");
-}
-function showLoginForm() {
-    $("signupForm").classList.add("hidden");
-    $("loginForm").classList.remove("hidden");
-    $("showLogin").classList.remove("secondary");
-    $("showSignup").classList.add("secondary");
-    showAuthMessage("");
-}
-$("showSignup").addEventListener("click",showSignupForm);
-$("showLogin").addEventListener("click",showLoginForm);
-
-document.querySelectorAll("[data-toggle]").forEach(button => {
-    button.addEventListener("click",() => {
-        const input = $(button.dataset.toggle);
-        input.type = input.type==="password" ? "text" : "password";
-        button.textContent = input.type==="password" ? "Show" : "Hide";
-    });
+    localStorage.setItem(
+        "uu_theme",
+        document.body.classList.contains("light") ? "light" : "dark"
+    );
 });
 
-/* Topics */
+if(localStorage.getItem("uu_theme")==="light"){
+    document.body.classList.add("light");
+}
+
+
+// =====================================================
+// TOPIC DATABASE
+// =====================================================
+
 const topics = [
-["🌌","Space & Astronomy","science","Explore planets, galaxies, stars, black holes and space missions."],
-["🔬","Physics","science","Discover motion, energy, forces, electricity and matter."],
-["🧪","Chemistry","science","Explore elements, atoms, molecules and reactions."],
-["🧬","Biology","science","Learn about cells, living organisms, genetics and ecosystems."],
-["🌍","Planet Earth","world","Explore Earth's structure, continents, oceans and geography."],
-["🌦️","Weather & Climate","science","Discover clouds, storms, climate and atmospheric science."],
-["🌊","Ocean Exploration","world","Explore marine life and deep-sea environments."],
-["🦁","Animals","world","Discover animal behavior, habitats and biodiversity."],
-["🌱","Plants","world","Learn about plant life, forests, seeds and photosynthesis."],
-["💻","Computer Science","technology","Explore programming, algorithms and computer systems."],
-["🤖","Artificial Intelligence","technology","Understand AI and machine learning."],
-["⚙️","Robotics","technology","Discover robots, sensors, automation and engineering."],
-["🚀","Space Engineering","technology","Explore spacecraft, rockets and space technology."],
-["🏗️","Civil Engineering","technology","Learn about buildings, bridges and infrastructure."],
-["➗","Mathematics","learning","Practice numbers, geometry, algebra and problem-solving."],
-["📐","Geometry","learning","Explore shapes, angles, measurements and patterns."],
-["🏛️","Ancient History","world","Discover ancient civilizations and historical events."],
-["🗺️","World Geography","world","Learn about countries, mountains, rivers and cultures."],
-["📚","Literature","learning","Explore books, stories, authors and language."],
-["🕌","Islamic Knowledge","learning","Explore Islamic history, values and knowledge."],
-["⚽","Football","sports","Discover football history, tactics, competitions and rules."],
-["🏊","Swimming","sports","Learn about swimming techniques and water safety."],
-["🧠","Human Body","science","Explore organs, senses, muscles and the nervous system."],
-["🎨","Art & Creativity","learning","Explore design, drawing, creativity and visual arts."],
-["🧭","Exploration","world","Learn about explorers and discoveries."],
-["🌋","Volcanoes","science","Understand volcanoes and Earth's changing surface."],
-["🌳","Environment","world","Discover ecosystems, conservation and biodiversity."],
-["🔭","Optics","science","Explore light, lenses, mirrors and vision."],
-["🧩","Logic","learning","Practice reasoning, patterns and problem solving."]
+    ["🌌","Space & Astronomy","science","Explore planets, galaxies, stars, black holes and space missions."],
+    ["🔬","Physics","science","Understand energy, motion, forces, matter and the laws of nature."],
+    ["🧪","Chemistry","science","Discover atoms, molecules, reactions and elements."],
+    ["🧬","Biology","science","Learn about living organisms, cells, DNA and ecosystems."],
+    ["🌍","Earth Science","science","Explore our planet, climate, rocks and natural processes."],
+    ["🦕","Dinosaurs","science","Discover prehistoric life and ancient animals."],
+    ["🌊","Ocean Science","science","Explore oceans, marine life and underwater environments."],
+    ["🌱","Environment","science","Understand nature, conservation and sustainability."],
+    ["🤖","Artificial Intelligence","technology","Discover how artificial intelligence works."],
+    ["💻","Computers","technology","Learn about hardware, software and computing."],
+    ["📱","Mobile Technology","technology","Explore smartphones, apps and mobile systems."],
+    ["🔐","Cybersecurity","technology","Learn how to protect information and digital accounts."],
+    ["🚀","Space Technology","technology","Discover rockets, satellites and space exploration."],
+    ["🌐","Internet","technology","Understand websites, networks and online services."],
+    ["🏛️","History","world","Explore ancient civilizations and important historical events."],
+    ["🗺️","Geography","world","Discover countries, continents, maps and landscapes."],
+    ["🐘","Animals","world","Learn about wildlife and the animal kingdom."],
+    ["🏙️","World Cultures","world","Explore traditions, languages and communities."],
+    ["⚽","Football","sports","Explore football history, rules, teams and competitions."],
+    ["🏊","Swimming","sports","Learn about swimming styles, techniques and competitions."],
+    ["➗","Mathematics","learning","Practice numbers, geometry, algebra and problem solving."],
+    ["📖","English","learning","Improve vocabulary, grammar, reading and writing."],
+    ["🧠","General Knowledge","learning","Discover facts from many different subjects."],
+    ["🕌","Islamic Knowledge","learning","Explore Islamic history, values and learning."]
 ];
 
-$("topicCount").textContent=topics.length;
-let activeFilter="all";
+$("topicCount").textContent = topics.length;
 
-function renderTopics() {
-    const search=$("topicSearch").value.toLowerCase();
-    const grid=$("topicGrid");
-    grid.innerHTML="";
-    const filtered=topics.filter(topic =>
-        topic.join(" ").toLowerCase().includes(search) &&
-        (activeFilter==="all" || topic[2]===activeFilter)
-    );
-    $("noTopics").classList.toggle("hidden",filtered.length>0);
-    filtered.forEach(topic => {
-        const card=document.createElement("article");
-        card.className="card";
-        card.innerHTML=`
+let activeFilter = "all";
+
+function renderTopics(){
+    const search = $("topicSearch").value.toLowerCase().trim();
+    const filtered = topics.filter(topic=>{
+        const matchesFilter = activeFilter==="all" || topic[2]===activeFilter;
+        const matchesSearch = topic.join(" ").toLowerCase().includes(search);
+        return matchesFilter && matchesSearch;
+    });
+
+    $("topicGrid").innerHTML = "";
+
+    filtered.forEach(topic=>{
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
             <span class="card-icon">${topic[0]}</span>
             <h3>${escapeHTML(topic[1])}</h3>
             <p>${escapeHTML(topic[3])}</p>
             <div class="card-footer">
                 <span class="tag">${escapeHTML(topic[2])}</span>
-                <button class="button small secondary">Explore →</button>
-            </div>`;
-        card.querySelector("button").addEventListener("click",() => {
-            showToast("Keep exploring "+topic[1]+"!");
-            $("resources").scrollIntoView({behavior:"smooth"});
+                <button class="button small secondary">Explore</button>
+            </div>
+        `;
+
+        card.querySelector("button").addEventListener("click",()=>{
+            showToast("You selected "+topic[1]+". More lessons can be added here.");
+            if(topic[1].includes("Space")){
+                completeMission("space");
+            }else{
+                completeMission("world");
+            }
         });
-        grid.appendChild(card);
+
+        $("topicGrid").appendChild(card);
     });
+
+    $("noTopics").classList.toggle("hidden",filtered.length!==0);
 }
+
 $("topicSearch").addEventListener("input",renderTopics);
-document.querySelectorAll("#topicFilters button").forEach(button => {
-    button.addEventListener("click",() => {
+
+document.querySelectorAll("#topicFilters button").forEach(button=>{
+    button.addEventListener("click",()=>{
         document.querySelectorAll("#topicFilters button").forEach(b=>b.classList.remove("active"));
         button.classList.add("active");
-        activeFilter=button.dataset.filter;
+        activeFilter = button.dataset.filter;
         renderTopics();
     });
 });
+
 renderTopics();
 
-/* Learning guides */
-const guides=[
-["🌌","How Do Stars Form?","Clouds of gas and dust can collapse under gravity and become stars."],
-["🪐","Why Do Planets Orbit the Sun?","Gravity and forward motion combine to create planetary orbits."],
-["⚡","What Is Electricity?","Electricity involves the movement or presence of electric charge."],
-["🧬","How Do Cells Work?","Cells are the basic structural and functional units of life."],
-["🤖","How Does Artificial Intelligence Work?","AI systems use data and mathematical models to perform tasks."],
-["🌊","What Is the Deep Ocean Like?","The deep ocean contains unusual environments and fascinating life."],
-["📐","Why Is Mathematics Important?","Mathematics helps us describe patterns and solve problems."],
-["🏛️","How Did Ancient Civilizations Develop?","People built cities, created writing systems and developed technologies."],
-["🌋","How Do Volcanoes Work?","Volcanoes form where molten rock and gases reach Earth's surface."],
-["🧠","How Does Memory Work?","The brain processes, stores and retrieves information."],
-["🌍","Why Does Earth Have Seasons?","Earth's tilted axis changes the angle and duration of sunlight."],
-["🛰️","How Do Satellites Stay in Orbit?","Satellites move forward while gravity continually bends their paths."]
-];
-guides.forEach((guide,index)=>{
-    const card=document.createElement("article");
-    card.className="card";
-    card.innerHTML=`<span class="card-icon">${guide[0]}</span>
-    <h3>${escapeHTML(guide[1])}</h3><p>${escapeHTML(guide[2])}</p>
-    <div class="card-footer"><span class="tag">Guide ${index+1}</span></div>`;
-    $("articleGrid").appendChild(card);
-});
 
-/* Daily facts */
-const facts=[
-["SPACE","A day on Venus is longer than its year.","Venus rotates very slowly compared with its orbit around the Sun."],
-["SPACE","Jupiter has a giant storm called the Great Red Spot.","This enormous storm has been observed for centuries."],
-["SCIENCE","Water can exist naturally as a solid, liquid and gas.","Temperature and pressure determine its state."],
-["OCEAN","The Mariana Trench is the deepest known ocean region.","It lies in the western Pacific Ocean."],
-["ANIMALS","Octopuses have three hearts.","Their circulatory system is unusual among animals."],
-["MATH","A googol is 10 followed by 100 zeroes.","It is a very large number."],
-["EARTH","Earth is not a perfect sphere.","Its rotation makes it slightly wider around the equator."],
-["TECHNOLOGY","Early electronic computers were enormous machines.","Some early computers filled large rooms."],
-["BIOLOGY","Some plants respond to touch.","The sensitive plant can fold its leaves when disturbed."],
-["ASTRONOMY","The Sun is a star.","It is the closest star to Earth."]
+// =====================================================
+// LEARNING GUIDES
+// =====================================================
+
+const articles = [
+    ["01","How Stars Are Born","Stars form inside enormous clouds of gas and dust. Gravity pulls material together until the centre becomes hot and dense enough for nuclear fusion."],
+    ["02","Understanding Black Holes","Black holes are regions of space where gravity is so strong that nothing, not even light, can escape from within the event horizon."],
+    ["03","How Computers Work","Computers process information using hardware and software. The CPU performs instructions while memory and storage help manage data."],
+    ["04","The Water Cycle","Water moves around Earth through evaporation, condensation, precipitation and collection."],
+    ["05","The Human Cell","Cells are the basic structural and functional units of living organisms. Many different cell types perform specialised jobs."],
+    ["06","The Solar System","Our Solar System includes the Sun, eight planets, dwarf planets, moons, asteroids and comets."]
 ];
+
+$("articleGrid").innerHTML = articles.map(article=>`
+    <article class="card article-card">
+        <div class="article-number">${article[0]}</div>
+        <div><h3>${escapeHTML(article[1])}</h3><p>${escapeHTML(article[2])}</p></div>
+    </article>
+`).join("");
+
+
+// =====================================================
+// DAILY DISCOVERIES
+// =====================================================
+
+const facts = [
+    ["SPACE DISCOVERY","A day on Venus is longer than its year.","Venus rotates very slowly, taking longer to spin once than it takes to orbit the Sun."],
+    ["SPACE DISCOVERY","The Sun is a star.","It is the closest star to Earth."],
+    ["OCEAN DISCOVERY","The deepest known ocean region is in the Mariana Trench.","It is located in the western Pacific Ocean."],
+    ["ANIMAL DISCOVERY","Octopuses have three hearts.","Their circulatory system is unusual among animals."],
+    ["MATHEMATICS","A googol is 10 followed by 100 zeroes.","It is a very large number used to describe enormous quantities."],
+    ["EARTH DISCOVERY","Earth is not a perfect sphere.","Its rotation makes it slightly wider around the equator."],
+    ["TECHNOLOGY","Early electronic computers were enormous machines.","Some early computers filled large rooms."],
+    ["BIOLOGY","Some plants respond to touch.","The sensitive plant can fold its leaves when disturbed."]
+];
+
 function showRandomFact(){
-    const fact=facts[Math.floor(Math.random()*facts.length)];
-    $("factCategory").textContent=fact[0]+" DISCOVERY";
-    $("dailyFact").textContent=fact[1];
-    $("factDescription").textContent=fact[2];
+    const fact = facts[Math.floor(Math.random()*facts.length)];
+    $("factCategory").textContent = fact[0];
+    $("dailyFact").textContent = fact[1];
+    $("factDescription").textContent = fact[2];
 }
+
 $("newFactButton").addEventListener("click",showRandomFact);
 
-/* Local progress */
-let progress=readLocal("uu_progress",{
-    points:0,answered:0,correct:0,completedMissions:[],unlockedBadges:[]
+
+// =====================================================
+// LOCAL PROGRESS
+// =====================================================
+
+let progress = readLocal("uu_progress",{
+    points:0,
+    answered:0,
+    correct:0,
+    completedMissions:[],
+    unlockedBadges:[]
 });
+
 function saveProgress(){
     writeLocal("uu_progress",progress);
     updateStatistics();
     renderBadges();
 }
+
 function updateStatistics(){
-    $("localPoints").textContent=progress.points;
-    $("practicePoints").textContent=progress.points+" points";
-    $("questionsAnswered").textContent=progress.answered+" questions";
-    $("correctAnswers").textContent=progress.correct+" answers";
-    $("visitCount").textContent=localStorage.getItem("uu_visits")||"1";
+    $("localPoints").textContent = progress.points;
+    $("practicePoints").textContent = progress.points+" points";
+    $("questionsAnswered").textContent = progress.answered+" questions";
+    $("correctAnswers").textContent = progress.correct+" answers";
+    $("visitCount").textContent = localStorage.getItem("uu_visits") || 1;
 }
-localStorage.setItem("uu_visits",String(Number(localStorage.getItem("uu_visits")||0)+1));
 
-/* Quiz questions */
-const questions=[
-{category:"SPACE",question:"Which planet is known as the Red Planet?",answers:["Venus","Mars","Jupiter","Saturn"],correct:1,explanation:"Mars appears reddish because of iron minerals in its surface."},
-{category:"SPACE",question:"Which is the largest planet in our Solar System?",answers:["Earth","Mars","Jupiter","Mercury"],correct:2,explanation:"Jupiter is the largest planet in our Solar System."},
-{category:"SCIENCE",question:"Which gas do plants absorb during photosynthesis?",answers:["Oxygen","Carbon dioxide","Helium","Hydrogen"],correct:1,explanation:"Plants use carbon dioxide, water and light to make sugars."},
-{category:"MATH",question:"How many sides does a hexagon have?",answers:["Four","Five","Six","Eight"],correct:2,explanation:"A hexagon has six sides."},
-{category:"SPACE",question:"What is the closest star to Earth?",answers:["Sirius","The Sun","Polaris","Vega"],correct:1,explanation:"The Sun is our nearest star."},
-{category:"SCIENCE",question:"What is the chemical formula for water?",answers:["CO2","O2","H2O","NaCl"],correct:2,explanation:"A water molecule contains two hydrogen atoms and one oxygen atom."},
-{category:"EARTH",question:"Which is the largest ocean?",answers:["Atlantic","Indian","Arctic","Pacific"],correct:3,explanation:"The Pacific Ocean is the largest."},
-{category:"BIOLOGY",question:"Which organ pumps blood around the body?",answers:["Lungs","Heart","Stomach","Kidneys"],correct:1,explanation:"The heart pumps blood through the circulatory system."},
-{category:"TECH",question:"Which two digits are used in binary?",answers:["1 and 2","0 and 1","2 and 3","5 and 6"],correct:1,explanation:"Binary uses zero and one."},
-{category:"MATH",question:"What is 12 × 12?",answers:["124","144","132","154"],correct:1,explanation:"12 multiplied by 12 equals 144."},
-{category:"SPACE",question:"What is the name of our galaxy?",answers:["Andromeda","Milky Way","Whirlpool","Sombrero"],correct:1,explanation:"Our Solar System is located in the Milky Way."},
-{category:"HISTORY",question:"Which civilization built the pyramids at Giza?",answers:["Romans","Ancient Egyptians","Greeks","Persians"],correct:1,explanation:"The pyramids at Giza were built in ancient Egypt."},
-{category:"SCIENCE",question:"At sea level, what is the boiling point of pure water?",answers:["50°C","75°C","100°C","150°C"],correct:2,explanation:"Pure water boils at approximately 100°C at standard atmospheric pressure."},
-{category:"ANIMALS",question:"Which mammal can perform powered flight?",answers:["Flying squirrel","Bat","Sugar glider","Lemur"],correct:1,explanation:"Bats are the only mammals capable of sustained powered flight."},
-{category:"SPACE",question:"What force helps keep planets in orbit?",answers:["Friction","Gravity","Magnetism","Sound"],correct:1,explanation:"Gravity helps keep planets in orbit."},
-{category:"GEOGRAPHY",question:"Which continent is largest by area?",answers:["Africa","Europe","Asia","Australia"],correct:2,explanation:"Asia is the largest continent by area."},
-{category:"BIOLOGY",question:"What is the basic structural unit of life?",answers:["Atom","Cell","Organ","Tissue"],correct:1,explanation:"Cells are the basic units of living organisms."},
-{category:"TECH",question:"What does CPU stand for?",answers:["Central Processing Unit","Computer Power Utility","Core Program Unit","Central Program User"],correct:0,explanation:"CPU means Central Processing Unit."},
-{category:"MATH",question:"What is the square root of 81?",answers:["7","8","9","10"],correct:2,explanation:"Nine multiplied by nine equals 81."},
-{category:"SCIENCE",question:"Which particle has a negative electric charge?",answers:["Proton","Neutron","Electron","Photon"],correct:2,explanation:"Electrons have a negative electric charge."},
-{category:"SPACE",question:"Which planet has the most prominent ring system?",answers:["Mars","Saturn","Earth","Mercury"],correct:1,explanation:"Saturn is famous for its extensive ring system."},
-{category:"EARTH",question:"What is the process by which liquid water becomes vapor?",answers:["Freezing","Condensation","Evaporation","Melting"],correct:2,explanation:"Evaporation changes liquid water into water vapor."},
-{category:"SCIENCE",question:"What is the center of an atom called?",answers:["Electron","Nucleus","Molecule","Cell"],correct:1,explanation:"The nucleus contains protons and usually neutrons."},
-{category:"MATH",question:"What is 15% of 200?",answers:["15","20","30","45"],correct:2,explanation:"0.15 multiplied by 200 equals 30."},
-{category:"GEOGRAPHY",question:"What is the largest hot desert?",answers:["Gobi","Sahara","Kalahari","Mojave"],correct:1,explanation:"The Sahara is the largest hot desert."},
-{category:"BIOLOGY",question:"Which part of a plant usually absorbs water?",answers:["Flower","Root","Fruit","Leaf"],correct:1,explanation:"Roots absorb water and minerals from the soil."},
-{category:"SPACE",question:"What is a light-year a measure of?",answers:["Time","Brightness","Distance","Mass"],correct:2,explanation:"A light-year is the distance light travels in one year."},
-{category:"TECH",question:"What does HTML describe?",answers:["A markup language","A battery","A processor","A search engine"],correct:0,explanation:"HTML structures content on web pages."},
-{category:"SCIENCE",question:"What is the main gas in Earth's atmosphere?",answers:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"],correct:1,explanation:"Nitrogen makes up most of Earth's atmosphere."},
-{category:"SPORTS",question:"How many players from one team are on the field in association football?",answers:["9","10","11","12"],correct:2,explanation:"A standard team has eleven players on the field."}
+localStorage.setItem(
+    "uu_visits",
+    String(Number(localStorage.getItem("uu_visits")||0)+1)
+);
+
+updateStatistics();
+
+
+// =====================================================
+// QUIZ DATABASE
+// =====================================================
+
+const questions = [
+    {category:"SPACE",question:"Which planet is known as the Red Planet?",answers:["Venus","Mars","Jupiter","Saturn"],correct:1,explanation:"Mars appears reddish because of iron minerals in its surface."},
+    {category:"SPACE",question:"Which is the largest planet in our Solar System?",answers:["Earth","Mars","Jupiter","Mercury"],correct:2,explanation:"Jupiter is the largest planet in our Solar System."},
+    {category:"SCIENCE",question:"Which gas do plants absorb during photosynthesis?",answers:["Oxygen","Carbon dioxide","Helium","Hydrogen"],correct:1,explanation:"Plants use carbon dioxide, water and light to make sugars."},
+    {category:"MATHEMATICS",question:"How many sides does a hexagon have?",answers:["Four","Five","Six","Eight"],correct:2,explanation:"A hexagon is a polygon with six sides."},
+    {category:"SPACE",question:"What is the closest star to Earth?",answers:["Sirius","The Sun","Polaris","Vega"],correct:1,explanation:"The Sun is our nearest star."},
+    {category:"SCIENCE",question:"What is the chemical symbol for water?",answers:["CO2","O2","H2O","NaCl"],correct:2,explanation:"A water molecule contains two hydrogen atoms and one oxygen atom."},
+    {category:"EARTH",question:"Which is the largest ocean?",answers:["Atlantic","Indian","Arctic","Pacific"],correct:3,explanation:"The Pacific Ocean is the largest ocean on Earth."},
+    {category:"BIOLOGY",question:"Which organ pumps blood around the human body?",answers:["Lungs","Heart","Stomach","Kidneys"],correct:1,explanation:"The heart pumps blood through the circulatory system."},
+    {category:"TECHNOLOGY",question:"Which two digits are used in binary?",answers:["1 and 2","0 and 1","2 and 3","5 and 6"],correct:1,explanation:"Binary uses two digits: zero and one."},
+    {category:"MATHEMATICS",question:"What is 12 × 12?",answers:["124","144","132","154"],correct:1,explanation:"12 multiplied by 12 equals 144."},
+    {category:"SPACE",question:"What is the name of our galaxy?",answers:["Andromeda","Milky Way","Whirlpool","Sombrero"],correct:1,explanation:"Our Solar System is located in the Milky Way."},
+    {category:"HISTORY",question:"Which ancient civilization built the pyramids at Giza?",answers:["Romans","Ancient Egyptians","Greeks","Persians"],correct:1,explanation:"The pyramids at Giza were built in ancient Egypt."},
+    {category:"SCIENCE",question:"At sea level, what is the boiling point of pure water?",answers:["50°C","75°C","100°C","150°C"],correct:2,explanation:"Pure water boils at approximately 100°C at standard atmospheric pressure."},
+    {category:"ANIMALS",question:"Which mammal is capable of true powered flight?",answers:["Flying squirrel","Bat","Sugar glider","Lemur"],correct:1,explanation:"Bats are the only mammals capable of sustained powered flight."},
+    {category:"SPACE",question:"What force helps keep planets in orbit around the Sun?",answers:["Friction","Gravity","Magnetism","Sound"],correct:1,explanation:"Gravity helps keep planets in their orbits."},
+    {category:"GEOGRAPHY",question:"Which continent is the largest by area?",answers:["Africa","Europe","Asia","Australia"],correct:2,explanation:"Asia is the largest continent by area."},
+    {category:"BIOLOGY",question:"What is the basic structural unit of life?",answers:["Atom","Cell","Organ","Tissue"],correct:1,explanation:"Cells are the basic structural and functional units of living organisms."},
+    {category:"TECHNOLOGY",question:"What does CPU stand for?",answers:["Central Processing Unit","Computer Power Utility","Core Program Unit","Central Program User"],correct:0,explanation:"CPU stands for Central Processing Unit."},
+    {category:"MATHEMATICS",question:"What is the square root of 81?",answers:["7","8","9","10"],correct:2,explanation:"Nine multiplied by nine equals 81."},
+    {category:"SCIENCE",question:"Which particle has a negative electric charge?",answers:["Proton","Neutron","Electron","Photon"],correct:2,explanation:"Electrons have a negative electric charge."}
 ];
-$("questionCount").textContent=questions.length;
 
-let quizOrder=[],quizIndex=0,quizCorrect=0,quizAnswered=false;
+$("questionCount").textContent = questions.length;
+
+let quizOrder = [];
+let quizIndex = 0;
+let quizCorrect = 0;
+let quizAnswered = false;
+
 function shuffle(array){
-    const copy=[...array];
+    const copy = [...array];
     for(let i=copy.length-1;i>0;i--){
-        const j=Math.floor(Math.random()*(i+1));
-        [copy[i],copy[j]]=[copy[j],copy[i]];
+        const j = Math.floor(Math.random()*(i+1));
+        [copy[i],copy[j]] = [copy[j],copy[i]];
     }
     return copy;
 }
+
 function startQuiz(){
-    quizOrder=shuffle(questions);
-    quizIndex=0;
-    quizCorrect=0;
+    quizOrder = shuffle(questions);
+    quizIndex = 0;
+    quizCorrect = 0;
     renderQuizQuestion();
 }
+
 function renderQuizQuestion(){
-    const q=quizOrder[quizIndex];
-    quizAnswered=false;
-    $("quizCategory").textContent=q.category;
-    $("quizCounter").textContent=`Question ${quizIndex+1} / ${quizOrder.length}`;
-    $("questionText").textContent=q.question;
-    $("quizFeedback").textContent="";
+    const question = quizOrder[quizIndex];
+    quizAnswered = false;
+
+    $("quizCategory").textContent = question.category;
+    $("quizCounter").textContent = `Question ${quizIndex+1} / ${quizOrder.length}`;
+    $("questionText").textContent = question.question;
+    $("quizFeedback").textContent = "";
     $("nextQuestion").classList.add("hidden");
-    $("quizProgress").style.width=(quizIndex/quizOrder.length*100)+"%";
-    $("answerList").innerHTML="";
-    q.answers.forEach((answer,index)=>{
-        const button=document.createElement("button");
-        button.className="answer";
-        button.textContent=answer;
+    $("quizProgress").style.width = (quizIndex/quizOrder.length*100)+"%";
+    $("answerList").innerHTML = "";
+
+    question.answers.forEach((answer,index)=>{
+        const button = document.createElement("button");
+        button.className = "answer";
+        button.textContent = answer;
         button.addEventListener("click",()=>selectAnswer(index,button));
         $("answerList").appendChild(button);
     });
-    $("quizScore").textContent=quizCorrect;
-    $("quizAccuracy").textContent=progress.answered?
-        Math.round(progress.correct/progress.answered*100)+"%":"0%";
+
+    $("quizScore").textContent = quizCorrect;
+    $("quizAccuracy").textContent = progress.answered
+        ? Math.round(progress.correct/progress.answered*100)+"%"
+        : "0%";
 }
+
 async function selectAnswer(index,button){
-    if(quizAnswered)return;
-    quizAnswered=true;
-    const q=quizOrder[quizIndex];
-    const buttons=[...$("answerList").children];
+    if(quizAnswered) return;
+    quizAnswered = true;
+
+    const question = quizOrder[quizIndex];
+    const buttons = [...$("answerList").children];
+
     progress.answered++;
-    if(index===q.correct){
+
+    if(index===question.correct){
         quizCorrect++;
         progress.correct++;
-        progress.points+=10;
+        progress.points += 10;
         button.classList.add("correct");
-        $("quizFeedback").textContent="Correct! +10 points. "+q.explanation;
-        await awardOnlinePoints(10);
+
+        $("quizFeedback").textContent =
+            "Correct! +10 practice points. "+question.explanation;
+
+        if(currentUser && db){
+            await addOnlinePoints(10);
+        }
     }else{
         button.classList.add("wrong");
-        buttons[q.correct].classList.add("correct");
-        $("quizFeedback").textContent="Not quite. "+q.explanation;
+        buttons[question.correct].classList.add("correct");
+        $("quizFeedback").textContent = "Not quite. "+question.explanation;
     }
+
     buttons.forEach(item=>item.disabled=true);
     saveProgress();
-    $("quizScore").textContent=quizCorrect;
-    $("quizAccuracy").textContent=Math.round(quizCorrect/(quizIndex+1)*100)+"%";
-    $("quizProgress").style.width=((quizIndex+1)/quizOrder.length*100)+"%";
-    $("nextQuestion").textContent=quizIndex===quizOrder.length-1?"Finish Quiz":"Next Question →";
+
+    $("quizScore").textContent = quizCorrect;
+    $("quizAccuracy").textContent = Math.round(quizCorrect/(quizIndex+1)*100)+"%";
+    $("quizProgress").style.width = ((quizIndex+1)/quizOrder.length*100)+"%";
+
+    $("nextQuestion").textContent =
+        quizIndex===quizOrder.length-1 ? "Finish Quiz" : "Next Question →";
+
     $("nextQuestion").classList.remove("hidden");
 }
+
 $("nextQuestion").addEventListener("click",()=>{
     if(quizIndex<quizOrder.length-1){
         quizIndex++;
         renderQuizQuestion();
     }else{
-        $("questionText").textContent="Challenge completed!";
-        $("answerList").innerHTML="";
-        $("quizFeedback").textContent=`You answered ${quizCorrect} questions correctly.`;
+        $("questionText").textContent = "Challenge completed!";
+        $("answerList").innerHTML = "";
+        $("quizFeedback").textContent = `You answered ${quizCorrect} questions correctly.`;
         $("nextQuestion").classList.add("hidden");
-        $("quizProgress").style.width="100%";
+        $("quizProgress").style.width = "100%";
         showToast("Challenge completed!");
     }
 });
+
 $("restartQuiz").addEventListener("click",startQuiz);
 startQuiz();
 
-/* Missions */
-const missions=[
-["🔭","Explore Space","Discover the Space & Astronomy category.","space"],
-["🧠","Test Your Knowledge","Answer a quiz question.","quiz"],
-["📝","Write a Discovery","Save a note in your notebook.","notes"],
-["🌍","Explore the World","Discover a world learning category.","world"],
-["📚","Read a Learning Guide","Explore one of the featured guides.","guide"]
+
+// =====================================================
+// MISSION SYSTEM
+// =====================================================
+
+const missions = [
+    ["🔭","Explore Space","Visit the Space & Astronomy category.","space"],
+    ["🧠","Test Your Knowledge","Answer one quiz question.","quiz"],
+    ["📝","Write a Discovery","Save a note in your notebook.","notes"],
+    ["🌍","Explore the World","Visit a learning category.","world"]
 ];
+
 function renderMissions(){
-    $("missionGrid").innerHTML="";
-    missions.forEach(m=>{
-        const done=progress.completedMissions.includes(m[3]);
-        const card=document.createElement("div");
-        card.className="card";
-        card.innerHTML=`<span class="card-icon">${m[0]}</span>
-        <h3>${escapeHTML(m[1])}</h3><p>${escapeHTML(m[2])}</p>
-        <div class="card-footer"><span class="tag">${done?"Completed":"Available"}</span>
-        <button class="button small ${done?"secondary":""}">${done?"Completed ✓":"Complete"}</button></div>`;
-        card.querySelector("button").addEventListener("click",()=>completeMission(m[3]));
+    $("missionGrid").innerHTML = "";
+
+    missions.forEach(mission=>{
+        const done = progress.completedMissions.includes(mission[3]);
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <span class="card-icon">${mission[0]}</span>
+            <h3>${escapeHTML(mission[1])}</h3>
+            <p>${escapeHTML(mission[2])}</p>
+            <div class="card-footer">
+                <span class="tag">${done?"Completed":"In progress"}</span>
+                <button class="button small ${done?"secondary":""}">
+                    ${done?"Completed ✓":"Complete"}
+                </button>
+            </div>
+        `;
+
+        card.querySelector("button").addEventListener("click",()=>{
+            if(!done) completeMission(mission[3]);
+        });
+
         $("missionGrid").appendChild(card);
     });
 }
-async function completeMission(id){
-    if(progress.completedMissions.includes(id))return;
+
+function completeMission(id){
+    if(progress.completedMissions.includes(id)) return;
+
     progress.completedMissions.push(id);
-    progress.points+=15;
+    progress.points += 15;
     saveProgress();
     renderMissions();
-    await awardOnlinePoints(15);
-    showToast("Mission completed! +15 points.");
+    showToast("Mission completed! +15 local points.");
 }
+
 renderMissions();
 
-/* Badges */
-const badgeDefinitions=[
-["🌟","First Steps","Answer your first question.",()=>progress.answered>=1],
-["🧠","Thinker","Answer five questions.",()=>progress.answered>=5],
-["🎯","Sharp Mind","Get five correct answers.",()=>progress.correct>=5],
-["📚","Book Explorer","Save your first note.",()=>readLocal("uu_notes",[]).length>=1],
-["🚀","Space Explorer","Complete the Space mission.",()=>progress.completedMissions.includes("space")],
-["🏆","Knowledge Champion","Earn 100 practice points.",()=>progress.points>=100],
-["🌍","World Explorer","Complete the World mission.",()=>progress.completedMissions.includes("world")],
-["✨","Dedicated Learner","Answer 20 questions.",()=>progress.answered>=20],
-["💡","Curious Mind","Answer 50 questions.",()=>progress.answered>=50],
-["👑","Universe Legend","Earn 500 practice points.",()=>progress.points>=500]
+
+// =====================================================
+// ACHIEVEMENT SYSTEM
+// =====================================================
+
+const badgeDefinitions = [
+    ["🌟","First Steps","Answer your first question.",()=>progress.answered>=1],
+    ["🧠","Thinker","Answer five questions.",()=>progress.answered>=5],
+    ["🎯","Sharp Mind","Get five correct answers.",()=>progress.correct>=5],
+    ["📚","Book Explorer","Save your first note.",()=>readLocal("uu_notes",[]).length>=1],
+    ["🚀","Space Explorer","Complete the Space mission.",()=>progress.completedMissions.includes("space")],
+    ["🏆","Knowledge Champion","Earn 100 practice points.",()=>progress.points>=100],
+    ["🌍","World Explorer","Complete the World mission.",()=>progress.completedMissions.includes("world")],
+    ["✨","Dedicated Learner","Answer 20 questions.",()=>progress.answered>=20]
 ];
+
 function renderBadges(){
-    $("badgeGrid").innerHTML="";
-    badgeDefinitions.forEach(b=>{
-        const unlocked=b[3]();
-        const item=document.createElement("div");
-        item.className="badge"+(unlocked?"":" locked");
-        const icon=document.createElement("span");
-        icon.className="badge-icon";
-        icon.textContent=b[0];
-        const title=document.createElement("strong");
-        title.textContent=b[1];
-        const description=document.createElement("small");
-        description.textContent=b[2];
-        const status=document.createElement("span");
-        status.className="tag";
-        status.textContent=unlocked?"Unlocked":"Locked";
-        item.append(icon,title,document.createElement("br"),description,document.createElement("br"),status);
+    $("badgeGrid").innerHTML = "";
+
+    badgeDefinitions.forEach(badge=>{
+        const unlocked = badge[3]();
+        const item = document.createElement("div");
+        item.className = "badge"+(unlocked?"":" locked");
+
+        item.innerHTML = `
+            <span class="badge-icon">${badge[0]}</span>
+            <strong>${escapeHTML(badge[1])}</strong><br>
+            <small>${escapeHTML(badge[2])}</small><br>
+            <span class="tag">${unlocked?"Unlocked":"Locked"}</span>
+        `;
+
         $("badgeGrid").appendChild(item);
     });
 }
+
 renderBadges();
 
-/* Notebook */
-let notes=readLocal("uu_notes",[]);
+
+// =====================================================
+// NOTEBOOK
+// =====================================================
+
+let notes = readLocal("uu_notes",[]);
+
 function renderNotes(){
-    $("notesList").innerHTML="";
+    $("notesList").innerHTML = "";
+
     if(!notes.length){
-        $("notesList").innerHTML='<p class="muted">Your notebook is empty.</p>';
+        $("notesList").innerHTML = '<p class="muted">Your notebook is empty.</p>';
         return;
     }
+
     notes.forEach((note,index)=>{
-        const card=document.createElement("div");
-        card.className="card";
-        const title=document.createElement("h3");
-        title.textContent=note.title;
-        const content=document.createElement("p");
-        content.textContent=note.content;
-        const date=document.createElement("small");
-        date.className="muted";
-        date.textContent=note.date;
-        const remove=document.createElement("button");
-        remove.className="button small danger";
-        remove.textContent="Delete";
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const title = document.createElement("h3");
+        title.textContent = note.title;
+
+        const content = document.createElement("p");
+        content.textContent = note.content;
+
+        const date = document.createElement("small");
+        date.className = "muted";
+        date.textContent = note.date;
+
+        const remove = document.createElement("button");
+        remove.className = "button small danger";
+        remove.textContent = "Delete";
+
         remove.addEventListener("click",()=>{
             notes.splice(index,1);
             writeLocal("uu_notes",notes);
             renderNotes();
             renderBadges();
         });
+
         card.append(title,content,date,remove);
         $("notesList").appendChild(card);
     });
 }
+
 $("saveNote").addEventListener("click",()=>{
-    const title=$("noteTitle").value.trim();
-    const content=$("noteContent").value.trim();
-    if(!title||!content){
-        $("noteMessage").textContent="Please enter a title and note.";
+    const title = $("noteTitle").value.trim();
+    const content = $("noteContent").value.trim();
+
+    if(!title || !content){
+        $("noteMessage").textContent = "Please enter a title and note.";
         return;
     }
-    notes.unshift({title,content,date:new Date().toLocaleString()});
+
+    notes.unshift({
+        title,
+        content,
+        date:new Date().toLocaleString()
+    });
+
     writeLocal("uu_notes",notes);
-    $("noteTitle").value="";
-    $("noteContent").value="";
-    $("noteMessage").textContent="Note saved successfully.";
+    $("noteTitle").value = "";
+    $("noteContent").value = "";
+    $("noteMessage").textContent = "Note saved successfully.";
+
     renderNotes();
     renderBadges();
-    completeMission("notes");
+
+    if(!progress.completedMissions.includes("notes")){
+        completeMission("notes");
+    }
 });
+
 renderNotes();
 
-/* Local file library using IndexedDB */
-let database=null;
+
+// =====================================================
+// LOCAL FILE LIBRARY WITH INDEXEDDB
+// =====================================================
+
+let database = null;
+
 function openLocalDatabase(){
     return new Promise((resolve,reject)=>{
         if(!("indexedDB" in window)){
-            reject(new Error("IndexedDB is unavailable."));
+            reject(new Error("IndexedDB is not available."));
             return;
         }
-        const request=indexedDB.open("UniverseUnlockedDB",1);
-        request.onupgradeneeded=event=>{
-            const db=event.target.result;
+
+        const request = indexedDB.open("UniverseUnlockedDB",1);
+
+        request.onupgradeneeded = event=>{
+            const db = event.target.result;
             if(!db.objectStoreNames.contains("files")){
                 db.createObjectStore("files",{keyPath:"id",autoIncrement:true});
             }
         };
-        request.onsuccess=()=>{database=request.result;resolve(database);};
-        request.onerror=()=>reject(request.error);
+
+        request.onsuccess = ()=>{
+            database = request.result;
+            resolve(database);
+        };
+
+        request.onerror = ()=>reject(request.error);
     });
 }
-function saveFile(file){
+
+async function saveFile(file){
+    if(!database) return;
+
     return new Promise((resolve,reject)=>{
-        const tx=database.transaction("files","readwrite");
-        const request=tx.objectStore("files").add({
-            name:file.name,type:file.type,size:file.size,data:file,date:new Date().toISOString()
+        const transaction = database.transaction("files","readwrite");
+        const store = transaction.objectStore("files");
+
+        const request = store.add({
+            name:file.name,
+            type:file.type,
+            size:file.size,
+            data:file,
+            date:new Date().toISOString()
         });
-        request.onsuccess=()=>resolve(request.result);
-        request.onerror=()=>reject(request.error);
+
+        request.onsuccess = ()=>resolve(request.result);
+        request.onerror = ()=>reject(request.error);
     });
 }
-function getFiles(){
+
+async function getFiles(){
+    if(!database) return [];
+
     return new Promise((resolve,reject)=>{
-        const request=database.transaction("files","readonly").objectStore("files").getAll();
-        request.onsuccess=()=>resolve(request.result);
-        request.onerror=()=>reject(request.error);
+        const transaction = database.transaction("files","readonly");
+        const request = transaction.objectStore("files").getAll();
+
+        request.onsuccess = ()=>resolve(request.result);
+        request.onerror = ()=>reject(request.error);
     });
 }
-function deleteFile(id){
+
+async function deleteFile(id){
     return new Promise((resolve,reject)=>{
-        const request=database.transaction("files","readwrite").objectStore("files").delete(id);
-        request.onsuccess=resolve;
-        request.onerror=()=>reject(request.error);
+        const transaction = database.transaction("files","readwrite");
+        const request = transaction.objectStore("files").delete(id);
+        request.onsuccess = resolve;
+        request.onerror = ()=>reject(request.error);
     });
 }
+
 function formatBytes(bytes){
-    if(bytes<1024)return bytes+" B";
-    if(bytes<1048576)return(bytes/1024).toFixed(2)+" KB";
-    if(bytes<1073741824)return(bytes/1048576).toFixed(2)+" MB";
-    return(bytes/1073741824).toFixed(2)+" GB";
+    if(bytes<1024) return bytes+" B";
+    if(bytes<1048576) return (bytes/1024).toFixed(2)+" KB";
+    if(bytes<1073741824) return (bytes/1048576).toFixed(2)+" MB";
+    return (bytes/1073741824).toFixed(2)+" GB";
 }
+
 async function renderFiles(){
-    const files=await getFiles();
-    $("fileList").innerHTML="";
+    const files = await getFiles();
+    $("fileList").innerHTML = "";
+
     if(!files.length){
-        $("fileList").innerHTML='<p class="muted">No files saved yet.</p>';
+        $("fileList").innerHTML = '<p class="muted">No files saved yet.</p>';
         return;
     }
+
     files.forEach(file=>{
-        const row=document.createElement("div");
-        row.className="article-card";
-        row.style.marginBottom="14px";
-        const info=document.createElement("div");
-        info.style.flex="1";
-        const name=document.createElement("strong");
-        name.textContent=file.name;
-        const size=document.createElement("p");
-        size.className="muted";
-        size.textContent=formatBytes(file.size);
-        const download=document.createElement("a");
-        download.className="button small secondary";
-        download.textContent="Download";
-        const objectURL=URL.createObjectURL(file.data);
-        download.href=objectURL;
-        download.download=file.name;
-        const remove=document.createElement("button");
-        remove.className="button small danger";
-        remove.textContent="Delete";
+        const row = document.createElement("div");
+        row.className = "article-card";
+        row.style.marginBottom = "14px";
+
+        const info = document.createElement("div");
+        info.style.flex = "1";
+
+        const name = document.createElement("strong");
+        name.textContent = file.name;
+
+        const size = document.createElement("p");
+        size.className = "muted";
+        size.textContent = formatBytes(file.size);
+
+        const download = document.createElement("a");
+        download.className = "button small secondary";
+        download.textContent = "Download";
+        download.href = URL.createObjectURL(file.data);
+        download.download = file.name;
+
+        const remove = document.createElement("button");
+        remove.className = "button small danger";
+        remove.textContent = "Delete";
+
         remove.addEventListener("click",async()=>{
             await deleteFile(file.id);
             renderFiles();
             updateStorage();
         });
+
         info.append(name,size);
         row.append(info,download,remove);
         $("fileList").appendChild(row);
     });
 }
+
 $("fileInput").addEventListener("change",async event=>{
-    if(!database){
-        showToast("Local file database is not ready.");
-        return;
+    const files = [...event.target.files];
+
+    for(const file of files){
+        try{
+            await saveFile(file);
+        }catch(error){
+            showToast("Could not save "+file.name);
+        }
     }
-    for(const file of event.target.files){
-        try{await saveFile(file);}
-        catch(error){showToast("Could not save "+file.name);}
-    }
-    event.target.value="";
-    await renderFiles();
+
+    event.target.value = "";
+    renderFiles();
     updateStorage();
-    showToast("Your file library was updated.");
-});
-openLocalDatabase().then(renderFiles).catch(error=>{
-    $("fileList").textContent=error.message;
+    showToast("File library updated.");
 });
 
-/* Storage display */
-const STORAGE_TARGET=8*1024*1024*1024;
+openLocalDatabase()
+    .then(renderFiles)
+    .catch(error=>$("fileList").textContent=error.message);
+
+
+// =====================================================
+// STORAGE MONITOR
+// =====================================================
+
+const STORAGE_TARGET = 8*1024*1024*1024;
+
 async function updateStorage(){
-    if(!navigator.storage||!navigator.storage.estimate){
-        $("storageUsed").textContent="Unavailable";
-        $("storageQuota").textContent="This browser does not report storage estimates.";
+    if(!navigator.storage || !navigator.storage.estimate){
+        $("storageUsed").textContent = "Unavailable";
+        $("storageQuota").textContent = "This browser does not report storage estimates.";
         return;
     }
+
     try{
-        const estimate=await navigator.storage.estimate();
-        const used=estimate.usage||0;
-        const quota=estimate.quota||0;
-        $("storageUsed").textContent=formatBytes(used)+" used";
-        $("storageQuota").textContent=
-            "Browser-reported quota: "+formatBytes(quota)+
-            ". Actual storage availability is controlled by the browser.";
-        $("storageBar").style.width=Math.min(100,used/STORAGE_TARGET*100)+"%";
-    }catch(error){
-        $("storageUsed").textContent="Could not measure storage.";
+        const estimate = await navigator.storage.estimate();
+        const used = estimate.usage || 0;
+        const quota = estimate.quota || 0;
+
+        $("storageUsed").textContent = formatBytes(used)+" used";
+        $("storageQuota").textContent =
+            "Reported browser quota: "+formatBytes(quota)+
+            ". 8 GB is a target, not a guaranteed allocation.";
+
+        $("storageBar").style.width =
+            Math.min(100,used/STORAGE_TARGET*100)+"%";
+    }catch{
+        $("storageUsed").textContent = "Could not measure storage.";
     }
 }
+
 $("refreshStorage").addEventListener("click",updateStorage);
-if(navigator.storage?.persist)navigator.storage.persist().catch(()=>{});
+
+if(navigator.storage && navigator.storage.persist){
+    navigator.storage.persist().catch(()=>{});
+}
+
 updateStorage();
 
-/* Focus timer */
-let timerSeconds=25*60;
-let timerInterval=null;
+
+// =====================================================
+// FOCUS TIMER
+// =====================================================
+
+let timerSeconds = 25*60;
+let timerInterval = null;
+
 function renderTimer(){
-    $("timerDisplay").textContent=
-        String(Math.floor(timerSeconds/60)).padStart(2,"0")+":"+
-        String(timerSeconds%60).padStart(2,"0");
+    const minutes = Math.floor(timerSeconds/60);
+    const seconds = timerSeconds%60;
+
+    $("timerDisplay").textContent =
+        String(minutes).padStart(2,"0")+":"+
+        String(seconds).padStart(2,"0");
 }
+
 $("startTimer").addEventListener("click",()=>{
-    if(timerInterval)return;
-    timerInterval=setInterval(()=>{
+    if(timerInterval) return;
+
+    timerInterval = setInterval(()=>{
         timerSeconds--;
         renderTimer();
+
         if(timerSeconds<=0){
             clearInterval(timerInterval);
-            timerInterval=null;
-            timerSeconds=0;
+            timerInterval = null;
+            timerSeconds = 0;
             renderTimer();
             showToast("Focus session completed!");
         }
     },1000);
 });
+
 $("pauseTimer").addEventListener("click",()=>{
     clearInterval(timerInterval);
-    timerInterval=null;
+    timerInterval = null;
 });
+
 $("resetTimer").addEventListener("click",()=>{
     clearInterval(timerInterval);
-    timerInterval=null;
-    timerSeconds=25*60;
+    timerInterval = null;
+    timerSeconds = 25*60;
     renderTimer();
 });
+
 renderTimer();
 
-/* Firebase initialization */
-if(firebaseConfigured){
-    try{
-        app=initializeApp(firebaseConfig);
-        auth=getAuth(app);
-        db=getFirestore(app);
-        activateFirebase();
-    }catch(error){
-        showAuthMessage("Firebase could not start: "+error.message,true);
-    }
-}else{
-    showAuthMessage("Firebase is not connected yet. Add your Firebase project configuration to activate real accounts.");
-    $("leaderboardStatus").textContent="Firebase setup is required for the real global leaderboard.";
+
+// =====================================================
+// FIREBASE ACCOUNT SYSTEM
+// =====================================================
+
+function setAuthMessage(message,type="success"){
+    const element = $("authMessage");
+    element.textContent = message;
+    element.className = "message "+(type==="error"?"error":"");
 }
 
-function activateFirebase(){
-    onAuthStateChanged(auth,async user=>{
-        currentUser=user;
-        if(user){
-            $("authPanel").classList.add("hidden");
-            $("userPanel").classList.remove("hidden");
-            await loadUserProfile();
-        }else{
-            $("authPanel").classList.remove("hidden");
-            $("userPanel").classList.add("hidden");
-            currentProfile=null;
-            $("myRank").textContent="—";
-            $("myOnlinePoints").textContent="0";
-            $("userPoints").textContent="0";
-        }
-    });
-    startGlobalLeaderboard();
+function showLoggedOut(){
+    $("authPanel").classList.remove("hidden");
+    $("userPanel").classList.add("hidden");
+    $("authTitle").textContent = "Join Universe Unlocked";
+    $("registerButton").classList.remove("hidden");
+    $("loginButton").classList.remove("hidden");
+    $("nickname").classList.remove("hidden");
 }
 
-/* Create account */
-$("signupForm").addEventListener("submit",async event=>{
-    event.preventDefault();
-    if(!auth){
-        showAuthMessage("Firebase is not configured. Add your Firebase settings first.",true);
-        return;
-    }
+function showLoggedIn(profile){
+    $("authPanel").classList.add("hidden");
+    $("userPanel").classList.remove("hidden");
+    $("userName").textContent = profile.nickname || "Explorer";
+    $("userPoints").textContent = profile.points || 0;
+}
 
-    const nickname=$("signupNickname").value.trim();
-    const email=$("signupEmail").value.trim();
-    const password=$("signupPassword").value;
-    const confirmation=$("signupConfirm").value;
+async function createUserProfile(user,nickname){
+    const userRef = doc(db,"users",user.uid);
+    const existing = await getDoc(userRef);
 
-    if(nickname.length<3||nickname.length>20){
-        showAuthMessage("Your nickname must contain 3–20 characters.",true);
-        return;
-    }
-    if(password.length<8){
-        showAuthMessage("Choose a password with at least 8 characters.",true);
-        return;
-    }
-    if(password!==confirmation){
-        showAuthMessage("The passwords do not match.",true);
-        return;
-    }
-
-    const button=$("registerButton");
-    button.disabled=true;
-    button.textContent="Creating account...";
-
-    try{
-        const result=await createUserWithEmailAndPassword(auth,email,password);
-        await updateProfile(result.user,{displayName:nickname});
-
-        await setDoc(doc(db,"users",result.user.uid),{
+    if(!existing.exists()){
+        await setDoc(userRef,{
             nickname:nickname,
             points:0,
-            createdAt:serverTimestamp(),
-            updatedAt:serverTimestamp()
+            createdAt:serverTimestamp()
+        });
+    }
+
+    const profileSnapshot = await getDoc(userRef);
+    return profileSnapshot.data();
+}
+
+async function loadUserProfile(user){
+    const userRef = doc(db,"users",user.uid);
+    const snapshot = await getDoc(userRef);
+
+    if(!snapshot.exists()){
+        const fallbackName = user.email
+            ? user.email.split("@")[0]
+            : "Explorer";
+
+        await setDoc(userRef,{
+            nickname:fallbackName,
+            points:0,
+            createdAt:serverTimestamp()
         });
 
-        $("signupForm").reset();
-        showAuthMessage("Your account was created successfully. Welcome to Universe Unlocked!");
-        showToast("Account created successfully!");
-    }catch(error){
-        const messages={
-            "auth/email-already-in-use":"This email already has an account. Please log in.",
-            "auth/invalid-email":"Please enter a valid email address.",
-            "auth/weak-password":"Please choose a stronger password.",
-            "auth/network-request-failed":"Network error. Check your internet connection."
+        return {
+            nickname:fallbackName,
+            points:0
         };
-        showAuthMessage(messages[error.code]||error.message,true);
-    }finally{
-        button.disabled=false;
-        button.textContent="Create My Account";
     }
-});
 
-/* Log in to an existing account */
-$("loginForm").addEventListener("submit",async event=>{
-    event.preventDefault();
-    if(!auth){
-        showAuthMessage("Firebase is not configured. Add your Firebase settings first.",true);
+    return snapshot.data();
+}
+
+$("registerButton").addEventListener("click",async()=>{
+    if(!firebaseReady){
+        setAuthMessage("Firebase is not configured yet. Add your Firebase project settings first.","error");
         return;
     }
 
-    const email=$("loginEmail").value.trim();
-    const password=$("loginPassword").value;
-    const button=$("loginButton");
-    button.disabled=true;
-    button.textContent="Logging in...";
+    const nickname = $("nickname").value.trim();
+    const email = $("email").value.trim();
+    const password = $("password").value;
+
+    if(nickname.length<2 || nickname.length>20){
+        setAuthMessage("Your public nickname must be 2–20 characters.","error");
+        return;
+    }
+
+    if(!email || !password){
+        setAuthMessage("Please enter your email and password.","error");
+        return;
+    }
+
+    if(password.length<6){
+        setAuthMessage("Your password must contain at least 6 characters.","error");
+        return;
+    }
 
     try{
-        await signInWithEmailAndPassword(auth,email,password);
-        $("loginForm").reset();
-        showAuthMessage("You are logged in successfully.");
-        showToast("Welcome back!");
+        $("registerButton").disabled = true;
+        setAuthMessage("Creating your account...");
+
+        const credential = await createUserWithEmailAndPassword(auth,email,password);
+
+        await createUserProfile(credential.user,nickname);
+
+        setAuthMessage("Account created successfully!");
+        showToast("Welcome to Universe Unlocked!");
     }catch(error){
-        const messages={
-            "auth/invalid-credential":"Email or password is incorrect.",
-            "auth/user-not-found":"No account was found with that email.",
-            "auth/wrong-password":"The password is incorrect.",
-            "auth/invalid-email":"Please enter a valid email address.",
-            "auth/too-many-requests":"Too many attempts. Please wait and try again.",
-            "auth/network-request-failed":"Network error. Check your internet connection."
-        };
-        showAuthMessage(messages[error.code]||error.message,true);
+        console.error(error);
+        setAuthMessage(getFirebaseError(error),"error");
     }finally{
-        button.disabled=false;
-        button.textContent="Log In";
+        $("registerButton").disabled = false;
     }
 });
 
-/* Password reset */
-$("forgotPassword").addEventListener("click",async()=>{
-    if(!auth){
-        showAuthMessage("Firebase is not configured.",true);
+$("loginButton").addEventListener("click",async()=>{
+    if(!firebaseReady){
+        setAuthMessage("Firebase is not configured yet. Add your Firebase project settings first.","error");
         return;
     }
-    const email=$("loginEmail").value.trim();
+
+    const email = $("email").value.trim();
+    const password = $("password").value;
+
+    if(!email || !password){
+        setAuthMessage("Enter your email and password.","error");
+        return;
+    }
+
+    try{
+        $("loginButton").disabled = true;
+        setAuthMessage("Signing in...");
+
+        await signInWithEmailAndPassword(auth,email,password);
+
+        setAuthMessage("Login successful!");
+        showToast("You are logged in!");
+    }catch(error){
+        console.error(error);
+        setAuthMessage(getFirebaseError(error),"error");
+    }finally{
+        $("loginButton").disabled = false;
+    }
+});
+
+$("forgotPasswordButton").addEventListener("click",async()=>{
+    if(!firebaseReady){
+        setAuthMessage("Firebase is not configured yet.","error");
+        return;
+    }
+
+    const email = $("email").value.trim();
+
     if(!email){
-        showAuthMessage("Enter your email address first.",true);
+        setAuthMessage("Enter your email address first.","error");
         return;
     }
+
     try{
         await sendPasswordResetEmail(auth,email);
-        showAuthMessage("If the account exists, a password reset email has been sent.");
+        setAuthMessage("Password reset email sent. Check your inbox.");
     }catch(error){
-        showAuthMessage(error.message,true);
+        setAuthMessage(getFirebaseError(error),"error");
     }
 });
 
-/* Log out */
 $("logoutButton").addEventListener("click",async()=>{
-    if(!auth)return;
+    if(!auth) return;
+
     try{
         await signOut(auth);
         showToast("You have logged out.");
     }catch(error){
-        showToast("Could not log out: "+error.message);
+        showToast(getFirebaseError(error));
     }
 });
 
-/* Load profile */
-async function loadUserProfile(){
-    if(!currentUser||!db)return;
-    try{
-        const reference=doc(db,"users",currentUser.uid);
-        const snapshot=await getDoc(reference);
-        if(!snapshot.exists()){
-            await setDoc(reference,{
-                nickname:currentUser.displayName||"Explorer",
-                points:0,
-                createdAt:serverTimestamp(),
-                updatedAt:serverTimestamp()
-            });
-            currentProfile={nickname:currentUser.displayName||"Explorer",points:0};
+function getFirebaseError(error){
+    const code = error.code || "";
+
+    const messages = {
+        "auth/email-already-in-use":"This email already has an account. Try logging in.",
+        "auth/invalid-email":"Please enter a valid email address.",
+        "auth/weak-password":"Choose a stronger password with at least 6 characters.",
+        "auth/user-not-found":"No account was found with this email.",
+        "auth/wrong-password":"The password is incorrect.",
+        "auth/invalid-credential":"The email or password is incorrect.",
+        "auth/too-many-requests":"Too many attempts. Please wait and try again.",
+        "auth/network-request-failed":"Network error. Check your internet connection."
+    };
+
+    return messages[code] || error.message || "Something went wrong.";
+}
+
+function activateFirebase(){
+    onAuthStateChanged(auth,async user=>{
+        currentUser = user;
+
+        if(user){
+            try{
+                currentProfile = await loadUserProfile(user);
+                showLoggedIn(currentProfile);
+                listenToLeaderboard();
+            }catch(error){
+                console.error(error);
+                showToast("Could not load your profile.");
+            }
         }else{
-            currentProfile=snapshot.data();
-        }
+            currentProfile = null;
+            showLoggedOut();
 
-        const nickname=currentProfile.nickname||currentUser.displayName||"Explorer";
-        const points=currentProfile.points||0;
-        $("userName").textContent=nickname;
-        $("userPoints").textContent=points;
-        $("myOnlinePoints").textContent=points;
-        $("accountEmail").textContent="Signed in as: "+currentUser.email;
-        $("profileAvatar").textContent=nickname.charAt(0).toUpperCase();
-        $("accountMessage").textContent="Your account information is loaded.";
-    }catch(error){
-        $("accountMessage").textContent="Could not load profile: "+error.message;
-    }
-}
-
-/* Online points */
-async function awardOnlinePoints(amount){
-    if(!currentUser||!db)return;
-    try{
-        const reference=doc(db,"users",currentUser.uid);
-        const snapshot=await getDoc(reference);
-        if(!snapshot.exists())return;
-        const currentPoints=Number(snapshot.data().points)||0;
-        await updateDoc(reference,{
-            points:currentPoints+amount,
-            updatedAt:serverTimestamp()
-        });
-        await loadUserProfile();
-    }catch(error){
-        console.error("Online points update failed:",error);
-    }
-}
-
-/* Real-time global leaderboard */
-function startGlobalLeaderboard(){
-    if(!db)return;
-    if(unsubscribeLeaderboard)unsubscribeLeaderboard();
-
-    const leaderboardQuery=query(
-        collection(db,"users"),
-        orderBy("points","desc"),
-        limit(50)
-    );
-
-    unsubscribeLeaderboard=onSnapshot(leaderboardQuery,snapshot=>{
-        const list=$("leaderboardList");
-        list.innerHTML="";
-
-        if(snapshot.empty){
-            list.textContent="No registered explorers yet. Be the first!";
-            $("leaderboardStatus").textContent="No users are registered yet.";
-            return;
-        }
-
-        let rank=1;
-        let myRank="Not in top 50";
-
-        snapshot.forEach(userDocument=>{
-            const data=userDocument.data();
-            if(currentUser&&userDocument.id===currentUser.uid){
-                myRank="#"+rank;
+            if(unsubscribeLeaderboard){
+                unsubscribeLeaderboard();
+                unsubscribeLeaderboard = null;
             }
 
-            const row=document.createElement("div");
-            row.className="leaderboard-row";
-
-            const rankElement=document.createElement("div");
-            rankElement.className="rank";
-            rankElement.textContent=rank===1?"🥇":rank===2?"🥈":rank===3?"🥉":"#"+rank;
-
-            const nameElement=document.createElement("div");
-            nameElement.className="player-name";
-            nameElement.textContent=data.nickname||"Explorer";
-
-            const pointsElement=document.createElement("div");
-            pointsElement.className="player-points";
-            pointsElement.textContent=(Number(data.points)||0)+" pts";
-
-            row.append(rankElement,nameElement,pointsElement);
-            list.appendChild(row);
-            rank++;
-        });
-
-        $("leaderboardStatus").textContent=
-            "Live leaderboard: "+snapshot.size+" registered explorers shown.";
-        $("myRank").textContent=myRank;
-    },error=>{
-        $("leaderboardStatus").textContent="Leaderboard error: "+error.message;
+            $("leaderboardList").innerHTML =
+                '<p class="muted">Log in to connect to the online leaderboard.</p>';
+        }
     });
 }
 
-$("refreshLeaderboard").addEventListener("click",()=>{
-    if(!db){
-        showToast("Connect Firebase to activate the real leaderboard.");
+
+// =====================================================
+// ONLINE POINTS
+// =====================================================
+
+async function addOnlinePoints(points){
+    if(!currentUser || !db) return;
+
+    try{
+        const userRef = doc(db,"users",currentUser.uid);
+
+        await updateDoc(userRef,{
+            points:increment(points)
+        });
+
+        currentProfile = await loadUserProfile(currentUser);
+        $("userPoints").textContent = currentProfile.points || 0;
+    }catch(error){
+        console.error("Online points error:",error);
+        showToast("Your local points were saved, but online points could not update.");
+    }
+}
+
+
+// =====================================================
+// ONLINE LEADERBOARD
+// =====================================================
+
+function listenToLeaderboard(){
+    if(!db) return;
+
+    if(unsubscribeLeaderboard){
+        unsubscribeLeaderboard();
+    }
+
+    const leaderboardQuery = query(
+        collection(db,"users"),
+        orderBy("points","desc"),
+        limit(20)
+    );
+
+    unsubscribeLeaderboard = onSnapshot(leaderboardQuery,snapshot=>{
+        const users = [];
+
+        snapshot.forEach(document=>{
+            const data = document.data();
+            users.push({
+                nickname:data.nickname || "Explorer",
+                points:data.points || 0
+            });
+        });
+
+        renderLeaderboard(users);
+    },error=>{
+        console.error(error);
+        $("leaderboardList").innerHTML =
+            '<p class="error">Could not load leaderboard. Check your Firestore rules.</p>';
+    });
+}
+
+function renderLeaderboard(users){
+    const container = $("leaderboardList");
+    container.innerHTML = "";
+
+    if(!users.length){
+        container.innerHTML = '<p class="muted">No explorers have earned points yet.</p>';
         return;
     }
-    startGlobalLeaderboard();
-    showToast("Leaderboard refreshed.");
-});
 
-/* Reset local progress */
+    users.forEach((user,index)=>{
+        const row = document.createElement("div");
+        row.className = "leaderboard-row";
+
+        const rank = document.createElement("div");
+        rank.className = "rank";
+        rank.textContent = "#"+(index+1);
+
+        const name = document.createElement("div");
+        name.className = "player-name";
+        name.textContent = user.nickname;
+
+        const points = document.createElement("div");
+        points.className = "player-points";
+        points.textContent = (user.points||0)+" pts";
+
+        row.append(rank,name,points);
+        container.appendChild(row);
+    });
+}
+
+
+// =====================================================
+// RESET LOCAL PROGRESS
+// =====================================================
+
 $("resetLocalProgress").addEventListener("click",()=>{
-    if(!confirm("Reset your local points, quiz statistics and mission progress?"))return;
-    progress={points:0,answered:0,correct:0,completedMissions:[],unlockedBadges:[]};
+    const confirmed = confirm("Are you sure you want to reset your local learning progress?");
+
+    if(!confirmed) return;
+
+    progress = {
+        points:0,
+        answered:0,
+        correct:0,
+        completedMissions:[],
+        unlockedBadges:[]
+    };
+
+    writeLocal("uu_progress",progress);
     saveProgress();
     renderMissions();
-    showToast("Local progress reset.");
+    renderBadges();
+
+    showToast("Local progress has been reset.");
 });
 
-/* Initial display */
+
+// =====================================================
+// INITIAL PAGE SETUP
+// =====================================================
+
+if(!firebaseReady){
+    $("authMessage").textContent =
+        "Firebase setup is required before account registration and login can work.";
+    $("authMessage").classList.add("warning");
+}
+
 updateStatistics();
 renderTopics();
 renderMissions();
