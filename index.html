@@ -3,677 +3,1688 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080d20">
-<meta name="description" content="Universe Unlocked — explore space, science, technology, nature, history, mathematics and more.">
-<title>Universe Unlocked | Explore Everything</title>
+<meta name="theme-color" content="#070b1c">
+<title>Universe Unlocked — Ultimate Platform</title>
+
 <style>
 :root{
- --bg:#080d20;--panel:#111a35;--panel2:#172344;--text:#f4f7ff;--muted:#aab6d5;
- --line:rgba(180,199,255,.15);--accent:#8b7cff;--accent2:#43d9cf;--gold:#ffd36e;
- --shadow:0 18px 55px rgba(0,0,0,.28);--radius:22px
+--bg:#070b1c;
+--card:#111a35;
+--card2:#1b2850;
+--text:#ffffff;
+--muted:#aab6d5;
+--purple:#916cff;
+--blue:#397dff;
+--cyan:#40e0d0;
+--gold:#ffd166;
+--border:rgba(255,255,255,.12);
 }
-body.light{--bg:#f3f6ff;--panel:#fff;--panel2:#eaf0ff;--text:#18213c;--muted:#596784;--line:rgba(40,60,110,.15);--shadow:0 16px 45px rgba(38,58,100,.12)}
+
 *{box-sizing:border-box}
+
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.6;transition:background .25s,color .25s}
-button,input,select,textarea{font:inherit}
+
+body{
+margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:Arial,Helvetica,sans-serif;
+line-height:1.6;
+}
+
+button,input,textarea,select{font:inherit}
+
 button{cursor:pointer}
+
 a{color:inherit;text-decoration:none}
-#stars{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden;background:radial-gradient(ellipse at 15% 10%,rgba(93,71,190,.18),transparent 35%),radial-gradient(ellipse at 85% 35%,rgba(34,190,190,.12),transparent 35%)}
-.star{position:absolute;width:2px;height:2px;background:white;border-radius:50%;opacity:.7;animation:twinkle 3s infinite alternate}
-@keyframes twinkle{to{opacity:.15;transform:scale(.5)}}
-header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-.nav{max-width:1200px;margin:auto;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:15px}
-.brand{font-weight:900;letter-spacing:.5px;font-size:1.05rem;display:flex;align-items:center;gap:10px}
-.brand-mark{display:grid;place-items:center;width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;font-weight:1000}
-nav{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
-nav a,.navbtn{padding:8px 11px;border-radius:12px;color:var(--muted);font-size:.9rem;border:0;background:transparent}
-nav a:hover,.navbtn:hover{background:var(--panel2);color:var(--text)}
-.wrap{max-width:1200px;margin:auto;padding:0 22px}
-.hero{padding:78px 0 46px;display:grid;grid-template-columns:1.35fr .65fr;gap:32px;align-items:center}
-.eyebrow{color:var(--accent2);font-size:.78rem;font-weight:850;letter-spacing:2px;text-transform:uppercase}
-h1{font-size:clamp(2.7rem,6vw,5.2rem);line-height:1.02;letter-spacing:-3px;margin:15px 0 20px}
-.gradient{background:linear-gradient(90deg,#a99cff,#55e5d5);-webkit-background-clip:text;background-clip:text;color:transparent}
-.lead{max-width:690px;color:var(--muted);font-size:1.12rem}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
-.btn{border:0;border-radius:14px;padding:12px 18px;font-weight:800;background:linear-gradient(120deg,var(--accent),#5b9cff);color:white;box-shadow:0 8px 25px rgba(110,100,255,.22)}
-.btn.secondary{background:var(--panel2);color:var(--text);box-shadow:none;border:1px solid var(--line)}
-.btn:hover{transform:translateY(-2px)}
-.orbit-card{min-height:280px;border:1px solid var(--line);border-radius:30px;background:linear-gradient(145deg,var(--panel),var(--panel2));box-shadow:var(--shadow);display:grid;place-items:center;position:relative;overflow:hidden}
-.planet{width:145px;height:145px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#d6caff,#8374ef 38%,#30266f 75%);box-shadow:inset -20px -15px 35px #090d2c,0 0 60px rgba(133,113,255,.45);position:relative}
-.planet:after{content:"";position:absolute;width:220px;height:55px;border:7px solid rgba(84,226,219,.65);border-left-color:transparent;border-right-color:transparent;border-radius:50%;transform:rotate(-22deg);left:-38px;top:48px}
-.orbit-label{position:absolute;bottom:20px;color:var(--muted);font-size:.85rem}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:10px 0 55px}
-.stat,.card,.section-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-.stat{padding:17px;text-align:center}
-.stat strong{display:block;font-size:1.7rem}
-.stat span{color:var(--muted);font-size:.83rem}
-section{padding:25px 0 48px;scroll-margin-top:90px}
-.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:20px}
-.section-head h2{font-size:clamp(1.7rem,4vw,2.5rem);margin:4px 0}
-.section-head p{color:var(--muted);margin:0}
-.searchrow{display:flex;gap:10px;margin:20px 0}
-.searchrow input,.field,input,select,textarea{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:13px;padding:12px 14px;color:var(--text);outline:none}
-.searchrow input:focus,input:focus,textarea:focus,select:focus{border-color:var(--accent)}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.chip{border:1px solid var(--line);background:var(--panel);color:var(--muted);padding:7px 12px;border-radius:999px}
-.chip.active{background:var(--accent);color:white;border-color:transparent}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.topic{padding:20px;position:relative;overflow:hidden;transition:.2s}
-.topic:hover{transform:translateY(-4px);border-color:var(--accent)}
-.topic-icon{font-size:2rem}
-.topic small{color:var(--accent2);font-weight:850;letter-spacing:1px}
-.topic h3{margin:8px 0 5px}
-.topic p{color:var(--muted);font-size:.93rem;min-height:52px;margin:0 0 15px}
-.topic .btn{padding:9px 13px;font-size:.86rem}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.card{padding:22px}
-.card h3{margin:0 0 8px}
+
+header{
+position:sticky;
+top:0;
+z-index:100;
+background:rgba(7,11,28,.94);
+backdrop-filter:blur(15px);
+border-bottom:1px solid var(--border);
+}
+
+nav{
+max-width:1400px;
+margin:auto;
+padding:15px 22px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:15px;
+}
+
+.logo{
+font-size:22px;
+font-weight:900;
+letter-spacing:1px;
+}
+
+.logo span{color:var(--cyan)}
+
+.navlinks{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.navlinks a{
+color:var(--muted);
+font-size:14px;
+}
+
+.navlinks a:hover{color:var(--cyan)}
+
+button{
+border:0;
+border-radius:10px;
+padding:11px 16px;
+background:linear-gradient(120deg,var(--purple),var(--blue));
+color:white;
+font-weight:bold;
+}
+
+button:hover{filter:brightness(1.15)}
+
+.secondary{
+background:var(--card2);
+border:1px solid var(--border);
+}
+
+.container{
+max-width:1400px;
+margin:auto;
+padding:20px;
+}
+
+.hero{
+min-height:570px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:30px;
+padding:65px 25px;
+overflow:hidden;
+background:
+radial-gradient(circle at 80% 40%,#39266d 0,transparent 35%),
+radial-gradient(circle at 20% 70%,#102e58 0,transparent 40%);
+}
+
+.hero h1{
+font-size:clamp(45px,7vw,90px);
+line-height:1.05;
+margin:15px 0;
+}
+
+.gradient{
+background:linear-gradient(90deg,#a58aff,#43e5d4);
+color:transparent;
+background-clip:text;
+}
+
+.hero p{
+font-size:19px;
+color:var(--muted);
+max-width:650px;
+}
+
+.planet{
+width:250px;
+height:250px;
+min-width:250px;
+border-radius:50%;
+background:radial-gradient(circle at 30% 25%,#e3d9ff,#8c68ed 40%,#17134d 80%);
+box-shadow:0 0 100px #7152ff;
+position:relative;
+animation:float 5s infinite ease-in-out;
+}
+
+.planet:after{
+content:"";
+position:absolute;
+width:340px;
+height:80px;
+border:9px solid #43e5d4;
+border-left-color:transparent;
+border-right-color:transparent;
+border-radius:50%;
+left:-45px;
+top:85px;
+transform:rotate(-20deg);
+}
+
+@keyframes float{
+50%{transform:translateY(-20px)}
+}
+
+.section-title{
+font-size:32px;
+margin:45px 0 20px;
+}
+
 .muted{color:var(--muted)}
-.progress{height:10px;background:var(--panel2);border-radius:99px;overflow:hidden;margin:12px 0}
-.progress>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s}
-.mission-line{display:flex;justify-content:space-between;gap:12px;align-items:center}
-.badge-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.badge{padding:12px;border-radius:15px;background:var(--panel2);border:1px solid var(--line);opacity:.55}
-.badge.earned{opacity:1;border-color:var(--gold)}
-.badge b{display:block}
-.badge small{color:var(--muted)}
-.quiz-question{font-size:1.2rem;font-weight:800;margin:14px 0}
-.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.answer{padding:12px;border:1px solid var(--line);border-radius:13px;background:var(--panel2);color:var(--text);text-align:left}
-.answer:hover{border-color:var(--accent)}
-.answer.correct{border-color:#31c48d;background:rgba(49,196,141,.13)}
-.answer.wrong{border-color:#f87171;background:rgba(248,113,113,.12)}
-.factbox{font-size:1.1rem;padding:18px;background:var(--panel2);border-radius:16px;margin:12px 0}
-.leader-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}
-.notice{font-size:.84rem;color:var(--muted);background:var(--panel2);padding:12px;border-radius:12px}
-footer{border-top:1px solid var(--line);padding:30px 0 45px;color:var(--muted);text-align:center}
-.modal{position:fixed;inset:0;background:rgba(2,5,17,.78);z-index:50;display:none;place-items:center;padding:18px}
-.modal.show{display:grid}
-.modalbox{width:min(680px,100%);max-height:85vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:25px;box-shadow:var(--shadow)}
-.modal-top{display:flex;justify-content:space-between;gap:10px}
-.close{border:0;background:var(--panel2);color:var(--text);border-radius:10px;padding:7px 12px}
-.modalbox li{margin:8px 0}
-.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--text);color:var(--bg);padding:11px 18px;border-radius:99px;z-index:80;transition:.25s}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-[dir=rtl] body{text-align:right}
-[dir=rtl] .section-head,[dir=rtl] .mission-line,[dir=rtl] .leader-row{flex-direction:row-reverse}
-@media(max-width:850px){.hero{grid-template-columns:1fr;padding-top:50px}.orbit-card{min-height:220px}.grid{grid-template-columns:repeat(2,1fr)}nav a{display:none}}
-@media(max-width:600px){.wrap{padding:0 15px}.nav{padding:10px 15px}.brand{font-size:.9rem}.hero{padding:45px 0 30px}h1{letter-spacing:-1.5px}.stats{grid-template-columns:repeat(2,1fr);margin-bottom:35px}.grid,.two-col{grid-template-columns:1fr}.answers{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}.badge-list{grid-template-columns:1fr 1fr}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin:30px 0;
+}
+
+.stat{
+background:var(--card);
+border:1px solid var(--border);
+border-radius:17px;
+padding:23px;
+text-align:center;
+}
+
+.stat strong{
+display:block;
+font-size:32px;
+color:var(--cyan);
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--border);
+border-radius:18px;
+padding:23px;
+transition:.2s;
+}
+
+.card:hover{
+transform:translateY(-4px);
+border-color:var(--purple);
+}
+
+.card h3{margin-top:8px}
+
+.icon{font-size:38px}
+
+input,textarea,select{
+width:100%;
+padding:13px;
+background:var(--card2);
+color:white;
+border:1px solid var(--border);
+border-radius:10px;
+margin:8px 0;
+}
+
+textarea{
+min-height:130px;
+resize:vertical;
+}
+
+.search{
+display:flex;
+gap:10px;
+margin-bottom:20px;
+}
+
+.search input{flex:1}
+
+.filters{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin:15px 0;
+}
+
+.filter{
+background:var(--card2);
+border:1px solid var(--border);
+}
+
+.filter.active{background:var(--purple)}
+
+.topic-icon{font-size:38px}
+
+.topic p{color:var(--muted)}
+
+.panel{
+background:var(--card);
+padding:25px;
+border-radius:18px;
+border:1px solid var(--border);
+margin:20px 0;
+}
+
+.two{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+.progress{
+height:13px;
+background:#25304f;
+border-radius:30px;
+overflow:hidden;
+margin:15px 0;
+}
+
+.progress div{
+height:100%;
+width:0;
+background:linear-gradient(90deg,var(--purple),var(--cyan));
+transition:.3s;
+}
+
+.badges{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+.badge{
+padding:15px;
+border-radius:12px;
+background:var(--card2);
+opacity:.5;
+}
+
+.badge.earned{
+opacity:1;
+border:1px solid var(--gold);
+}
+
+.answer{
+display:block;
+width:100%;
+margin:9px 0;
+text-align:left;
+background:var(--card2);
+}
+
+.correct{background:#087a55}
+.wrong{background:#963b48}
+
+.file-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+padding:12px;
+border-bottom:1px solid var(--border);
+overflow-wrap:anywhere;
+}
+
+.file-item span{flex:1}
+
+.storage-bar{
+height:20px;
+background:#273354;
+border-radius:20px;
+overflow:hidden;
+}
+
+.storage-bar div{
+height:100%;
+width:0;
+background:linear-gradient(90deg,var(--purple),var(--cyan));
+}
+
+.progress-label{
+display:flex;
+justify-content:space-between;
+gap:10px;
+margin:12px 0;
+}
+
+.video-frame{
+width:100%;
+aspect-ratio:16/9;
+border:0;
+border-radius:15px;
+background:#000;
+}
+
+footer{
+margin-top:70px;
+padding:40px 20px;
+text-align:center;
+background:#050816;
+border-top:1px solid var(--border);
+color:var(--muted);
+}
+
+.hidden{display:none!important}
+
+#toast{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:white;
+color:#111;
+padding:12px 22px;
+border-radius:30px;
+display:none;
+z-index:300;
+}
+
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.85);
+z-index:200;
+display:none;
+place-items:center;
+padding:20px;
+}
+
+.modal-content{
+background:var(--card);
+padding:30px;
+border-radius:20px;
+max-width:600px;
+width:100%;
+max-height:85vh;
+overflow:auto;
+}
+
+@media(max-width:900px){
+.grid{grid-template-columns:repeat(2,1fr)}
+.hero{flex-direction:column}
+.planet{margin:35px}
+}
+
+@media(max-width:600px){
+.grid,.two{grid-template-columns:1fr}
+.stats{grid-template-columns:repeat(2,1fr)}
+.navlinks{display:none}
+.hero h1{font-size:48px}
+.planet{transform:scale(.8)}
+}
 </style>
 </head>
+
 <body>
 
-<div id="stars" aria-hidden="true"></div>
-
 <header>
-<div class="nav">
-<a class="brand" href="#top"><span class="brand-mark">UU</span> UNIVERSE UNLOCKED</a>
-<nav aria-label="Main navigation">
-<a href="#explore" data-en="Explore" data-ar="استكشف">Explore</a>
-<a href="#missions" data-en="Missions" data-ar="المهام">Missions</a>
-<a href="#quiz" data-en="Quiz" data-ar="اختبار">Quiz</a>
-<a href="#leaderboard" data-en="Leaderboard" data-ar="المتصدرون">Leaderboard</a>
-<a href="#profile" data-en="Profile" data-ar="الملف الشخصي">Profile</a>
-<button class="navbtn" id="langBtn">عربي</button>
-<button class="navbtn" id="themeBtn">☀️ Theme</button>
-</nav>
+<nav>
+<div class="logo">🌌 UNIVERSE <span>UNLOCKED</span></div>
+
+<div class="navlinks">
+<a href="#home">Home</a>
+<a href="#explore">Explore</a>
+<a href="#missions">Missions</a>
+<a href="#quiz">Quiz</a>
+<a href="#library">Library</a>
+<a href="#storage">Storage</a>
+<a href="#community">Community</a>
+<a href="#profile">Profile</a>
 </div>
+
+<button class="secondary" onclick="toggleTheme()">🌓 Theme</button>
+</nav>
 </header>
 
-<main id="top" class="wrap">
+<main class="container">
 
-<section class="hero">
+<!-- HOME -->
+
+<section class="hero" id="home">
+
 <div>
-<div class="eyebrow" data-en="YOUR JOURNEY STARTS HERE" data-ar="رحلتك تبدأ من هنا">YOUR JOURNEY STARTS HERE</div>
-<h1 data-en="Unlock the <span class='gradient'>Unknown.</span>" data-ar="اكتشف <span class='gradient'>المجهول.</span>">Unlock the <span class="gradient">Unknown.</span></h1>
-<p class="lead" data-en="Explore space, science, technology, history, nature and the ideas shaping tomorrow. Ask questions, learn something surprising, and level up as an explorer." data-ar="استكشف الفضاء والعلوم والتكنولوجيا والتاريخ والطبيعة وأفكار المستقبل. اسأل، وتعلّم شيئًا مدهشًا، وطوّر مستواك كمستكشف.">Explore space, science, technology, history, nature and the ideas shaping tomorrow. Ask questions, learn something surprising, and level up as an explorer.</p>
-<div class="actions">
-<a class="btn" href="#explore" data-en="Start Exploring →" data-ar="ابدأ الاستكشاف ←">Start Exploring →</a>
-<a class="btn secondary" href="#quiz" data-en="Take the Challenge" data-ar="ابدأ التحدي">Take the Challenge</a>
+<p style="color:var(--cyan);letter-spacing:4px">
+THE WORLD OF KNOWLEDGE
+</p>
+
+<h1>
+UNLOCK THE<br>
+<span class="gradient">UNKNOWN.</span>
+</h1>
+
+<p>
+Welcome to Universe Unlocked.
+Discover the mysteries of the universe,
+explore science, technology, history,
+nature, mathematics, Islam and everything
+that makes our world extraordinary.
+</p>
+
+<button onclick="go('explore')">START EXPLORING 🚀</button>
+<button class="secondary" onclick="go('quiz')">TAKE A QUIZ</button>
 </div>
-</div>
-<div class="orbit-card">
+
 <div class="planet"></div>
-<div class="orbit-label">ONE WORLD. INFINITE QUESTIONS.</div>
-</div>
+
 </section>
+
+<!-- STATISTICS -->
 
 <div class="stats">
-<div class="stat"><strong id="topicsStat">0</strong><span data-en="Topics explored" data-ar="موضوعات استكشفتها">Topics explored</span></div>
-<div class="stat"><strong id="xpStat">0</strong><span>XP</span></div>
-<div class="stat"><strong id="levelStat">1</strong><span data-en="Explorer level" data-ar="مستوى المستكشف">Explorer level</span></div>
-<div class="stat"><strong id="badgeStat">0</strong><span data-en="Badges earned" data-ar="شارات حصلت عليها">Badges earned</span></div>
+
+<div class="stat">
+<strong id="xp">0</strong>
+XP
 </div>
+
+<div class="stat">
+<strong id="level">1</strong>
+Explorer Level
+</div>
+
+<div class="stat">
+<strong id="explored">0</strong>
+Topics Explored
+</div>
+
+<div class="stat">
+<strong id="achievements">0</strong>
+Achievements
+</div>
+
+</div>
+
+<!-- EXPLORE -->
 
 <section id="explore">
-<div class="section-head">
-<div>
-<div class="eyebrow">01 / DISCOVER</div>
-<h2 data-en="Explore Everything" data-ar="استكشف كل شيء">Explore Everything</h2>
-<p data-en="Choose a field, follow your curiosity, and open a new door." data-ar="اختر مجالًا واتبع فضولك وافتح بابًا جديدًا.">Choose a field, follow your curiosity, and open a new door.</p>
+
+<h2 class="section-title">🌍 Explore Everything</h2>
+
+<p class="muted">
+There is no limit to curiosity.
+Choose your next adventure.
+</p>
+
+<div class="search">
+<input id="search" placeholder="Search for anything...">
+<button onclick="renderTopics()">Search</button>
 </div>
-</div>
-<div class="searchrow">
-<input id="search" type="search" placeholder="Search topics..." aria-label="Search topics">
-<button class="btn secondary" id="clearSearch">Clear</button>
-</div>
+
 <div class="filters" id="filters"></div>
-<div class="grid" id="topicGrid"></div>
-<p class="muted" id="noResults" hidden>No topics found. Try another search.</p>
+
+<div class="grid" id="topics"></div>
+
 </section>
+
+<!-- MISSIONS -->
 
 <section id="missions">
-<div class="section-head">
-<div>
-<div class="eyebrow">02 / KEEP GOING</div>
-<h2 data-en="Your Explorer Dashboard" data-ar="لوحة المستكشف">Your Explorer Dashboard</h2>
-<p data-en="Small discoveries build big knowledge." data-ar="الاكتشافات الصغيرة تصنع معرفة كبيرة.">Small discoveries build big knowledge.</p>
+
+<h2 class="section-title">🚀 Explorer Missions</h2>
+
+<div class="two">
+
+<div class="panel">
+<h3>Daily Mission</h3>
+<p>Explore three different subjects today.</p>
+
+<div class="progress">
+<div id="missionProgress"></div>
 </div>
+
+<p id="missionText">0 / 3 completed</p>
+
+<button onclick="claimMission()" id="missionButton">
+Claim Reward
+</button>
 </div>
-<div class="two-col">
-<div class="card">
-<h3>🚀 <span data-en="Daily Mission" data-ar="مهمة اليوم">Daily Mission</span></h3>
-<p class="muted" data-en="Explore three different topics today." data-ar="استكشف ثلاثة موضوعات مختلفة اليوم.">Explore three different topics today.</p>
-<div class="mission-line"><b id="missionCount">0 / 3</b><span class="muted">Reward: 30 XP</span></div>
-<div class="progress"><span id="missionProgress"></span></div>
-<button class="btn" id="claimMission">Claim reward</button>
-<p class="muted" id="missionMessage"></p>
+
+<div class="panel">
+<h3>🏅 Your Achievements</h3>
+<div class="badges" id="badges"></div>
 </div>
-<div class="card">
-<h3>🏅 <span data-en="Achievements" data-ar="الإنجازات">Achievements</span></h3>
-<div class="badge-list" id="badges"></div>
+
 </div>
-</div>
+
 </section>
+
+<!-- QUIZ -->
 
 <section id="quiz">
-<div class="section-head">
-<div>
-<div class="eyebrow">03 / TEST YOURSELF</div>
-<h2 data-en="Knowledge Challenge" data-ar="تحدي المعرفة">Knowledge Challenge</h2>
-<p data-en="Choose an answer. Every correct answer earns 10 XP." data-ar="اختر إجابة. كل إجابة صحيحة تمنحك 10 نقاط خبرة.">Choose an answer. Every correct answer earns 10 XP.</p>
+
+<h2 class="section-title">🧠 Knowledge Challenge</h2>
+
+<div class="panel">
+
+<p id="questionNumber">Question 1</p>
+
+<h3 id="question">Loading question...</h3>
+
+<div id="answers"></div>
+
+<p id="feedback"></p>
+
+<button onclick="nextQuestion()">Next Question →</button>
+
 </div>
-</div>
-<div class="card">
-<div class="eyebrow" id="quizCategory">SCIENCE QUIZ</div>
-<div class="quiz-question" id="question">Loading question…</div>
-<div class="answers" id="answers"></div>
-<p id="quizFeedback" class="muted" aria-live="polite"></p>
-<button class="btn secondary" id="nextQuestion">Next Question →</button>
-<span class="muted" id="quizScore" style="margin-left:12px">0 correct</span>
-</div>
+
 </section>
 
-<section id="leaderboard">
-<div class="section-head">
-<div>
-<div class="eyebrow">04 / FRIENDLY CHALLENGE</div>
-<h2>🏆 Explorer Leaderboard</h2>
-<p class="muted">A sample board to make the journey fun.</p>
+<!-- KNOWLEDGE LIBRARY -->
+
+<section id="library">
+
+<h2 class="section-title">📚 Knowledge Library</h2>
+
+<div class="panel">
+
+<h3>My Learning Notes</h3>
+
+<input id="noteTitle" placeholder="Note title">
+
+<textarea id="noteContent" placeholder="Write your discoveries here..."></textarea>
+
+<button onclick="saveNote()">Save Note</button>
+
+<h3>Saved Notes</h3>
+
+<div id="notes"></div>
+
 </div>
-</div>
-<div class="card">
-<div id="leaderRows"></div>
-<p class="notice">This is a demonstration leaderboard saved only in this browser. It is not a global ranking. A real shared leaderboard needs a secure online database and account system. Never enter private information here.</p>
-</div>
+
 </section>
+
+<!-- STORAGE -->
+
+<section id="storage">
+
+<h2 class="section-title">💾 Universe Storage Center</h2>
+
+<div class="panel">
+
+<h3>Personal Storage Manager</h3>
+
+<p class="muted">
+Store learning documents, images, research files,
+and other personal learning materials in your browser.
+</p>
+
+<div class="progress-label">
+<b>Storage used</b>
+<strong id="storageUsed">Calculating...</strong>
+</div>
+
+<div class="storage-bar">
+<div id="storageProgress"></div>
+</div>
+
+<div class="progress-label">
+<span>Target storage capacity</span>
+<strong>8 GB</strong>
+</div>
+
+<p class="muted" id="storageAvailable">
+Checking browser storage...
+</p>
+
+<hr style="border-color:var(--border);margin:25px 0">
+
+<h3>📁 Upload Files</h3>
+
+<input type="file" id="fileInput" multiple>
+
+<button onclick="uploadFiles()">Save Selected Files</button>
+
+<h3>My Stored Files</h3>
+
+<div id="fileList"></div>
+
+<button class="secondary" onclick="refreshStorage()">
+Refresh Storage Information
+</button>
+
+<p class="muted">
+Important: 8 GB is the requested target, not guaranteed
+available capacity. Actual browser storage depends on
+your device, browser and available disk space.
+Files are stored locally, not uploaded to a worldwide server.
+</p>
+
+</div>
+
+</section>
+
+<!-- VIDEO CENTER -->
+
+<section id="videos">
+
+<h2 class="section-title">🎬 Video Learning Center</h2>
+
+<div class="grid">
+
+<div class="card">
+<div class="icon">🌌</div>
+<h3>Space Exploration</h3>
+<p>Discover planets, stars and galaxies.</p>
+<a href="https://www.youtube.com/results?search_query=space+documentary+for+students" target="_blank">
+<button>Explore Videos</button>
+</a>
+</div>
+
+<div class="card">
+<div class="icon">🔬</div>
+<h3>Science Discoveries</h3>
+<p>Explore the laws of nature.</p>
+<a href="https://www.youtube.com/results?search_query=science+documentary" target="_blank">
+<button>Explore Videos</button>
+</a>
+</div>
+
+<div class="card">
+<div class="icon">🤖</div>
+<h3>Technology</h3>
+<p>Learn about artificial intelligence and robots.</p>
+<a href="https://www.youtube.com/results?search_query=technology+documentary" target="_blank">
+<button>Explore Videos</button>
+</a>
+</div>
+
+</div>
+
+</section>
+
+<!-- COMMUNITY -->
+
+<section id="community">
+
+<h2 class="section-title">🌐 Explorer Community</h2>
+
+<div class="panel">
+
+<h3>Share Your Discovery</h3>
+
+<input id="postTitle" placeholder="Discovery title">
+
+<textarea id="postContent" placeholder="What have you discovered?"></textarea>
+
+<button onclick="publishPost()">Publish Locally</button>
+
+<h3>Recent Discoveries</h3>
+
+<div id="posts"></div>
+
+<p class="muted">
+These posts are saved only in this browser.
+A public community requires a secure online backend.
+</p>
+
+</div>
+
+</section>
+
+<!-- PROFILE -->
 
 <section id="profile">
-<div class="section-head">
-<div>
-<div class="eyebrow">05 / YOUR SPACE</div>
-<h2>👤 Explorer Profile</h2>
-<p class="muted">Choose a nickname and avatar for this device.</p>
-</div>
-</div>
-<div class="card">
-<div class="two-col">
-<div>
-<label for="nickname">Explorer nickname</label>
-<input id="nickname" maxlength="18" placeholder="e.g. Star Explorer">
-<label for="avatar" style="display:block;margin-top:12px">Choose avatar</label>
+
+<h2 class="section-title">👤 Explorer Profile</h2>
+
+<div class="panel">
+
+<h3>Customize Your Profile</h3>
+
+<input id="username" maxlength="20" placeholder="Choose a nickname">
+
 <select id="avatar">
-<option>🚀</option><option>🌟</option><option>🪐</option><option>🔭</option><option>🧠</option><option>🦉</option>
+<option>🚀</option>
+<option>🌟</option>
+<option>🪐</option>
+<option>🔭</option>
+<option>🧠</option>
+<option>🌍</option>
 </select>
-<button class="btn" id="saveProfile" style="margin-top:14px">Save Profile</button>
+
+<button onclick="saveProfile()">Save Profile</button>
+
+<h3 id="welcome">Welcome, Explorer!</h3>
+
+<button class="secondary" onclick="resetProgress()">
+Reset Learning Progress
+</button>
+
 </div>
-<div>
-<h3 id="profileGreeting">🚀 Welcome, Explorer!</h3>
-<p class="muted">Your progress is stored in this browser on this device. It is not a secure online account.</p>
-<button class="btn secondary" id="resetProgress">Reset my progress</button>
-</div>
-</div>
-<p class="notice">For your safety, do not enter your real name, address, school, phone number, password, or other private information.</p>
-</div>
+
 </section>
 
-<section id="extras">
-<div class="two-col">
-<div class="card">
-<div class="eyebrow">A LITTLE WONDER</div>
-<h2>💫 Amazing Fact</h2>
-<div class="factbox" id="factText">Loading a surprising fact…</div>
-<button class="btn secondary" id="newFact">Discover another fact</button>
-</div>
-<div class="card">
-<div class="eyebrow">THINK DIFFERENTLY</div>
-<h2>❓ Question of the Day</h2>
-<div class="factbox" id="dailyQuestion">What would you explore if you could travel anywhere in the universe?</div>
-<p class="muted">Think about it, discuss it, or write your own answer in your notebook.</p>
-</div>
-</div>
-</section>
+<!-- DAILY FACT -->
 
 <section>
-<div class="card" style="text-align:center">
-<div class="eyebrow">WATCH • LEARN • DISCOVER</div>
-<h2>📺 Universe Unlocked on YouTube</h2>
-<p class="muted">More questions about space, science, our world, and the unknown.</p>
-<a class="btn" href="https://www.youtube.com/channel/UCaFS3FO0Il2XlDxbo2RbHzg" target="_blank" rel="noopener">Visit Our YouTube Channel ↗</a>
+
+<h2 class="section-title">💫 Amazing Fact Generator</h2>
+
+<div class="panel">
+<h3 id="fact">Loading a fascinating fact...</h3>
+<button onclick="newFact()">Another Fact</button>
 </div>
+
 </section>
 
 </main>
 
 <footer>
-<div class="wrap">
-<b>UNIVERSE UNLOCKED</b><br>
-Keep questioning. Keep discovering.<br>
-<small>Made for curious minds everywhere • Learn safely and think critically.</small>
-</div>
+
+<h2>🌌 UNIVERSE UNLOCKED</h2>
+
+<p>One World. Infinite Questions.</p>
+
+<p>Keep Learning. Keep Discovering.</p>
+
+<a href="https://www.youtube.com/channel/UCaFS3FO0Il2XlDxbo2RbHzg" target="_blank">
+<button>Visit Our YouTube Channel</button>
+</a>
+
+<p>© 2026 Universe Unlocked</p>
+
 </footer>
 
-<div class="modal" id="topicModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-<div class="modalbox">
-<div class="modal-top">
-<div><div class="eyebrow" id="modalEyebrow">TOPIC DISCOVERY</div><h2 id="modalTitle">Topic</h2></div>
-<button class="close" id="closeModal" aria-label="Close">✕</button>
-</div>
-<p class="muted" id="modalIntro"></p>
-<h3>Explore these ideas</h3>
-<ul id="modalIdeas"></ul>
-<div class="notice">Use these ideas as a starting point. Check reliable books and educational sources when researching facts.</div>
-<button class="btn" id="markExplored" style="margin-top:15px">Mark topic explored (+15 XP)</button>
-</div>
-</div>
-
-<div class="toast" id="toast" role="status"></div>
+<div id="toast"></div>
 
 <script>
+
+/* ==================================
+   UNIVERSE UNLOCKED DATABASE
+================================== */
+
+const DB_NAME="UniverseUnlockedDB";
+const DB_VERSION=1;
+const FILE_STORE="files";
+const NOTE_STORE="notes";
+
+let db;
+
+const state={
+xp:0,
+explored:[],
+correct:0,
+mission:[],
+claimed:false,
+username:"",
+avatar:"🚀"
+};
+
+let questions=[
+{
+q:"Which planet is the largest in our Solar System?",
+a:["Earth","Jupiter","Mars","Venus"],
+correct:1
+},
+{
+q:"What is the closest star to Earth?",
+a:["Sirius","Polaris","The Sun","Vega"],
+correct:2
+},
+{
+q:"What is the unit of force?",
+a:["Newton","Watt","Metre","Joule"],
+correct:0
+},
+{
+q:"Which organ pumps blood?",
+a:["Lungs","Heart","Brain","Liver"],
+correct:1
+},
+{
+q:"What is the smallest prime number?",
+a:["1","2","3","5"],
+correct:1
+},
+{
+q:"Which ocean is the largest?",
+a:["Atlantic","Indian","Pacific","Arctic"],
+correct:2
+}
+];
+
+let questionIndex=0;
+let answered=false;
+
 const topics=[
-{id:"space",icon:"🌌",tag:"THE COSMOS",name:"Space & Astronomy",desc:"Discover planets, stars, galaxies, black holes and cosmic mysteries.",ideas:["How do stars form and change?","Why do planets orbit the Sun?","What can telescopes reveal about distant galaxies?","How do astronauts live and work in space?"]},
-{id:"science",icon:"🔬",tag:"EXPERIMENT",name:"Science",desc:"Investigate matter, energy, forces, life and how our world works.",ideas:["How are potential and kinetic energy different?","What makes magnets attract or repel?","How does light travel?","How do scientists test an idea fairly?"]},
-{id:"technology",icon:"🤖",tag:"THE FUTURE",name:"Technology & AI",desc:"Explore computers, robotics, artificial intelligence and inventions.",ideas:["How does a computer process information?","How can robots help people?","What is machine learning?","How can we use technology responsibly?"]},
-{id:"nature",icon:"🌍",tag:"OUR PLANET",name:"Nature & Earth",desc:"Discover ecosystems, oceans, weather, wildlife and our planet.",ideas:["How does the water cycle work?","Why are forests important?","How do earthquakes happen?","How can communities reduce pollution?"]},
-{id:"history",icon:"🏛️",tag:"THE PAST",name:"History",desc:"Travel through civilizations, discoveries and historical events.",ideas:["How did ancient civilizations build cities?","How did writing change human history?","What can archaeology teach us?","How do historians compare sources?"]},
-{id:"math",icon:"🧮",tag:"THINK SMART",name:"Mathematics",desc:"Test your logic and uncover patterns in numbers and shapes.",ideas:["Where do prime numbers appear?","How do fractions describe parts of a whole?","What makes a shape symmetrical?","How can patterns help solve problems?"]},
-{id:"body",icon:"🧠",tag:"YOU",name:"Human Body",desc:"Learn how the brain, heart, senses and body systems work.",ideas:["How does the brain send messages?","Why does the heart beat?","How do the five senses help us?","Why is sleep important for learning?"]},
-{id:"engineering",icon:"⚙️",tag:"BUILD IT",name:"Engineering",desc:"Explore structures, machines, spacecraft, bridges and clever designs.",ideas:["How do bridges spread loads?","What makes a rocket move?","How can engineers test a prototype?","How do simple machines make work easier?"]},
-{id:"islam",icon:"📖",tag:"REFLECTION",name:"Islam & Knowledge",desc:"Explore Islamic knowledge, values, history and reflections on creation.",ideas:["Why does Islam encourage seeking beneficial knowledge?","How did scholars contribute to mathematics and astronomy?","What can we learn from the value of honesty?","Reflect on signs of creation while respecting reliable interpretation."]},
-{id:"ocean",icon:"🌊",tag:"DEEP BLUE",name:"Ocean Mysteries",desc:"Discover underwater ecosystems, deep-sea creatures and exploration.",ideas:["Why is the deep ocean difficult to explore?","How do coral reefs support marine life?","How do deep-sea animals adapt?","Why does the ocean influence climate?"]},
-{id:"sports",icon:"⚽",tag:"GAME ON",name:"Sports",desc:"Learn about football, sporting records, tactics and athletic science.",ideas:["How does teamwork improve a football team?","What is the role of a midfielder?","How do athletes practise skills safely?","How does physics explain a curved ball?"]},
-{id:"ideas",icon:"💡",tag:"BIG IDEAS",name:"Inventions & Ideas",desc:"Investigate remarkable inventions and imagine solutions for tomorrow.",ideas:["How did the printing press spread knowledge?","What makes an invention useful?","How can an idea become a prototype?","Which everyday problem could you redesign?"]},
-{id:"puzzles",icon:"🧩",tag:"BRAIN GYM",name:"Puzzles & Logic",desc:"Sharpen your reasoning with patterns, riddles and brain teasers.",ideas:["Can you find the next number in a sequence?","How can you eliminate impossible answers?","What is a logical contradiction?","How do chess players plan ahead?"]},
-{id:"future",icon:"🛸",tag:"WHAT IF",name:"What If?",desc:"Explore imaginative questions using evidence and scientific thinking.",ideas:["What if Earth had two moons?","What if the Sun suddenly became dimmer?","What if humans explored an ocean under an icy moon?","How would you test a surprising prediction?"]}
+["space","🌌","Space & Astronomy","Explore stars, galaxies, planets and black holes.","SPACE"],
+["science","🔬","Science","Discover matter, energy, forces and experiments.","SCIENCE"],
+["technology","🤖","Technology & AI","Explore computers, robots and artificial intelligence.","TECH"],
+["math","🧮","Mathematics","Numbers, equations, geometry and logic.","MATH"],
+["history","🏛️","History","Discover ancient civilizations and historical events.","HISTORY"],
+["nature","🌍","Nature & Earth","Explore wildlife, climate and our planet.","NATURE"],
+["engineering","⚙️","Engineering","Discover machines, structures and spacecraft.","ENGINEERING"],
+["ocean","🌊","Ocean Mysteries","Explore the deep sea and marine life.","OCEAN"],
+["islam","📖","Islam & Knowledge","Explore knowledge, values and Islamic history.","ISLAM"],
+["football","⚽","Football","Discover football science, tactics and history.","SPORTS"],
+["body","🧠","Human Body","Explore the brain, heart and body systems.","BIOLOGY"],
+["inventions","💡","Inventions","Discover inventions that changed the world.","INVENTIONS"],
+["puzzles","🧩","Puzzles","Challenge your reasoning and logic.","LOGIC"],
+["future","🛸","Future Science","Explore possibilities and scientific predictions.","FUTURE"],
+["geography","🗺️","Geography","Explore countries, continents and landscapes.","GEOGRAPHY"],
+["art","🎨","Art & Creativity","Discover art, design and creative thinking.","ART"]
 ];
 
-const questions=[
-{c:"SPACE",q:"Which planet is famous for its large ring system?",a:["Mars","Saturn","Mercury","Venus"],ok:1,why:"Saturn's bright rings are made mostly of ice and rocky particles."},
-{c:"SCIENCE",q:"What is the unit of force?",a:["Watt","Metre","Newton","Litre"],ok:2,why:"Force is measured in newtons (N)."},
-{c:"EARTH",q:"Which process turns liquid water into water vapour?",a:["Freezing","Evaporation","Condensation","Melting"],ok:1,why:"Evaporation happens when liquid water changes into water vapour."},
-{c:"BIOLOGY",q:"Which organ pumps blood around the body?",a:["Lungs","Brain","Heart","Stomach"],ok:2,why:"The heart pumps blood through the circulatory system."},
-{c:"MATH",q:"What is the smallest prime number?",a:["0","1","2","3"],ok:2,why:"2 is the smallest prime number and the only even prime."},
-{c:"TECH",q:"What does CPU commonly stand for?",a:["Central Processing Unit","Computer Power Utility","Core Program User","Central Print Unit"],ok:0,why:"The CPU processes instructions in a computer."},
-{c:"OCEAN",q:"What is the largest ocean on Earth?",a:["Atlantic","Indian","Arctic","Pacific"],ok:3,why:"The Pacific Ocean is the largest."},
-{c:"ENGINEERING",q:"Which simple machine is a seesaw an example of?",a:["Pulley","Lever","Wheel and axle","Screw"],ok:1,why:"A seesaw is a lever that pivots around a fulcrum."}
-];
+function openDatabase(){
 
-const facts=[
-"The light from the Sun takes about 8 minutes and 20 seconds to reach Earth.",
-"Jupiter is the largest planet in our Solar System.",
-"Octopuses have three hearts.",
-"Water can exist naturally as a solid, liquid and gas on Earth.",
-"The International Space Station travels around Earth roughly every 90 minutes.",
-"Some kinds of bamboo can grow very quickly under the right conditions.",
-"Sound needs a medium, such as air or water, to travel.",
-"A day on Venus is longer than its year.",
-"Your brain uses electrical and chemical signals to communicate with the body.",
-"The Pacific Ocean is larger than all of Earth's land area combined."
-];
+return new Promise((resolve,reject)=>{
 
-const $=id=>document.getElementById(id);
-const getToday=()=>new Date().toISOString().slice(0,10);
+const request=indexedDB.open(DB_NAME,DB_VERSION);
 
-let state={xp:0,explored:[],claimed:false,missionDate:getToday(),correct:0,profile:"",avatar:"🚀"};
+request.onupgradeneeded=e=>{
 
-try{
-const saved=JSON.parse(localStorage.getItem("uuExplorerV3"));
-if(saved)state={...state,...saved}
-}catch(e){}
+const database=e.target.result;
 
-if(state.missionDate!==getToday()){
-state.missionDate=getToday();
-state.claimed=false;
-state.todayExplored=[];
+if(!database.objectStoreNames.contains(FILE_STORE)){
+database.createObjectStore(FILE_STORE,{
+keyPath:"id",
+autoIncrement:true
+});
 }
 
-state.todayExplored=state.todayExplored||[];
-
-let currentTopic=null,currentQuestion=-1,answered=false,filter="All",lang="en";
-
-function save(){
-localStorage.setItem("uuExplorerV3",JSON.stringify(state));
-renderStats();
+if(!database.objectStoreNames.contains(NOTE_STORE)){
+database.createObjectStore(NOTE_STORE,{
+keyPath:"id",
+autoIncrement:true
+});
 }
 
-function toast(msg){
-$("toast").textContent=msg;
-$("toast").classList.add("show");
-setTimeout(()=>$("toast").classList.remove("show"),2200);
+};
+
+request.onsuccess=e=>{
+db=e.target.result;
+resolve(db);
+};
+
+request.onerror=()=>{
+reject(request.error);
+};
+
+});
+
 }
 
-function level(){
-return Math.floor(state.xp/100)+1;
+/* ==================================
+   DATABASE HELPERS
+================================== */
+
+function storeData(store,mode,callback){
+
+return db.transaction(store,mode).objectStore(store);
+
 }
 
-function renderStats(){
-$("topicsStat").textContent=state.explored.length;
-$("xpStat").textContent=state.xp;
-$("levelStat").textContent=level();
-$("badgeStat").textContent=earned().length;
-$("missionCount").textContent=`${state.todayExplored.length} / 3`;
-$("missionProgress").style.width=Math.min(100,state.todayExplored.length/3*100)+"%";
+function getAll(store){
+
+return new Promise((resolve,reject)=>{
+
+const request=storeData(store,"readonly").getAll();
+
+request.onsuccess=()=>resolve(request.result);
+request.onerror=()=>reject(request.error);
+
+});
+
 }
 
-function earned(){
-let b=[];
-if(state.explored.length>=1)b.push("first");
-if(state.xp>=100)b.push("curious");
-if(level()>=5)b.push("level");
-if(state.correct>=5)b.push("quiz");
-return b;
+function addRecord(store,data){
+
+return new Promise((resolve,reject)=>{
+
+const request=storeData(store,"readwrite").add(data);
+
+request.onsuccess=()=>resolve(request.result);
+request.onerror=()=>reject(request.error);
+
+});
+
 }
 
-const badgeInfo=[
-["first","🔭","First Discovery","Explore your first topic."],
-["curious","🧠","Curious Mind","Earn 100 XP."],
-["level","🌟","Rising Explorer","Reach level 5."],
-["quiz","🎯","Quiz Champion","Answer five questions correctly."]
-];
+function deleteRecord(store,id){
 
-function renderBadges(){
-$("badges").innerHTML=badgeInfo.map(b=>
-`<div class="badge ${earned().includes(b[0])?"earned":""}">
-${b[1]} <b>${b[2]}</b><small>${b[3]}</small></div>`
-).join("");
+return new Promise((resolve,reject)=>{
+
+const request=storeData(store,"readwrite").delete(id);
+
+request.onsuccess=()=>resolve();
+request.onerror=()=>reject(request.error);
+
+});
+
 }
+
+/* ==================================
+   NAVIGATION
+================================== */
+
+function go(id){
+
+document.getElementById(id).scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+/* ==================================
+   TOPICS
+================================== */
 
 function renderTopics(){
-let q=$("search").value.toLowerCase();
-let shown=topics.filter(t=>
-(filter==="All"||t.tag===filter)&&
-(`${t.name} ${t.desc} ${t.tag}`.toLowerCase().includes(q))
-);
 
-$("topicGrid").innerHTML=shown.map(t=>
-`<article class="card topic">
-<div class="topic-icon">${t.icon}</div>
-<small>${t.tag}</small>
-<h3>${t.name}</h3>
-<p>${t.desc}</p>
-<button class="btn" onclick="openTopic('${t.id}')">Explore Topic →</button>
-</article>`
-).join("");
+const query=document.getElementById("search").value.toLowerCase();
 
-$("noResults").hidden=shown.length>0;
-}
+const container=document.getElementById("topics");
 
-function renderFilters(){
-let tags=["All",...new Set(topics.map(t=>t.tag))];
+container.innerHTML="";
 
-$("filters").innerHTML=tags.map(t=>
-`<button class="chip ${filter===t?"active":""}" data-filter="${t}">${t}</button>`
-).join("");
+topics.filter(t=>
+t[2].toLowerCase().includes(query)||
+t[3].toLowerCase().includes(query)
+).forEach(t=>{
 
-$("filters").querySelectorAll("button").forEach(b=>{
-b.onclick=()=>{
-filter=b.dataset.filter;
-renderFilters();
-renderTopics();
-};
-});
-}
+const card=document.createElement("div");
 
-function openTopic(id){
-currentTopic=topics.find(t=>t.id===id);
-$("modalEyebrow").textContent=currentTopic.tag;
-$("modalTitle").textContent=currentTopic.icon+" "+currentTopic.name;
-$("modalIntro").textContent=currentTopic.desc;
-$("modalIdeas").innerHTML=currentTopic.ideas.map(x=>`<li>${x}</li>`).join("");
-$("markExplored").textContent=state.explored.includes(id)?"Already explored ✓":"Mark topic explored (+15 XP)";
-$("topicModal").classList.add("show");
-}
+card.className="card";
 
-function closeModal(){
-$("topicModal").classList.remove("show");
-}
+card.innerHTML=`
+<div class="topic-icon">${t[1]}</div>
+<h3>${t[2]}</h3>
+<p>${t[3]}</p>
+<button>Explore →</button>
+`;
 
-$("closeModal").onclick=closeModal;
+card.querySelector("button").onclick=()=>exploreTopic(t[0]);
 
-$("topicModal").onclick=e=>{
-if(e.target===$("topicModal"))closeModal();
-};
+container.appendChild(card);
 
-document.addEventListener("keydown",e=>{
-if(e.key==="Escape")closeModal();
 });
 
-$("markExplored").onclick=()=>{
-if(!currentTopic)return;
+}
 
-if(!state.explored.includes(currentTopic.id)){
-state.explored.push(currentTopic.id);
+function exploreTopic(id){
+
+if(!state.explored.includes(id)){
+
+state.explored.push(id);
 state.xp+=15;
 
-if(!state.todayExplored.includes(currentTopic.id)){
-state.todayExplored.push(currentTopic.id);
+if(!state.mission.includes(id)){
+state.mission.push(id);
 }
 
-save();
-renderBadges();
+saveState();
+
+}
+
+renderStats();
 renderMission();
-toast("+15 XP! Topic explored.");
-}else{
-toast("You have already explored this topic.");
+
+toast("Topic explored! +15 XP");
+
 }
 
-closeModal();
-renderTopics();
-};
+document.getElementById("search").addEventListener("input",renderTopics);
 
-function renderMission(){
-$("missionCount").textContent=`${state.todayExplored.length} / 3`;
-$("missionProgress").style.width=Math.min(100,state.todayExplored.length/3*100)+"%";
-$("claimMission").disabled=state.claimed||state.todayExplored.length<3;
-$("claimMission").textContent=state.claimed?"Reward claimed ✓":"Claim reward";
+/* ==================================
+   PROFILE
+================================== */
 
-$("missionMessage").textContent=
-state.claimed?"Great work! Come back tomorrow for a new mission.":
-state.todayExplored.length>=3?"Mission complete. Claim your 30 XP!":
-"Explore "+(3-state.todayExplored.length)+" more different topic(s).";
-}
+function saveProfile(){
 
-$("claimMission").onclick=()=>{
-if(!state.claimed&&state.todayExplored.length>=3){
-state.xp+=30;
-state.claimed=true;
-save();
-renderMission();
-renderBadges();
-toast("Mission reward: +30 XP!");
-}
-};
+state.username=document.getElementById("username").value.trim().slice(0,20);
+state.avatar=document.getElementById("avatar").value;
 
-function nextQuestion(){
-currentQuestion=(currentQuestion+1)%questions.length;
-answered=false;
+localStorage.setItem("uuProfile",JSON.stringify({
+username:state.username,
+avatar:state.avatar
+}));
 
-let q=questions[currentQuestion];
+renderProfile();
 
-$("quizCategory").textContent=q.c+" QUIZ";
-$("question").textContent=q.q;
-$("quizFeedback").textContent="";
+toast("Profile saved!");
 
-$("answers").innerHTML=q.a.map((a,i)=>
-`<button class="answer" data-i="${i}">${String.fromCharCode(65+i)}. ${a}</button>`
-).join("");
-
-$("answers").querySelectorAll("button").forEach(b=>{
-b.onclick=()=>answer(Number(b.dataset.i));
-});
-
-$("nextQuestion").disabled=true;
-}
-
-function answer(i){
-if(answered)return;
-
-answered=true;
-let q=questions[currentQuestion];
-
-$("answers").querySelectorAll("button").forEach((b,n)=>{
-if(n===q.ok)b.classList.add("correct");
-if(n===i&&i!==q.ok)b.classList.add("wrong");
-});
-
-if(i===q.ok){
-state.xp+=10;
-state.correct++;
-$("quizFeedback").textContent="Correct! +10 XP. "+q.why;
-toast("+10 XP!");
-}else{
-$("quizFeedback").textContent="Not quite. "+q.why;
-}
-
-save();
-renderBadges();
-
-$("quizScore").textContent=state.correct+" correct answers";
-$("nextQuestion").disabled=false;
-}
-
-$("nextQuestion").onclick=nextQuestion;
-
-function renderLeader(){
-let rows=[
-{n:"CosmicLearner",xp:280,a:"🪐"},
-{n:"BrainExplorer",xp:220,a:"🧠"},
-{n:"StarSeeker",xp:170,a:"🌟"},
-{n:state.profile||"You",xp:state.xp,a:state.avatar}
-].sort((a,b)=>b.xp-a.xp);
-
-$("leaderRows").innerHTML=rows.map((r,i)=>
-`<div class="leader-row">
-<span>${["🥇","🥈","🥉","🚀"][i]} ${r.a} ${r.n}</span>
-<b>${r.xp} XP</b>
-</div>`
-).join("");
 }
 
 function renderProfile(){
-$("nickname").value=state.profile;
-$("avatar").value=state.avatar;
-$("profileGreeting").textContent=`${state.avatar} Welcome, ${state.profile||"Explorer"}!`;
+
+document.getElementById("welcome").textContent=
+state.avatar+" Welcome, "+(state.username||"Explorer")+"!";
+
 }
 
-$("saveProfile").onclick=()=>{
-state.profile=$("nickname").value.trim().slice(0,18);
-state.avatar=$("avatar").value;
-save();
+function loadProfile(){
+
+try{
+
+const p=JSON.parse(localStorage.getItem("uuProfile"));
+
+if(p){
+state.username=p.username||"";
+state.avatar=p.avatar||"🚀";
+}
+
+}catch(e){}
+
+document.getElementById("username").value=state.username;
+document.getElementById("avatar").value=state.avatar;
+
 renderProfile();
-renderLeader();
-toast("Profile saved on this device.");
-};
 
-$("resetProgress").onclick=()=>{
-if(confirm("Reset all your local progress on this browser? This cannot be undone.")){
-state={
-xp:0,
-explored:[],
-claimed:false,
-missionDate:getToday(),
-todayExplored:[],
-correct:0,
-profile:"",
-avatar:"🚀"
-};
-save();
-renderAll();
-toast("Progress reset.");
-}
-};
-
-function renderFact(){
-$("factText").textContent=facts[Math.floor(Math.random()*facts.length)];
 }
 
-$("newFact").onclick=renderFact;
+/* ==================================
+   PROGRESS
+================================== */
 
-$("search").addEventListener("input",renderTopics);
+function saveState(){
 
-$("clearSearch").onclick=()=>{
-$("search").value="";
-renderTopics();
-};
+localStorage.setItem("uuProgress",JSON.stringify(state));
 
-$("themeBtn").onclick=()=>{
-document.body.classList.toggle("light");
-localStorage.setItem("uuTheme",document.body.classList.contains("light")?"light":"dark");
-};
-
-if(localStorage.getItem("uuTheme")==="light"){
-document.body.classList.add("light");
 }
 
-$("langBtn").onclick=()=>{
-lang=lang==="en"?"ar":"en";
-document.documentElement.lang=lang;
-document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+function loadState(){
 
-document.querySelectorAll("[data-en]").forEach(el=>{
-el.innerHTML=el.dataset[lang];
+try{
+
+const saved=JSON.parse(localStorage.getItem("uuProgress"));
+
+if(saved){
+Object.assign(state,saved);
+}
+
+}catch(e){}
+
+}
+
+function renderStats(){
+
+document.getElementById("xp").textContent=state.xp;
+
+document.getElementById("level").textContent=
+Math.floor(state.xp/100)+1;
+
+document.getElementById("explored").textContent=
+state.explored.length;
+
+let count=0;
+
+if(state.explored.length>=1)count++;
+if(state.xp>=100)count++;
+if(state.correct>=5)count++;
+if(state.xp>=500)count++;
+
+document.getElementById("achievements").textContent=count;
+
+renderBadges();
+
+}
+
+function renderBadges(){
+
+const badges=[
+["🔭","First Discovery",state.explored.length>=1],
+["🧠","Curious Mind",state.xp>=100],
+["🎯","Quiz Champion",state.correct>=5],
+["🌟","Super Explorer",state.xp>=500]
+];
+
+document.getElementById("badges").innerHTML=badges.map(b=>`
+<div class="badge ${b[2]?"earned":""}">
+${b[0]} ${b[1]}
+</div>
+`).join("");
+
+}
+
+/* ==================================
+   DAILY MISSIONS
+================================== */
+
+function renderMission(){
+
+let n=state.mission.length;
+
+document.getElementById("missionProgress").style.width=
+Math.min(100,n/3*100)+"%";
+
+document.getElementById("missionText").textContent=
+n+" / 3 completed";
+
+document.getElementById("missionButton").disabled=
+state.claimed||n<3;
+
+document.getElementById("missionButton").textContent=
+state.claimed?"Reward Claimed":"Claim Reward";
+
+}
+
+function claimMission(){
+
+if(state.mission.length<3||state.claimed)return;
+
+state.xp+=30;
+state.claimed=true;
+
+saveState();
+renderStats();
+renderMission();
+
+toast("+30 XP! Mission completed.");
+
+}
+
+/* ==================================
+   QUIZ
+================================== */
+
+function showQuestion(){
+
+let q=questions[questionIndex];
+
+answered=false;
+
+document.getElementById("questionNumber").textContent=
+"Question "+(questionIndex+1);
+
+document.getElementById("question").textContent=q.q;
+
+document.getElementById("feedback").textContent="";
+
+const answers=document.getElementById("answers");
+
+answers.innerHTML="";
+
+q.a.forEach((a,i)=>{
+
+let button=document.createElement("button");
+
+button.className="answer";
+button.textContent=a;
+
+button.onclick=()=>checkAnswer(i,button);
+
+answers.appendChild(button);
+
 });
 
-$("langBtn").textContent=lang==="en"?"عربي":"English";
-$("search").placeholder=lang==="en"?"Search topics...":"ابحث عن موضوع...";
+}
+
+function checkAnswer(i,button){
+
+if(answered)return;
+
+answered=true;
+
+let q=questions[questionIndex];
+
+if(i===q.correct){
+
+button.classList.add("correct");
+
+state.xp+=10;
+state.correct++;
+
+document.getElementById("feedback").textContent=
+"Excellent! Correct answer. +10 XP.";
+
+}else{
+
+button.classList.add("wrong");
+
+document.getElementById("feedback").textContent=
+"Not quite! The correct answer is "+q.a[q.correct]+".";
+
+}
+
+saveState();
+renderStats();
+
+}
+
+function nextQuestion(){
+
+questionIndex=(questionIndex+1)%questions.length;
+
+showQuestion();
+
+}
+
+/* ==================================
+   LEARNING NOTES
+================================== */
+
+async function saveNote(){
+
+let title=document.getElementById("noteTitle").value.trim();
+let content=document.getElementById("noteContent").value.trim();
+
+if(!title||!content){
+toast("Enter a title and some content.");
+return;
+}
+
+await addRecord(NOTE_STORE,{
+title,
+content,
+created:new Date().toISOString()
+});
+
+document.getElementById("noteTitle").value="";
+document.getElementById("noteContent").value="";
+
+await renderNotes();
+
+toast("Note saved!");
+
+}
+
+async function renderNotes(){
+
+const notes=await getAll(NOTE_STORE);
+
+const container=document.getElementById("notes");
+
+container.innerHTML="";
+
+notes.reverse().forEach(note=>{
+
+let div=document.createElement("div");
+
+div.className="card";
+div.style.margin="12px 0";
+
+let title=document.createElement("h3");
+title.textContent=note.title;
+
+let content=document.createElement("p");
+content.textContent=note.content;
+
+let button=document.createElement("button");
+button.className="secondary";
+button.textContent="Delete Note";
+
+button.onclick=async()=>{
+
+await deleteRecord(NOTE_STORE,note.id);
+
+renderNotes();
+
 };
 
-function renderAll(){
+div.append(title,content,button);
+
+container.appendChild(div);
+
+});
+
+}
+
+/* ==================================
+   FILE STORAGE CENTER
+================================== */
+
+const TARGET_BYTES=8*1024*1024*1024;
+
+async function uploadFiles(){
+
+const input=document.getElementById("fileInput");
+
+const files=Array.from(input.files);
+
+if(!files.length){
+toast("Choose files first.");
+return;
+}
+
+for(const file of files){
+
+try{
+
+await addRecord(FILE_STORE,{
+name:file.name,
+type:file.type,
+size:file.size,
+created:new Date().toISOString(),
+blob:file
+});
+
+}catch(error){
+
+toast("Storage error: "+error.message);
+
+break;
+
+}
+
+}
+
+input.value="";
+
+await renderFiles();
+await refreshStorage();
+
+toast("Finished saving available files.");
+
+}
+
+async function renderFiles(){
+
+const files=await getAll(FILE_STORE);
+
+const container=document.getElementById("fileList");
+
+container.innerHTML="";
+
+files.forEach(file=>{
+
+let row=document.createElement("div");
+
+row.className="file-item";
+
+let name=document.createElement("span");
+name.textContent=file.name+" — "+formatBytes(file.size);
+
+let download=document.createElement("button");
+download.textContent="Download";
+download.onclick=()=>{
+
+const url=URL.createObjectURL(file.blob);
+
+const a=document.createElement("a");
+a.href=url;
+a.download=file.name;
+a.click();
+
+setTimeout(()=>URL.revokeObjectURL(url),3000);
+
+};
+
+let remove=document.createElement("button");
+remove.className="secondary";
+remove.textContent="Delete";
+
+remove.onclick=async()=>{
+
+await deleteRecord(FILE_STORE,file.id);
+
+await renderFiles();
+await refreshStorage();
+
+};
+
+row.append(name,download,remove);
+
+container.appendChild(row);
+
+});
+
+if(!files.length){
+container.textContent="No files stored yet.";
+}
+
+}
+
+function formatBytes(bytes){
+
+if(bytes===0)return "0 B";
+
+const units=["B","KB","MB","GB","TB"];
+
+const i=Math.floor(Math.log(bytes)/Math.log(1024));
+
+return (bytes/Math.pow(1024,i)).toFixed(2)+" "+units[i];
+
+}
+
+async function refreshStorage(){
+
+let used=0;
+let available=0;
+
+try{
+
+const estimate=await navigator.storage.estimate();
+
+used=estimate.usage||0;
+available=estimate.quota||0;
+
+}catch(e){}
+
+document.getElementById("storageUsed").textContent=
+formatBytes(used);
+
+let percentage=Math.min(100,used/TARGET_BYTES*100);
+
+document.getElementById("storageProgress").style.width=
+percentage+"%";
+
+document.getElementById("storageAvailable").textContent=
+"Browser-reported quota: "+formatBytes(available)+
+". Remaining estimated quota: "+formatBytes(Math.max(0,available-used))+
+". Requested target: 8 GB.";
+
+}
+
+async function requestPersistentStorage(){
+
+if(navigator.storage&&navigator.storage.persist){
+
+try{
+
+const granted=await navigator.storage.persist();
+
+toast(granted?
+"Persistent storage granted by browser.":
+"Browser did not grant persistent storage.");
+
+}catch(e){}
+
+}
+
+}
+
+/* ==================================
+   AMAZING FACTS
+================================== */
+
+const facts=[
+
+"The Sun is approximately 150 million kilometres from Earth.",
+
+"Jupiter is the largest planet in our Solar System.",
+
+"Saturn has an enormous ring system.",
+
+"The Moon is Earth's natural satellite.",
+
+"Octopuses have three hearts.",
+
+"The Pacific is the largest ocean.",
+
+"Light travels faster than sound.",
+
+"Venus rotates in the opposite direction to most planets.",
+
+"Some stars are much larger than our Sun.",
+
+"The human brain contains billions of neurons."
+
+];
+
+function newFact(){
+
+let fact=facts[Math.floor(Math.random()*facts.length)];
+
+document.getElementById("fact").textContent=fact;
+
+}
+
+/* ==================================
+   COMMUNITY POSTS
+================================== */
+
+function publishPost(){
+
+let title=document.getElementById("postTitle").value.trim();
+let content=document.getElementById("postContent").value.trim();
+
+if(!title||!content){
+toast("Complete your discovery first.");
+return;
+}
+
+let posts=JSON.parse(localStorage.getItem("uuPosts")||"[]");
+
+posts.unshift({
+title,
+content,
+date:new Date().toLocaleDateString()
+});
+
+localStorage.setItem("uuPosts",JSON.stringify(posts));
+
+document.getElementById("postTitle").value="";
+document.getElementById("postContent").value="";
+
+renderPosts();
+
+toast("Discovery saved locally!");
+
+}
+
+function renderPosts(){
+
+let posts=JSON.parse(localStorage.getItem("uuPosts")||"[]");
+
+const container=document.getElementById("posts");
+
+container.innerHTML="";
+
+posts.forEach(post=>{
+
+let div=document.createElement("div");
+
+div.className="card";
+div.style.margin="12px 0";
+
+let h=document.createElement("h3");
+h.textContent=post.title;
+
+let p=document.createElement("p");
+p.textContent=post.content;
+
+let date=document.createElement("small");
+date.textContent=post.date;
+
+div.append(h,p,date);
+
+container.appendChild(div);
+
+});
+
+}
+
+/* ==================================
+   THEME
+================================== */
+
+function toggleTheme(){
+
+const root=document.documentElement;
+
+if(root.dataset.theme==="light"){
+
+root.dataset.theme="dark";
+
+document.body.style.background="#070b1c";
+document.body.style.color="#ffffff";
+
+}else{
+
+root.dataset.theme="light";
+
+document.body.style.background="#eef2ff";
+document.body.style.color="#17203c";
+
+}
+
+}
+
+/* ==================================
+   RESET
+================================== */
+
+function resetProgress(){
+
+if(!confirm("Reset all learning progress?"))return;
+
+state.xp=0;
+state.explored=[];
+state.correct=0;
+state.mission=[];
+state.claimed=false;
+
+saveState();
+
 renderStats();
-renderFilters();
-renderTopics();
-renderBadges();
 renderMission();
-renderProfile();
-renderLeader();
-renderFact();
-nextQuestion();
+
+toast("Progress reset.");
+
 }
 
-renderAll();
+/* ==================================
+   NOTIFICATIONS
+================================== */
 
-const stars=$("stars");
+function toast(message){
 
-for(let i=0;i<85;i++){
-let s=document.createElement("i");
-s.className="star";
-s.style.left=Math.random()*100+"%";
-s.style.top=Math.random()*100+"%";
-s.style.animationDelay=Math.random()*3+"s";
-stars.appendChild(s);
+const el=document.getElementById("toast");
+
+el.textContent=message;
+el.style.display="block";
+
+setTimeout(()=>{
+el.style.display="none";
+},3000);
+
 }
+
+/* ==================================
+   START THE PLATFORM
+================================== */
+
+async function start(){
+
+loadState();
+loadProfile();
+
+renderTopics();
+renderStats();
+renderMission();
+renderPosts();
+newFact();
+showQuestion();
+
+try{
+
+await openDatabase();
+
+await renderNotes();
+await renderFiles();
+await refreshStorage();
+
+await requestPersistentStorage();
+
+}catch(error){
+
+console.error("Database initialization failed:",error);
+
+toast("Browser storage could not be initialized.");
+
+}
+
+}
+
+start();
+
 </script>
+
 </body>
 </html>
