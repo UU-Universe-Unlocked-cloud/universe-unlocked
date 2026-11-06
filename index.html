@@ -87,6 +87,7 @@ nav a:hover{background:var(--panel2);color:var(--blue)}
 .button.success{background:linear-gradient(110deg,#159d76,#43d7a2)}
 .button.danger{background:linear-gradient(110deg,#c74663,#ff7979)}
 .button.small{padding:8px 12px;font-size:12px}
+.button:disabled{opacity:.6;cursor:not-allowed;transform:none}
 .hero-visual{min-height:370px;position:relative;display:grid;place-items:center}
 .planet{
     width:min(290px,70vw);aspect-ratio:1;border-radius:50%;
@@ -227,7 +228,7 @@ footer{
 }
 .toast.show{transform:translateY(0);opacity:1}
 
-/* REQUIRED SIGN-IN GATE */
+/* SIGN-IN GATE */
 #loginGate{
     position:fixed;inset:0;z-index:99999;display:flex;align-items:center;
     justify-content:center;padding:20px;background:rgba(3,7,20,.97);
@@ -279,7 +280,6 @@ footer{
 
 <body>
 
-<!-- SIGN-IN SCREEN: THE WEBSITE IS BLOCKED UNTIL LOGIN -->
 <div id="loginGate">
     <div class="gate-card">
         <div class="gate-logo">UU</div>
@@ -362,7 +362,7 @@ footer{
 <section class="stats-grid">
     <div class="stat"><strong id="topicCount">24</strong><span>Learning Categories</span></div>
     <div class="stat"><strong id="questionCount">20</strong><span>Quiz Questions</span></div>
-    <div class="stat"><strong id="localPoints">0</strong><span>Your Local Points</span></div>
+    <div class="stat"><strong id="localPoints">0</strong><span>Your Points</span></div>
     <div class="stat"><strong id="visitCount">1</strong><span>Your Visits</span></div>
 </section>
 
@@ -493,8 +493,8 @@ footer{
     <div class="two-columns">
         <div class="panel">
             <h3>🏆 Top 50 Explorers</h3>
-            <div id="leaderboardList"><p class="muted">Configure Firebase to activate the shared leaderboard.</p></div>
-            <p class="leaderboard-note" id="leaderboardStatus">Offline preview — no real users are being displayed.</p>
+            <div id="leaderboardList"><p class="muted">Loading leaderboard...</p></div>
+            <p class="leaderboard-note" id="leaderboardStatus">Connecting...</p>
         </div>
         <div class="panel">
             <h3>⭐ Your Position</h3>
@@ -504,6 +504,7 @@ footer{
         </div>
     </div>
 </section>
+
 <section class="section" id="profile">
     <div class="section-heading">
         <div>
@@ -514,9 +515,14 @@ footer{
     <div class="two-columns">
         <div class="panel">
             <h3>My Profile</h3>
-            <p class="muted">Nickname</p>
+            <p class="muted">Public nickname</p>
             <h2 id="profileName">Explorer</h2>
             <p class="muted" id="profileEmail"></p>
+            <div style="margin-top:15px">
+                <label class="muted" for="newNickname">Change nickname</label>
+                <input class="input" id="newNickname" maxlength="20" placeholder="New public nickname" style="margin-top:7px">
+                <button class="button small" id="saveNickname" style="margin-top:8px">Save Nickname</button>
+            </div>
             <p style="margin-top:15px">Total points: <strong id="profilePoints">0</strong></p>
             <button class="button danger small" id="logoutButton" style="margin-top:20px">Sign Out</button>
         </div>
@@ -534,7 +540,7 @@ footer{
         <div>
             <div class="eyebrow">Save your ideas</div>
             <h2 class="section-title">📓 Discovery Notebook</h2>
-            <p class="section-subtitle">Write down discoveries and notes. They sync to your account.</p>
+            <p class="section-subtitle">Write down discoveries and notes. They sync to your private account.</p>
         </div>
     </div>
     <div class="panel">
@@ -606,1055 +612,1594 @@ footer{
 
 <div class="toast" id="toast"></div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    <script type="module">
+/* =========================================================
+   UNIVERSE UNLOCKED — FIREBASE + WEBSITE SYSTEM
+   ========================================================= */
+
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 
 import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut,
-    onAuthStateChanged,
-    sendPasswordResetEmail,
-    updateProfile
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  updateProfile
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
 import {
-    getFirestore,
-    doc,
-    setDoc,
-    getDoc,
-    updateDoc,
-    collection,
-    query,
-    orderBy,
-    limit,
-    onSnapshot,
-    serverTimestamp
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  collection,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-/* =====================================================
-   FIREBASE CONFIGURATION
-   REPLACE THESE VALUES WITH YOUR FIREBASE PROJECT VALUES
-===================================================== */
+
+/* =========================================================
+   1. FIREBASE CONFIGURATION
+   ========================================================= */
 
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT.firebasestorage.app",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "PASTE_YOUR_API_KEY_HERE",
+  authDomain: "universe-unlocked-3a171.firebaseapp.com",
+  projectId: "universe-unlocked-3a171",
+  storageBucket: "universe-unlocked-3a171.firebasestorage.app",
+  messagingSenderId: "186876109213",
+  appId: "1:186876109213:web:88ceabba4230cc28f54f74"
 };
-
-let app, auth, db;
-let firebaseReady = false;
-
-try {
-    if (
-        firebaseConfig.apiKey !== "YOUR_API_KEY" &&
-        firebaseConfig.projectId !== "YOUR_PROJECT_ID"
-    ) {
-        app = initializeApp(firebaseConfig);
-        auth = getAuth(app);
-        db = getFirestore(app);
-        firebaseReady = true;
-    }
-} catch (error) {
-    console.error("Firebase initialization error:", error);
-}
 
 const $ = id => document.getElementById(id);
 
+let app = null;
+let auth = null;
+let db = null;
 let currentUser = null;
-let isSignup = false;
-let progress = {};
-let notes = [];
-let totalPoints = 0;
-let quizScore = 0;
-let currentQuestion = 0;
-let selectedAnswers = [];
-let timerSeconds = 1500;
-let timerInterval = null;
 let leaderboardUnsubscribe = null;
 let cloudSaveTimer = null;
 
-/* =====================================================
-   LOGIN AND SIGN-UP SCREEN
-===================================================== */
+let totalPoints = 0;
+let progress = {};
+let notes = [];
+let currentQuestion = 0;
+let quizCorrect = 0;
+let quizFinished = false;
+let focusSeconds = 25 * 60;
+let focusInterval = null;
+let dbLibrary = null;
 
-function showGateMessage(message, error = false) {
-    $("gateMessage").textContent = message;
-    $("gateMessage").style.color = error ? "#ff7373" : "#ffd166";
+
+/* =========================================================
+   2. GENERAL HELPERS
+   ========================================================= */
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
 }
 
-function setGateMode(signup) {
-    isSignup = signup;
-    $("gateNicknameField").classList.toggle("hidden", !signup);
-    $("gateLoginTab").classList.toggle("secondary", signup);
-    $("gateSignupTab").classList.toggle("secondary", !signup);
-    $("gateSubmit").textContent = signup ? "Create Account" : "Log In";
-    $("gatePassword").autocomplete = signup ? "new-password" : "current-password";
-    $("gateForgot").classList.toggle("hidden", signup);
-    showGateMessage("");
+function showToast(message) {
+  const toast = $("toast");
+  if (!toast) {
+    console.log(message);
+    return;
+  }
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(showToast.timeout);
+  showToast.timeout = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
 }
 
-$("gateLoginTab").addEventListener("click", () => setGateMode(false));
-$("gateSignupTab").addEventListener("click", () => setGateMode(true));
+function setText(id, value) {
+  const element = $(id);
+  if (element) element.textContent = value;
+}
 
-$("gateSubmit").addEventListener("click", async () => {
-    if (!firebaseReady) {
-        showGateMessage(
-            "Firebase is not configured. Add your Firebase settings in the code.",
-            true
-        );
-        return;
+function setHTML(id, value) {
+  const element = $(id);
+  if (element) element.innerHTML = value;
+}
+
+function friendlyError(error) {
+  const messages = {
+    "auth/email-already-in-use": "This email already has an account. Please sign in.",
+    "auth/invalid-email": "Please enter a valid email address.",
+    "auth/weak-password": "Your password must contain at least 6 characters.",
+    "auth/user-not-found": "No account was found with this email.",
+    "auth/wrong-password": "Incorrect password. Please try again.",
+    "auth/invalid-credential": "Your email or password is incorrect.",
+    "auth/too-many-requests": "Too many attempts. Please try again later.",
+    "auth/network-request-failed": "Internet connection problem. Check your connection.",
+    "permission-denied": "Firebase permissions are not configured correctly.",
+    "unavailable": "Firebase is temporarily unavailable. Try again."
+  };
+
+  return messages[error.code] ||
+    error.message ||
+    "Something went wrong. Please try again.";
+}
+
+
+/* =========================================================
+   3. LOGIN GATE
+   ========================================================= */
+
+const protectedElements = [
+  document.querySelector("header"),
+  document.querySelector("main"),
+  document.querySelector("footer")
+].filter(Boolean);
+
+function setSiteLocked(locked) {
+  protectedElements.forEach(element => {
+    element.style.visibility = locked ? "hidden" : "visible";
+    element.setAttribute("aria-hidden", locked ? "true" : "false");
+  });
+
+  const gate = $("loginGate");
+  if (gate) {
+    gate.style.display = locked ? "flex" : "none";
+  }
+}
+
+setSiteLocked(true);
+
+
+/* =========================================================
+   4. AUTHENTICATION FORM
+   ========================================================= */
+
+let authMode = "signin";
+
+function getAuthElements() {
+  return {
+    email: $("authEmail"),
+    password: $("authPassword"),
+    nickname: $("authName") || $("authNickname"),
+    submit: $("authSubmit"),
+    message: $("authMessage"),
+    title: $("authTitle"),
+    subtitle: $("authSubtitle"),
+    switchButton: $("authSwitch"),
+    signInTab: $("signInTab"),
+    signUpTab: $("signUpTab")
+  };
+}
+
+function authMessage(message, error = false) {
+  const element = getAuthElements().message;
+  if (!element) return;
+
+  element.textContent = message;
+  element.style.color = error ? "#ff7777" : "#8ee6b0";
+}
+
+function setAuthMode(mode) {
+  authMode = mode;
+
+  const elements = getAuthElements();
+  const signup = mode === "signup";
+
+  if (elements.title) {
+    elements.title.textContent = signup
+      ? "Create Your Account"
+      : "Welcome Back";
+  }
+
+  if (elements.subtitle) {
+    elements.subtitle.textContent = signup
+      ? "Join Universe Unlocked and start exploring."
+      : "Sign in to continue exploring Universe Unlocked.";
+  }
+
+  if (elements.nickname) {
+    elements.nickname.style.display = signup ? "" : "none";
+    elements.nickname.required = signup;
+  }
+
+  if (elements.submit) {
+    elements.submit.textContent = signup
+      ? "Create Account"
+      : "Sign In";
+  }
+
+  if (elements.switchButton) {
+    elements.switchButton.textContent = signup
+      ? "Already have an account? Sign in"
+      : "Don't have an account? Create one";
+  }
+
+  if (elements.signInTab) {
+    elements.signInTab.classList.toggle("active", !signup);
+  }
+
+  if (elements.signUpTab) {
+    elements.signUpTab.classList.toggle("active", signup);
+  }
+
+  authMessage("");
+}
+
+if ($("signInTab")) {
+  $("signInTab").addEventListener("click", () => setAuthMode("signin"));
+}
+
+if ($("signUpTab")) {
+  $("signUpTab").addEventListener("click", () => setAuthMode("signup"));
+}
+
+if ($("authSwitch")) {
+  $("authSwitch").addEventListener("click", () => {
+    setAuthMode(authMode === "signin" ? "signup" : "signin");
+  });
+}
+
+
+/* =========================================================
+   5. CREATE ACCOUNT / SIGN IN
+   ========================================================= */
+
+async function handleAuthentication(event) {
+  if (event) event.preventDefault();
+
+  if (!auth || !db) {
+    authMessage("Firebase is not configured. Add your Firebase API key first.", true);
+    return;
+  }
+
+  const elements = getAuthElements();
+  const email = elements.email?.value.trim();
+  const password = elements.password?.value;
+  const nickname = elements.nickname?.value.trim();
+
+  if (!email || !password) {
+    authMessage("Please enter your email and password.", true);
+    return;
+  }
+
+  if (authMode === "signup" && !nickname) {
+    authMessage("Please choose a nickname.", true);
+    return;
+  }
+
+  if (authMode === "signup" && nickname.length > 20) {
+    authMessage("Your nickname must be 20 characters or fewer.", true);
+    return;
+  }
+
+  if (elements.submit) {
+    elements.submit.disabled = true;
+    elements.submit.textContent = "Please wait...";
+  }
+
+  try {
+    if (authMode === "signup") {
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      await updateProfile(result.user, {
+        displayName: nickname
+      });
+
+      const privateData = {
+        nickname,
+        email: result.user.email,
+        points: 0,
+        progress: {},
+        notes: [],
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      };
+
+      await setDoc(doc(db, "users", result.user.uid), privateData);
+
+      await setDoc(doc(db, "leaderboard", result.user.uid), {
+        nickname,
+        points: 0,
+        updatedAt: serverTimestamp()
+      });
+
+      authMessage("Your account was created successfully!");
+      showToast("Welcome to Universe Unlocked!");
+
+    } else {
+      await signInWithEmailAndPassword(auth, email, password);
+      authMessage("Signed in successfully!");
+      showToast("Welcome back!");
     }
 
-    const email = $("gateEmail").value.trim();
-    const password = $("gatePassword").value;
-    const nickname = $("gateNickname").value.trim();
+  } catch (error) {
+    authMessage(friendlyError(error), true);
 
-    if (!email || !password) {
-        showGateMessage("Please enter your email and password.", true);
-        return;
+  } finally {
+    if (elements.submit) {
+      elements.submit.disabled = false;
+      elements.submit.textContent =
+        authMode === "signup" ? "Create Account" : "Sign In";
     }
+  }
+}
 
-    if (password.length < 6) {
-        showGateMessage("Your password must contain at least 6 characters.", true);
-        return;
-    }
+const authForm = $("authForm");
+if (authForm) {
+  authForm.addEventListener("submit", handleAuthentication);
+}
 
-    if (isSignup && !nickname) {
-        showGateMessage("Please choose a public nickname.", true);
-        return;
-    }
+if ($("authSubmit") && !authForm) {
+  $("authSubmit").addEventListener("click", handleAuthentication);
+}
 
-    $("gateSubmit").disabled = true;
-    $("gateSubmit").textContent = "Please wait...";
 
-    try {
-        if (isSignup) {
-            const credential = await createUserWithEmailAndPassword(
-                auth, email, password
-            );
+/* =========================================================
+   6. PASSWORD RESET
+   ========================================================= */
 
-            await updateProfile(credential.user, {
-                displayName: nickname
-            });
+const resetButton = $("forgotPassword");
 
-            await setDoc(doc(db, "users", credential.user.uid), {
-                nickname,
-                email: credential.user.email,
-                points: 0,
-                progress: {},
-                notes: [],
-                createdAt: serverTimestamp(),
-                updatedAt: serverTimestamp()
-            });
-
-            showGateMessage("Account created successfully!");
-        } else {
-            await signInWithEmailAndPassword(auth, email, password);
-            showGateMessage("Signed in successfully!");
-        }
-    } catch (error) {
-        console.error(error);
-
-        const messages = {
-            "auth/email-already-in-use": "This email already has an account. Please log in.",
-            "auth/invalid-email": "Please enter a valid email address.",
-            "auth/weak-password": "Please choose a stronger password.",
-            "auth/invalid-credential": "Incorrect email or password.",
-            "auth/user-not-found": "No account was found with this email.",
-            "auth/network-request-failed": "Check your internet connection."
-        };
-
-        showGateMessage(
-            messages[error.code] || error.message,
-            true
-        );
-    } finally {
-        $("gateSubmit").disabled = false;
-        $("gateSubmit").textContent = isSignup ? "Create Account" : "Log In";
-    }
-});
-
-$("gateForgot").addEventListener("click", async () => {
-    if (!firebaseReady) {
-        showGateMessage("Firebase is not configured.", true);
-        return;
-    }
-
-    const email = $("gateEmail").value.trim();
+if (resetButton) {
+  resetButton.addEventListener("click", async () => {
+    const email = getAuthElements().email?.value.trim();
 
     if (!email) {
-        showGateMessage("Enter your email address first.", true);
-        return;
+      authMessage("Enter your email address first.", true);
+      return;
     }
 
     try {
-        await sendPasswordResetEmail(auth, email);
-        showGateMessage("Password reset instructions have been sent to your email.");
+      await sendPasswordResetEmail(auth, email);
+      authMessage("Password reset email sent. Check your inbox.");
     } catch (error) {
-        showGateMessage(error.message, true);
+      authMessage(friendlyError(error), true);
     }
-});
+  });
+}
 
-$("logoutButton").addEventListener("click", async () => {
-    if (auth && currentUser) {
-        await signOut(auth);
+
+/* =========================================================
+   7. SIGN OUT
+   ========================================================= */
+
+const signOutButton =
+  $("signOutButton") ||
+  $("logoutButton") ||
+  $("signOut");
+
+if (signOutButton) {
+  signOutButton.addEventListener("click", async () => {
+    try {
+      await signOut(auth);
+      showToast("You have signed out.");
+    } catch (error) {
+      showToast(friendlyError(error));
     }
-});
+  });
+}
 
-/* =====================================================
-   CLOUD DATA SYNCHRONIZATION
-===================================================== */
+
+/* =========================================================
+   8. CLOUD DATA
+   ========================================================= */
+
+function scheduleCloudSave() {
+  if (!currentUser || !db) return;
+
+  clearTimeout(cloudSaveTimer);
+
+  cloudSaveTimer = setTimeout(() => {
+    saveCloudData();
+  }, 700);
+}
+
+async function saveCloudData() {
+  if (!currentUser || !db) return;
+
+  const nickname =
+    currentUser.displayName ||
+    currentUser.email?.split("@")[0] ||
+    "Explorer";
+
+  try {
+    await setDoc(doc(db, "users", currentUser.uid), {
+      nickname,
+      email: currentUser.email,
+      points: totalPoints,
+      progress,
+      notes,
+      updatedAt: serverTimestamp()
+    }, { merge: true });
+
+    await setDoc(doc(db, "leaderboard", currentUser.uid), {
+      nickname,
+      points: totalPoints,
+      updatedAt: serverTimestamp()
+    }, { merge: true });
+
+  } catch (error) {
+    console.error("Cloud save error:", error);
+    showToast("Cloud save failed. Check your Firebase rules.");
+  }
+}
 
 async function loadCloudData(user) {
-    const reference = doc(db, "users", user.uid);
-    const snapshot = await getDoc(reference);
+  currentUser = user;
 
-    if (!snapshot.exists()) {
-        await setDoc(reference, {
-            nickname: user.displayName || "Explorer",
-            email: user.email,
-            points: 0,
-            progress: {},
-            notes: [],
-            createdAt: serverTimestamp()
-        });
-        return;
+  try {
+    const userRef = doc(db, "users", user.uid);
+    const snapshot = await getDoc(userRef);
+
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+
+      totalPoints = Number(data.points) || 0;
+      progress = data.progress || {};
+      notes = Array.isArray(data.notes) ? data.notes : [];
+
+    } else {
+      totalPoints = 0;
+      progress = {};
+      notes = [];
+
+      await setDoc(userRef, {
+        nickname: user.displayName || "Explorer",
+        email: user.email,
+        points: 0,
+        progress: {},
+        notes: [],
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
     }
 
-    const data = snapshot.data();
+    const nickname =
+      user.displayName ||
+      user.email?.split("@")[0] ||
+      "Explorer";
 
-    progress = data.progress || {};
-    notes = data.notes || [];
-    totalPoints = Number(data.points || 0);
+    await setDoc(doc(db, "leaderboard", user.uid), {
+      nickname,
+      points: totalPoints,
+      updatedAt: serverTimestamp()
+    }, { merge: true });
+
+    setText("profileName", nickname);
+    setText("profileEmail", user.email || "");
+
+    const nicknameInput = $("newNickname");
+    if (nicknameInput) nicknameInput.value = nickname;
 
     updateAllDisplays();
     renderNotes();
+    startLeaderboard();
+
+  } catch (error) {
+    console.error("Loading user data:", error);
+    showToast("Could not load your cloud data. Check Firestore rules.");
+  }
 }
 
-function scheduleCloudSave() {
-    if (!firebaseReady || !currentUser) return;
 
-    clearTimeout(cloudSaveTimer);
+/* =========================================================
+   9. AUTH STATE
+   ========================================================= */
 
-    cloudSaveTimer = setTimeout(async () => {
-        try {
-            await updateDoc(doc(db, "users", currentUser.uid), {
-                progress,
-                notes,
-                points: totalPoints,
-                nickname: currentUser.displayName || "Explorer",
-                updatedAt: serverTimestamp()
-            });
-        } catch (error) {
-            console.error("Cloud save failed:", error);
-            showToast("Could not sync your progress. Check your connection.");
+if (
+  firebaseConfig.apiKey === "PASTE_YOUR_API_KEY_HERE" ||
+  !firebaseConfig.apiKey ||
+  !firebaseConfig.projectId
+) {
+  setSiteLocked(true);
+  authMessage("Add your Firebase API key in the code to activate the website.", true);
+
+} else {
+  try {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+
+    onAuthStateChanged(auth, async user => {
+      if (user) {
+        await loadCloudData(user);
+        setSiteLocked(false);
+      } else {
+        currentUser = null;
+        totalPoints = 0;
+        progress = {};
+        notes = [];
+
+        if (leaderboardUnsubscribe) {
+          leaderboardUnsubscribe();
+          leaderboardUnsubscribe = null;
         }
-    }, 900);
+
+        setSiteLocked(true);
+      }
+    });
+
+  } catch (error) {
+    console.error(error);
+    setSiteLocked(true);
+    authMessage("Firebase setup error. Check your Firebase configuration.", true);
+  }
+}
+
+
+/* =========================================================
+   10. POINTS AND PROGRESS
+   ========================================================= */
+
+function awardPointsOnce(key, amount) {
+  const awardKey = "award_" + key;
+
+  if (progress[awardKey]) return false;
+
+  progress[awardKey] = true;
+  totalPoints += amount;
+
+  updateAllDisplays();
+  scheduleCloudSave();
+
+  return true;
+}
+
+function saveProgress(key) {
+  if (progress[key]) return false;
+
+  progress[key] = true;
+
+  updateAllDisplays();
+  scheduleCloudSave();
+
+  return true;
 }
 
 function updateAllDisplays() {
-    $("localPoints").textContent = totalPoints;
-    $("profilePoints").textContent = totalPoints;
-    $("myOnlinePoints").textContent = totalPoints;
+  setText("totalPoints", totalPoints);
+  setText("pointsDisplay", totalPoints);
+  setText("profilePoints", totalPoints);
 
-    const completed = Object.values(progress).filter(Boolean).length;
-    const percentage = Math.round((completed / 5) * 100);
+  const missionKeys = [
+    "learnTopics",
+    "readGuide",
+    "quiz",
+    "first_note",
+    "focus"
+  ];
 
-    $("overallProgress").style.width = Math.min(percentage, 100) + "%";
-    $("progressText").textContent = Math.min(percentage, 100) + "% completed";
-    renderMissions();
-    renderBadges();
+  const completed = missionKeys.filter(key => progress[key]).length;
+  const percentage = Math.round(
+    completed / missionKeys.length * 100
+  );
+
+  setText("completedMissions", completed);
+  setText("progressPercentage", percentage + "%");
+
+  const progressBar =
+    $("progressBar") ||
+    $("overallProgressBar");
+
+  if (progressBar) {
+    progressBar.style.width = percentage + "%";
+  }
+
+  renderMissions();
+  renderBadges();
 }
 
-/* =====================================================
-   AUTHENTICATION STATE
-===================================================== */
 
-if (firebaseReady) {
-    onAuthStateChanged(auth, async user => {
-        currentUser = user;
-
-        if (!user) {
-            $("loginGate").style.display = "flex";
-            $("profileName").textContent = "Explorer";
-            $("profileEmail").textContent = "";
-            if (leaderboardUnsubscribe) leaderboardUnsubscribe();
-            return;
-        }
-
-        $("loginGate").style.display = "none";
-        $("profileName").textContent = user.displayName || "Explorer";
-        $("profileEmail").textContent = user.email || "";
-
-        try {
-            await loadCloudData(user);
-            startLeaderboard();
-            showToast("Welcome to Universe Unlocked!");
-        } catch (error) {
-            console.error(error);
-            showToast("Could not load your account data.");
-        }
-    });
-} else {
-    $("loginGate").style.display = "flex";
-    showGateMessage("Firebase setup is required before anyone can sign in.", true);
-}
-
-/* =====================================================
-   TOPIC CATEGORIES
-===================================================== */
-
-const topics = [
-    {name:"Space & Astronomy",icon:"🌌",category:"science",description:"Explore planets, stars, galaxies and the universe."},
-    {name:"Physics",icon:"⚛️",category:"science",description:"Discover energy, forces, motion and matter."},
-    {name:"Chemistry",icon:"🧪",category:"science",description:"Learn about elements, atoms and reactions."},
-    {name:"Biology",icon:"🧬",category:"science",description:"Explore living things and the human body."},
-    {name:"Mathematics",icon:"📐",category:"learning",description:"Solve problems and discover mathematical ideas."},
-    {name:"Technology",icon:"💻",category:"technology",description:"Discover computers, inventions and digital tools."},
-    {name:"Artificial Intelligence",icon:"🤖",category:"technology",description:"Learn how intelligent computer systems work."},
-    {name:"Robotics",icon:"🦾",category:"technology",description:"Explore robots, sensors and automation."},
-    {name:"Geography",icon:"🌍",category:"world",description:"Discover continents, countries and landscapes."},
-    {name:"History",icon:"🏛️",category:"world",description:"Explore civilizations and important events."},
-    {name:"Nature",icon:"🌳",category:"world",description:"Discover ecosystems, plants and animals."},
-    {name:"Oceans",icon:"🌊",category:"world",description:"Explore seas, marine life and underwater mysteries."},
-    {name:"Football",icon:"⚽",category:"sports",description:"Discover football history, rules and famous matches."},
-    {name:"Swimming",icon:"🏊",category:"sports",description:"Learn about swimming techniques and competitions."},
-    {name:"Human Body",icon:"🫀",category:"science",description:"Understand the systems that keep us alive."},
-    {name:"Environment",icon:"🌱",category:"science",description:"Explore climate, conservation and sustainability."},
-    {name:"Engineering",icon:"🏗️",category:"technology",description:"Discover how people design and build things."},
-    {name:"Inventions",icon:"💡",category:"technology",description:"Learn about inventions that changed the world."},
-    {name:"Languages",icon:"🗣️",category:"learning",description:"Explore words, communication and languages."},
-    {name:"Literature",icon:"📖",category:"learning",description:"Discover stories, books and great writers."},
-    {name:"Islamic Knowledge",icon:"🕌",category:"learning",description:"Learn about Islamic history, values and knowledge."},
-    {name:"Earth Science",icon:"🌋",category:"science",description:"Discover rocks, earthquakes and volcanoes."},
-    {name:"Weather",icon:"🌦️",category:"world",description:"Understand clouds, storms and climate."},
-    {name:"General Knowledge",icon:"🧠",category:"learning",description:"Explore interesting facts about everything."}
-];
-
-let activeFilter = "all";
-
-function renderTopics() {
-    const search = $("topicSearch").value.toLowerCase();
-    const filtered = topics.filter(topic => {
-        const matchesFilter = activeFilter === "all" || topic.category === activeFilter;
-        const matchesSearch = topic.name.toLowerCase().includes(search) ||
-            topic.description.toLowerCase().includes(search);
-        return matchesFilter && matchesSearch;
-    });
-
-    $("topicGrid").innerHTML = filtered.map(topic => `
-        <article class="card">
-            <span class="card-icon">${topic.icon}</span>
-            <h3>${topic.name}</h3>
-            <p>${topic.description}</p>
-            <div class="card-footer">
-                <span class="tag">${topic.category}</span>
-                <button class="button small topic-learn" data-topic="${topic.name}">Explore →</button>
-            </div>
-        </article>
-    `).join("");
-
-    $("noTopics").style.display = filtered.length ? "none" : "block";
-}
-
-$("topicSearch").addEventListener("input", renderTopics);
-
-$("topicFilters").addEventListener("click", event => {
-    const button = event.target.closest("[data-filter]");
-    if (!button) return;
-
-    activeFilter = button.dataset.filter;
-
-    document.querySelectorAll("#topicFilters .filter").forEach(item => {
-        item.classList.toggle("active", item === button);
-    });
-
-    renderTopics();
-});
-
-$("topicGrid").addEventListener("click", event => {
-    const button = event.target.closest(".topic-learn");
-    if (!button) return;
-
-    showToast("Your next discovery: " + button.dataset.topic);
-});
-
-/* =====================================================
-   DISCOVERY FACTS
-===================================================== */
-
-const facts = [
-    ["SPACE DISCOVERY","A day on Venus is longer than its year.","Venus rotates very slowly, taking longer to spin once than to orbit the Sun."],
-    ["OCEAN DISCOVERY","Most of Earth's ocean remains unexplored.","The deep ocean is a challenging environment to study."],
-    ["ANIMAL DISCOVERY","Octopuses have three hearts.","Two hearts move blood to the gills, while another pumps it to the body."],
-    ["SPACE DISCOVERY","The Sun is a star.","It is the star at the center of our solar system."],
-    ["SCIENCE DISCOVERY","Light travels extremely fast.","Light travels at about 300,000 kilometres per second in a vacuum."],
-    ["EARTH DISCOVERY","Earth is not a perfect sphere.","Its rotation makes it slightly wider around the equator."],
-    ["ANIMAL DISCOVERY","Some turtles can live for many decades.","Different turtle species have different lifespans."],
-    ["SCIENCE DISCOVERY","Water can exist as solid, liquid and gas.","These are three familiar states of matter."]
-];
-
-let factIndex = 0;
-
-function showFact(index) {
-    const fact = facts[index];
-    $("factCategory").textContent = fact[0];
-    $("dailyFact").textContent = fact[1];
-    $("factDescription").textContent = fact[2];
-}
-
-$("newFactButton").addEventListener("click", () => {
-    factIndex = (factIndex + 1) % facts.length;
-    showFact(factIndex);
-});
-
-/* =====================================================
-   FEATURED ARTICLES
-===================================================== */
-
-const articles = [
-    ["🌌","How Do Stars Form?","Stars form inside huge clouds of gas and dust called nebulae."],
-    ["🪐","What Are Exoplanets?","Exoplanets are planets that orbit stars beyond our Sun."],
-    ["⚡","What Is Energy?","Energy is the ability to cause change or do work."],
-    ["🤖","How Does AI Work?","Artificial intelligence uses computer systems to perform tasks that often require human-like intelligence."],
-    ["🌊","The Deep Ocean","The deep ocean contains extraordinary environments and unusual life forms."],
-    ["🧬","The Building Blocks of Life","Cells are the basic structural and functional units of living organisms."]
-];
-
-$("articleGrid").innerHTML = articles.map(article => `
-    <article class="card">
-        <span class="card-icon">${article[0]}</span>
-        <h3>${article[1]}</h3>
-        <p>${article[2]}</p>
-    </article>
-`).join("");
-
-/* =====================================================
-   QUIZ SYSTEM
-===================================================== */
-
-const questions = [
-    {category:"SPACE",q:"Which planet is known as the Red Planet?",a:["Venus","Mars","Jupiter","Saturn"],correct:1},
-    {category:"SPACE",q:"What is the closest star to Earth?",a:["Sirius","Proxima Centauri","The Sun","Polaris"],correct:2},
-    {category:"SPACE",q:"Which planet has the most prominent ring system?",a:["Mars","Saturn","Mercury","Earth"],correct:1},
-    {category:"SCIENCE",q:"What is H₂O commonly known as?",a:["Oxygen","Hydrogen","Water","Salt"],correct:2},
-    {category:"SCIENCE",q:"Which organ pumps blood around the body?",a:["Lungs","Heart","Brain","Stomach"],correct:1},
-    {category:"SCIENCE",q:"What force pulls objects toward Earth?",a:["Magnetism","Gravity","Friction","Electricity"],correct:1},
-    {category:"NATURE",q:"What do plants absorb from the atmosphere for photosynthesis?",a:["Oxygen","Carbon dioxide","Helium","Nitrogen only"],correct:1},
-    {category:"NATURE",q:"Which is the largest land animal?",a:["Giraffe","Elephant","Rhinoceros","Lion"],correct:1},
-    {category:"GEOGRAPHY",q:"Which is the largest ocean?",a:["Atlantic","Indian","Pacific","Arctic"],correct:2},
-    {category:"GEOGRAPHY",q:"How many continents are commonly recognized?",a:["Five","Six","Seven","Eight"],correct:2},
-    {category:"TECHNOLOGY",q:"What does CPU stand for?",a:["Central Processing Unit","Computer Power Utility","Central Program User","Core Personal Unit"],correct:0},
-    {category:"TECHNOLOGY",q:"Which device is used to point and click on a computer?",a:["Monitor","Mouse","Speaker","Printer"],correct:1},
-    {category:"MATHEMATICS",q:"What is 12 × 8?",a:["86","92","96","108"],correct:2},
-    {category:"MATHEMATICS",q:"What is the square root of 81?",a:["7","8","9","10"],correct:2},
-    {category:"HISTORY",q:"Which ancient civilization built the pyramids at Giza?",a:["Romans","Ancient Egyptians","Greeks","Persians"],correct:1},
-    {category:"SPORTS",q:"How many players from one team are on the football field during normal play?",a:["9","10","11","12"],correct:2},
-    {category:"SPORTS",q:"How many rings are on the Olympic symbol?",a:["Four","Five","Six","Seven"],correct:1},
-    {category:"ANIMALS",q:"Which mammal can fly?",a:["Penguin","Bat","Ostrich","Kangaroo"],correct:1},
-    {category:"EARTH",q:"What is the outermost solid layer of Earth called?",a:["Core","Mantle","Crust","Inner core"],correct:2},
-    {category:"GENERAL",q:"Which language has the most native speakers worldwide?",a:["English","Spanish","Mandarin Chinese","Arabic"],correct:2}
-];
-
-$("questionCount").textContent = questions.length;
-
-function renderQuestion() {
-    const question = questions[currentQuestion];
-
-    $("quizCategory").textContent = question.category;
-    $("quizCounter").textContent = `Question ${currentQuestion + 1} / ${questions.length}`;
-    $("questionText").textContent = question.q;
-    $("quizProgress").style.width = (currentQuestion / questions.length * 100) + "%";
-    $("quizFeedback").textContent = "";
-    $("nextQuestion").classList.add("hidden");
-
-    $("answerList").innerHTML = question.a.map((answer, index) => `
-        <button class="answer" data-answer="${index}">${String.fromCharCode(65 + index)}. ${answer}</button>
-    `).join("");
-}
-
-function updateQuizScore() {
-    $("quizScore").textContent = quizScore;
-    $("quizAccuracy").textContent =
-        Math.round(quizScore / Math.max(selectedAnswers.length, 1) * 100) + "%";
-}
-
-$("answerList").addEventListener("click", event => {
-    const button = event.target.closest("[data-answer]");
-    if (!button || selectedAnswers[currentQuestion] !== undefined) return;
-
-    const answer = Number(button.dataset.answer);
-    const correct = questions[currentQuestion].correct;
-
-    selectedAnswers[currentQuestion] = answer;
-
-    document.querySelectorAll("#answerList .answer").forEach(item => {
-        item.disabled = true;
-        if (Number(item.dataset.answer) === correct) item.classList.add("correct");
-    });
-
-    if (answer === correct) {
-        quizScore++;
-        totalPoints += 10;
-        $("quizFeedback").textContent = "Correct! +10 points. Great work!";
-        $("quizFeedback").className = "message";
-        saveProgress("quiz");
-        scheduleCloudSave();
-        showToast("+10 points!");
-    } else {
-        button.classList.add("wrong");
-        $("quizFeedback").textContent = "Not quite. The correct answer is highlighted.";
-        $("quizFeedback").className = "message error";
-    }
-
-    updateQuizScore();
-    updateAllDisplays();
-
-    if (currentQuestion < questions.length - 1) {
-        $("nextQuestion").classList.remove("hidden");
-    } else {
-        $("quizProgress").style.width = "100%";
-        $("nextQuestion").textContent = "Finish";
-        $("nextQuestion").classList.remove("hidden");
-    }
-});
-
-$("nextQuestion").addEventListener("click", () => {
-    if (currentQuestion < questions.length - 1) {
-        currentQuestion++;
-        renderQuestion();
-    } else {
-        $("questionText").textContent = `Challenge completed! You scored ${quizScore} out of ${questions.length}.`;
-        $("answerList").innerHTML = "";
-        $("quizFeedback").textContent = "Well done! You can restart to try again.";
-        $("nextQuestion").classList.add("hidden");
-    }
-});
-
-function restartQuiz() {
-    currentQuestion = 0;
-    quizScore = 0;
-    selectedAnswers = [];
-    $("nextQuestion").textContent = "Next →";
-    updateQuizScore();
-    renderQuestion();
-}
-
-$("restartQuiz").addEventListener("click", restartQuiz);
-
-/* =====================================================
-   MISSIONS AND ACHIEVEMENTS
-===================================================== */
+/* =========================================================
+   11. MISSIONS
+   ========================================================= */
 
 const missions = [
-    ["firstVisit","🚀","Visit the Explore section","Open the learning categories."],
-    ["readGuide","📖","Read a learning guide","Explore one featured learning guide."],
-    ["quiz","🧠","Complete a quiz question","Answer a question in the Universe Challenge."],
-    ["saveNote","📓","Write a discovery","Save a note in your Discovery Notebook."],
-    ["learnTopics","🌍","Explore a category","Choose a category to begin learning."]
+  {
+    key: "learnTopics",
+    title: "Explore the Universe",
+    description: "Explore the topic categories.",
+    reward: 5
+  },
+  {
+    key: "readGuide",
+    title: "Read a Learning Guide",
+    description: "Open a featured learning guide.",
+    reward: 5
+  },
+  {
+    key: "quiz",
+    title: "Complete the Quiz",
+    description: "Answer a quiz question correctly.",
+    reward: 5
+  },
+  {
+    key: "first_note",
+    title: "Create Your First Note",
+    description: "Save your first discovery note.",
+    reward: 5
+  },
+  {
+    key: "focus",
+    title: "Focus Explorer",
+    description: "Complete a focus session.",
+    reward: 5
+  }
 ];
-
-const badges = [
-    ["🚀","First Steps","Complete your first mission","firstVisit"],
-    ["🧠","Quiz Explorer","Answer a quiz question","quiz"],
-    ["📓","Note Keeper","Save your first note","saveNote"],
-    ["📖","Reader","Read a learning guide","readGuide"],
-    ["🌍","Explorer","Explore a category","learnTopics"]
-];
-
-function saveProgress(key) {
-    if (progress[key]) return;
-
-    progress[key] = true;
-    updateAllDisplays();
-    scheduleCloudSave();
-}
 
 function renderMissions() {
-    $("missionGrid").innerHTML = missions.map(mission => {
-        const done = !!progress[mission[0]];
+  const container =
+    $("missionsList") ||
+    $("missionsContainer");
 
-        return `
-            <article class="card">
-                <span class="card-icon">${mission[1]}</span>
-                <h3>${mission[2]}</h3>
-                <p>${mission[3]}</p>
-                <div class="card-footer">
-                    <span class="tag">${done ? "Completed ✓" : "In progress"}</span>
-                    ${done ? "" : `<button class="button small mission-button" data-mission="${mission[0]}">Complete</button>`}
-                </div>
-            </article>
-        `;
-    }).join("");
+  if (!container) return;
+
+  container.innerHTML = missions.map(mission => {
+    const done = Boolean(progress[mission.key]);
+
+    return `
+      <div class="mission-card">
+        <div>
+          <h3>${escapeHTML(mission.title)}</h3>
+          <p>${escapeHTML(mission.description)}</p>
+          <small>Reward: ${mission.reward} points</small>
+        </div>
+        <button
+          class="mission-button"
+          data-mission="${escapeHTML(mission.key)}"
+          ${done ? "disabled" : ""}
+        >
+          ${done ? "Completed ✓" : "Complete"}
+        </button>
+      </div>
+    `;
+  }).join("");
 }
 
-$("missionGrid").addEventListener("click", event => {
-    const button = event.target.closest("[data-mission]");
-    if (!button) return;
+document.addEventListener("click", event => {
+  const button = event.target.closest("[data-mission]");
+  if (!button) return;
 
-    saveProgress(button.dataset.mission);
-    totalPoints += 5;
-    updateAllDisplays();
-    scheduleCloudSave();
-    showToast("Mission completed! +5 points");
+  const key = button.dataset.mission;
+  const mission = missions.find(item => item.key === key);
+
+  if (!mission || progress[key]) return;
+
+  saveProgress(key);
+  awardPointsOnce("mission_" + key, mission.reward);
+
+  showToast("Mission completed!");
 });
+
+
+/* =========================================================
+   12. BADGES
+   ========================================================= */
 
 function renderBadges() {
-    $("badgeGrid").innerHTML = badges.map(badge => {
-        const unlocked = !!progress[badge[3]];
+  const container =
+    $("badgesList") ||
+    $("badgesContainer");
 
-        return `
-            <div class="badge ${unlocked ? "" : "locked"}">
-                <span class="badge-icon">${badge[0]}</span>
-                <strong>${badge[1]}</strong>
-                <br><small>${unlocked ? "Unlocked!" : badge[2]}</small>
-            </div>
-        `;
-    }).join("");
+  if (!container) return;
+
+  const badges = [
+    { key: "learnTopics", name: "Explorer", icon: "🌌" },
+    { key: "readGuide", name: "Reader", icon: "📚" },
+    { key: "quiz", name: "Quiz Master", icon: "🧠" },
+    { key: "first_note", name: "Note Keeper", icon: "📝" },
+    { key: "focus", name: "Focused Mind", icon: "⏳" }
+  ];
+
+  container.innerHTML = badges.map(badge => `
+    <div class="badge-card ${progress[badge.key] ? "unlocked" : "locked"}">
+      <span>${badge.icon}</span>
+      <strong>${escapeHTML(badge.name)}</strong>
+      <small>${progress[badge.key] ? "Unlocked" : "Locked"}</small>
+    </div>
+  `).join("");
 }
 
-/* =====================================================
-   NOTEBOOK
-===================================================== */
 
-function renderNotes() {
-    if (!notes.length) {
-        $("notesList").innerHTML = '<p class="muted">You have not saved any notes yet.</p>';
-        return;
-    }
+/* =========================================================
+   13. TOPIC EXPLORATION
+   ========================================================= */
 
-    $("notesList").innerHTML = notes.map((note, index) => `
-        <article class="card" style="margin-top:12px">
-            <h3>${escapeHTML(note.title)}</h3>
-            <p>${escapeHTML(note.content).replace(/\n/g, "<br>")}</p>
-            <div class="card-footer">
-                <span class="muted">${escapeHTML(note.date || "")}</span>
-                <button class="button danger small delete-note" data-index="${index}">Delete</button>
-            </div>
-        </article>
-    `).join("");
-}
+document.addEventListener("click", event => {
+  const topic = event.target.closest(
+    ".topic-card, [data-topic], .category-card"
+  );
 
-$("saveNote").addEventListener("click", () => {
-    const title = $("noteTitle").value.trim();
-    const content = $("noteContent").value.trim();
+  if (!topic) return;
 
-    if (!title || !content) {
-        showToast("Enter a title and note first.");
-        return;
-    }
+  saveProgress("learnTopics");
+  awardPointsOnce("topic_exploration", 2);
 
-    notes.unshift({
-        title,
-        content,
-        date: new Date().toLocaleDateString()
+  showToast("Keep exploring!");
+});
+
+
+/* =========================================================
+   14. FEATURED GUIDES
+   ========================================================= */
+
+document.addEventListener("click", event => {
+  const guide = event.target.closest(
+    ".guide-card, .article-card, [data-guide]"
+  );
+
+  if (!guide) return;
+
+  saveProgress("readGuide");
+  awardPointsOnce("read_guide", 2);
+});
+
+
+/* =========================================================
+   15. SEARCH AND FILTER
+   ========================================================= */
+
+const searchInput =
+  $("topicSearch") ||
+  $("searchInput") ||
+  $("searchBox");
+
+if (searchInput) {
+  searchInput.addEventListener("input", () => {
+    const search = searchInput.value.toLowerCase().trim();
+
+    document.querySelectorAll(
+      ".topic-card, .category-card, .guide-card, .article-card"
+    ).forEach(card => {
+      const text = card.textContent.toLowerCase();
+      card.style.display = text.includes(search) ? "" : "none";
     });
+  });
+}
 
-    $("noteTitle").value = "";
-    $("noteContent").value = "";
 
-    saveProgress("saveNote");
-    totalPoints += 5;
-    renderNotes();
-    updateAllDisplays();
-    scheduleCloudSave();
-    showToast("Your note has been saved!");
-});
+/* =========================================================
+   16. QUIZ
+   ========================================================= */
 
-$("notesList").addEventListener("click", event => {
-    const button = event.target.closest(".delete-note");
-    if (!button) return;
+const quizQuestions = [
+  {
+    question: "Which planet is known as the Red Planet?",
+    answers: ["Venus", "Mars", "Jupiter", "Saturn"],
+    correct: 1
+  },
+  {
+    question: "What is the closest star to Earth?",
+    answers: ["Sirius", "The Sun", "Polaris", "Vega"],
+    correct: 1
+  },
+  {
+    question: "Which gas do plants absorb?",
+    answers: ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"],
+    correct: 2
+  },
+  {
+    question: "What is the largest planet in our Solar System?",
+    answers: ["Earth", "Neptune", "Jupiter", "Mars"],
+    correct: 2
+  },
+  {
+    question: "What force keeps planets in orbit around the Sun?",
+    answers: ["Friction", "Gravity", "Magnetism", "Electricity"],
+    correct: 1
+  },
+  {
+    question: "What is the natural satellite of Earth?",
+    answers: ["The Sun", "The Moon", "Mars", "Venus"],
+    correct: 1
+  },
+  {
+    question: "Which ocean is the largest?",
+    answers: ["Atlantic", "Indian", "Arctic", "Pacific"],
+    correct: 3
+  },
+  {
+    question: "What is the process by which plants make food?",
+    answers: ["Photosynthesis", "Evaporation", "Condensation", "Digestion"],
+    correct: 0
+  },
+  {
+    question: "Which planet has famous rings?",
+    answers: ["Mercury", "Saturn", "Earth", "Mars"],
+    correct: 1
+  },
+  {
+    question: "What is the center of an atom called?",
+    answers: ["Electron", "Shell", "Nucleus", "Orbit"],
+    correct: 2
+  },
+  {
+    question: "Which planet is closest to the Sun?",
+    answers: ["Mercury", "Venus", "Earth", "Mars"],
+    correct: 0
+  },
+  {
+    question: "What do we call a scientist who studies space?",
+    answers: ["Biologist", "Astronomer", "Geologist", "Chemist"],
+    correct: 1
+  },
+  {
+    question: "What is frozen water called?",
+    answers: ["Steam", "Ice", "Rain", "Cloud"],
+    correct: 1
+  },
+  {
+    question: "Which organ pumps blood around the body?",
+    answers: ["Lungs", "Brain", "Heart", "Stomach"],
+    correct: 2
+  },
+  {
+    question: "What is Earth's main source of energy?",
+    answers: ["The Moon", "The Sun", "The oceans", "The stars"],
+    correct: 1
+  },
+  {
+    question: "What is the name of our galaxy?",
+    answers: ["Andromeda", "Milky Way", "Whirlpool", "Sombrero"],
+    correct: 1
+  },
+  {
+    question: "Which state of matter has a fixed shape?",
+    answers: ["Gas", "Liquid", "Solid", "Plasma"],
+    correct: 2
+  },
+  {
+    question: "What instrument measures temperature?",
+    answers: ["Thermometer", "Compass", "Ruler", "Barometer"],
+    correct: 0
+  },
+  {
+    question: "What is the study of living things called?",
+    answers: ["Physics", "Biology", "Astronomy", "Geography"],
+    correct: 1
+  },
+  {
+    question: "Which planet is famous for its Great Red Spot?",
+    answers: ["Jupiter", "Venus", "Mercury", "Earth"],
+    correct: 0
+  }
+];
 
-    notes.splice(Number(button.dataset.index), 1);
-    renderNotes();
-    scheduleCloudSave();
-});
+function showQuizQuestion() {
+  const question = quizQuestions[currentQuestion];
+  if (!question) return;
 
-/* =====================================================
-   LEADERBOARD
-===================================================== */
+  setText(
+    "quizQuestion",
+    `${currentQuestion + 1}. ${question.question}`
+  );
 
-function startLeaderboard() {
-    if (!firebaseReady || !currentUser) return;
+  setText(
+    "quizProgress",
+    `Question ${currentQuestion + 1} of ${quizQuestions.length}`
+  );
 
-    if (leaderboardUnsubscribe) leaderboardUnsubscribe();
+  const answersContainer =
+    $("quizAnswers") ||
+    $("quizOptions");
 
-    const leaderboardQuery = query(
-        collection(db, "users"),
-        orderBy("points", "desc"),
-        limit(50)
+  if (!answersContainer) return;
+
+  answersContainer.innerHTML = question.answers.map((answer, index) => `
+    <button class="quiz-answer" data-answer="${index}">
+      ${escapeHTML(answer)}
+    </button>
+  `).join("");
+}
+
+function startQuiz() {
+  currentQuestion = 0;
+  quizCorrect = 0;
+  quizFinished = false;
+
+  const startButton = $("startQuiz");
+  if (startButton) startButton.style.display = "none";
+
+  showQuizQuestion();
+  setText("quizResult", "");
+}
+
+function finishQuiz() {
+  quizFinished = true;
+
+  setText(
+    "quizQuestion",
+    `Quiz completed! You answered ${quizCorrect} questions correctly.`
+  );
+
+  setText(
+    "quizProgress",
+    "You have reached the end of the quiz."
+  );
+
+  setHTML("quizAnswers", `
+    <button id="restartQuiz">Try Again</button>
+  `);
+
+  const restart = $("restartQuiz");
+  if (restart) restart.addEventListener("click", startQuiz);
+
+  showToast("Quiz completed!");
+}
+
+document.addEventListener("click", event => {
+  const answerButton = event.target.closest("[data-answer]");
+  if (!answerButton || quizFinished) return;
+
+  const selected = Number(answerButton.dataset.answer);
+  const question = quizQuestions[currentQuestion];
+
+  if (!question) return;
+
+  const buttons = document.querySelectorAll("[data-answer]");
+  buttons.forEach(button => button.disabled = true);
+
+  if (selected === question.correct) {
+    quizCorrect++;
+
+    awardPointsOnce(
+      "quiz_question_" + currentQuestion,
+      10
     );
 
-    leaderboardUnsubscribe = onSnapshot(leaderboardQuery, snapshot => {
-        const users = snapshot.docs.map(item => ({
-            id: item.id,
-            ...item.data()
-        }));
+    saveProgress("quiz");
 
-        $("leaderboardList").innerHTML = users.map((user, index) => `
-            <div class="leaderboard-row">
-                <div class="rank">${index + 1}</div>
-                <div class="player-name">${escapeHTML(user.nickname || "Explorer")}</div>
-                <div class="player-points">${Number(user.points || 0)} pts</div>
-            </div>
-        `).join("") || '<p class="muted">No explorers yet.</p>';
+    answerButton.classList.add("correct");
+    showToast("Correct! +10 points");
 
-        const myIndex = users.findIndex(user => user.id === currentUser.uid);
-        $("myRank").textContent = myIndex >= 0 ? "#" + (myIndex + 1) : "Not ranked";
-        $("leaderboardStatus").textContent = "Live leaderboard.";
-    }, error => {
-        console.error(error);
-        $("leaderboardStatus").textContent = "Leaderboard unavailable. Check Firestore rules.";
-    });
-}
+  } else {
+    answerButton.classList.add("incorrect");
 
-$("refreshLeaderboard").addEventListener("click", () => {
-    if (currentUser) {
-        startLeaderboard();
-        showToast("Leaderboard refreshed.");
+    const correctButton = document.querySelector(
+      `[data-answer="${question.correct}"]`
+    );
+
+    if (correctButton) correctButton.classList.add("correct");
+
+    showToast("Not quite. Keep learning!");
+  }
+
+  setTimeout(() => {
+    currentQuestion++;
+
+    if (currentQuestion >= quizQuestions.length) {
+      finishQuiz();
+    } else {
+      showQuizQuestion();
     }
+  }, 1000);
 });
 
-/* =====================================================
-   FOCUS TIMER
-===================================================== */
+if ($("startQuiz")) {
+  $("startQuiz").addEventListener("click", startQuiz);
+}
+
+
+/* =========================================================
+   17. DISCOVERY NOTEBOOK
+   ========================================================= */
+
+function renderNotes() {
+  const container =
+    $("notesList") ||
+    $("notebookList");
+
+  if (!container) return;
+
+  if (!notes.length) {
+    container.innerHTML = "<p>No notes yet. Save your first discovery!</p>";
+    return;
+  }
+
+  container.innerHTML = notes.map((note, index) => `
+    <div class="note-card">
+      <h3>${escapeHTML(note.title)}</h3>
+      <p>${escapeHTML(note.content)}</p>
+      <small>${escapeHTML(note.date || "")}</small>
+      <button data-delete-note="${index}">Delete</button>
+    </div>
+  `).join("");
+}
+
+async function addNote() {
+  const titleInput =
+    $("noteTitle") ||
+    $("discoveryTitle");
+
+  const contentInput =
+    $("noteContent") ||
+    $("discoveryContent");
+
+  const title = titleInput?.value.trim();
+  const content = contentInput?.value.trim();
+
+  if (!title || !content) {
+    showToast("Please enter a title and your discovery.");
+    return;
+  }
+
+  notes.unshift({
+    title,
+    content,
+    date: new Date().toLocaleDateString()
+  });
+
+  saveProgress("first_note");
+  awardPointsOnce("first_note", 5);
+
+  if (titleInput) titleInput.value = "";
+  if (contentInput) contentInput.value = "";
+
+  renderNotes();
+  scheduleCloudSave();
+
+  showToast("Your discovery note was saved!");
+}
+
+const addNoteButton =
+  $("addNote") ||
+  $("saveNote") ||
+  $("saveDiscovery");
+
+if (addNoteButton) {
+  addNoteButton.addEventListener("click", addNote);
+}
+
+document.addEventListener("click", event => {
+  const button = event.target.closest("[data-delete-note]");
+  if (!button) return;
+
+  const index = Number(button.dataset.deleteNote);
+
+  if (!Number.isInteger(index) || index < 0 || index >= notes.length) {
+    return;
+  }
+
+  notes.splice(index, 1);
+  renderNotes();
+  scheduleCloudSave();
+
+  showToast("Note deleted.");
+});
+
+
+/* =========================================================
+   18. CHANGE NICKNAME
+   ========================================================= */
+
+const saveNicknameButton = $("saveNickname");
+
+if (saveNicknameButton) {
+  saveNicknameButton.addEventListener("click", async () => {
+    if (!currentUser) return;
+
+    const input = $("newNickname");
+    const nickname = input?.value.trim();
+
+    if (!nickname) {
+      showToast("Enter a nickname first.");
+      return;
+    }
+
+    if (nickname.length > 20) {
+      showToast("Nickname must be 20 characters or fewer.");
+      return;
+    }
+
+    try {
+      await updateProfile(currentUser, {
+        displayName: nickname
+      });
+
+      await setDoc(doc(db, "users", currentUser.uid), {
+        nickname,
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+
+      await setDoc(doc(db, "leaderboard", currentUser.uid), {
+        nickname,
+        points: totalPoints,
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+
+      setText("profileName", nickname);
+      showToast("Nickname updated!");
+
+    } catch (error) {
+      showToast(friendlyError(error));
+    }
+  });
+}
+
+
+/* =========================================================
+   19. PUBLIC LEADERBOARD
+   ========================================================= */
+
+function startLeaderboard() {
+  if (!db || !currentUser) return;
+
+  if (leaderboardUnsubscribe) {
+    leaderboardUnsubscribe();
+  }
+
+  const leaderboardQuery = query(
+    collection(db, "leaderboard"),
+    orderBy("points", "desc"),
+    limit(50)
+  );
+
+  leaderboardUnsubscribe = onSnapshot(
+    leaderboardQuery,
+    snapshot => {
+      const container =
+        $("leaderboardList") ||
+        $("leaderboardContainer");
+
+      if (!container) return;
+
+      if (snapshot.empty) {
+        container.innerHTML = "<p>No explorers on the leaderboard yet.</p>";
+        return;
+      }
+
+      let myRank = "Not in top 50";
+
+      const rows = snapshot.docs.map((document, index) => {
+        const data = document.data();
+
+        if (document.id === currentUser.uid) {
+          myRank = "#" + (index + 1);
+        }
+
+        return `
+          <div class="leaderboard-row">
+            <span class="leaderboard-rank">#${index + 1}</span>
+            <span class="leaderboard-name">
+              ${escapeHTML(data.nickname || "Explorer")}
+            </span>
+            <strong>${Number(data.points) || 0} points</strong>
+          </div>
+        `;
+      });
+
+      container.innerHTML = rows.join("");
+      setText("myRank", myRank);
+
+    },
+    error => {
+      console.error("Leaderboard error:", error);
+
+      const container =
+        $("leaderboardList") ||
+        $("leaderboardContainer");
+
+      if (container) {
+        container.innerHTML =
+          "<p>Leaderboard unavailable. Check your Firebase rules.</p>";
+      }
+    }
+  );
+}
+
+
+/* =========================================================
+   20. FOCUS TIMER
+   ========================================================= */
 
 function updateTimerDisplay() {
-    const minutes = Math.floor(timerSeconds / 60);
-    const seconds = timerSeconds % 60;
+  const minutes = Math.floor(focusSeconds / 60);
+  const seconds = focusSeconds % 60;
 
-    $("timerDisplay").textContent =
-        String(minutes).padStart(2, "0") + ":" +
-        String(seconds).padStart(2, "0");
+  const display =
+    String(minutes).padStart(2, "0") +
+    ":" +
+    String(seconds).padStart(2, "0");
+
+  setText("timerDisplay", display);
+  setText("focusTimer", display);
 }
 
-$("timerStart").addEventListener("click", () => {
-    if (timerInterval) return;
-
-    timerInterval = setInterval(() => {
-        if (timerSeconds > 0) {
-            timerSeconds--;
-            updateTimerDisplay();
-        } else {
-            clearInterval(timerInterval);
-            timerInterval = null;
-            showToast("Focus session complete!");
-            totalPoints += 5;
-            updateAllDisplays();
-            scheduleCloudSave();
-        }
-    }, 1000);
-});
-
-$("timerPause").addEventListener("click", () => {
-    clearInterval(timerInterval);
-    timerInterval = null;
-});
-
-$("timerReset").addEventListener("click", () => {
-    clearInterval(timerInterval);
-    timerInterval = null;
-    timerSeconds = 1500;
-    updateTimerDisplay();
-});
-
-/* =====================================================
-   LOCAL LEARNING LIBRARY - INDEXEDDB
-===================================================== */
-
-let libraryDB;
-
-function openLibraryDB() {
-    return new Promise((resolve, reject) => {
-        const request = indexedDB.open("UniverseUnlockedLibrary", 1);
-
-        request.onupgradeneeded = () => {
-            const database = request.result;
-
-            if (!database.objectStoreNames.contains("files")) {
-                database.createObjectStore("files", {
-                    keyPath: "id",
-                    autoIncrement: true
-                });
-            }
-        };
-
-        request.onsuccess = () => {
-            libraryDB = request.result;
-            resolve(libraryDB);
-        };
-
-        request.onerror = () => reject(request.error);
-    });
+function stopFocusTimer() {
+  clearInterval(focusInterval);
+  focusInterval = null;
 }
 
-async function getLibraryFiles() {
-    if (!libraryDB) await openLibraryDB();
+function startFocusTimer() {
+  if (focusInterval) return;
 
-    return new Promise((resolve, reject) => {
-        const transaction = libraryDB.transaction("files", "readonly");
-        const request = transaction.objectStore("files").getAll();
+  focusInterval = setInterval(() => {
+    if (focusSeconds > 0) {
+      focusSeconds--;
+      updateTimerDisplay();
+    } else {
+      stopFocusTimer();
 
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
+      saveProgress("focus");
+      awardPointsOnce("focus_session", 5);
+
+      showToast("Focus session completed! Great work.");
+    }
+  }, 1000);
+}
+
+function resetFocusTimer() {
+  stopFocusTimer();
+  focusSeconds = 25 * 60;
+  updateTimerDisplay();
+}
+
+if ($("startTimer")) {
+  $("startTimer").addEventListener("click", startFocusTimer);
+}
+
+if ($("pauseTimer")) {
+  $("pauseTimer").addEventListener("click", stopFocusTimer);
+}
+
+if ($("resetTimer")) {
+  $("resetTimer").addEventListener("click", resetFocusTimer);
+}
+
+updateTimerDisplay();
+
+
+/* =========================================================
+   21. LOCAL LEARNING LIBRARY — INDEXEDDB
+   ========================================================= */
+
+function openLibraryDatabase() {
+  return new Promise((resolve, reject) => {
+    if (!window.indexedDB) {
+      reject(new Error("IndexedDB is not supported."));
+      return;
+    }
+
+    const request = indexedDB.open(
+      "UniverseUnlockedLibrary",
+      1
+    );
+
+    request.onupgradeneeded = event => {
+      const database = event.target.result;
+
+      if (!database.objectStoreNames.contains("items")) {
+        database.createObjectStore("items", {
+          keyPath: "id",
+          autoIncrement: true
+        });
+      }
+    };
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function saveLibraryItem(title, content) {
+  if (!dbLibrary) return;
+
+  return new Promise((resolve, reject) => {
+    const transaction = dbLibrary.transaction(
+      "items",
+      "readwrite"
+    );
+
+    const store = transaction.objectStore("items");
+
+    store.add({
+      title,
+      content,
+      date: new Date().toISOString()
     });
+
+    transaction.oncomplete = resolve;
+    transaction.onerror = () => reject(transaction.error);
+  });
+}
+
+async function getLibraryItems() {
+  if (!dbLibrary) return [];
+
+  return new Promise((resolve, reject) => {
+    const transaction = dbLibrary.transaction(
+      "items",
+      "readonly"
+    );
+
+    const request = transaction
+      .objectStore("items")
+      .getAll();
+
+    request.onsuccess = () => resolve(request.result || []);
+    request.onerror = () => reject(request.error);
+  });
 }
 
 async function renderLibrary() {
-    try {
-        const files = await getLibraryFiles();
+  const container =
+    $("libraryList") ||
+    $("learningLibrary");
 
-        $("libraryList").innerHTML = files.map(file => `
-            <div class="card" style="margin-top:10px">
-                <strong>${escapeHTML(file.name)}</strong>
-                <p>${(file.size / 1024).toFixed(1)} KB</p>
-                <div class="card-footer">
-                    <button class="button small open-library-file" data-id="${file.id}">Open</button>
-                    <button class="button danger small delete-library-file" data-id="${file.id}">Delete</button>
-                </div>
-            </div>
-        `).join("") || '<p class="muted">No resources added yet.</p>';
-    } catch (error) {
-        console.error(error);
+  if (!container || !dbLibrary) return;
+
+  try {
+    const items = await getLibraryItems();
+
+    if (!items.length) {
+      container.innerHTML = "<p>Your learning library is empty.</p>";
+      return;
     }
+
+    container.innerHTML = items.map(item => `
+      <div class="library-card">
+        <h3>${escapeHTML(item.title)}</h3>
+        <p>${escapeHTML(item.content)}</p>
+        <small>${escapeHTML(new Date(item.date).toLocaleDateString())}</small>
+      </div>
+    `).join("");
+
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-$("saveLibraryFile").addEventListener("click", async () => {
-    const file = $("libraryFile").files[0];
+async function addLibraryItem() {
+  const title = $("libraryTitle")?.value.trim();
+  const content = $("libraryContent")?.value.trim();
 
-    if (!file) {
-        showToast("Choose a file first.");
-        return;
-    }
+  if (!title || !content) {
+    showToast("Enter a title and content.");
+    return;
+  }
 
-    if (file.size > 15 * 1024 * 1024) {
-        showToast("Please choose a file smaller than 15 MB.");
-        return;
-    }
+  try {
+    await saveLibraryItem(title, content);
 
-    try {
-        if (!libraryDB) await openLibraryDB();
+    $("libraryTitle").value = "";
+    $("libraryContent").value = "";
 
-        const transaction = libraryDB.transaction("files", "readwrite");
+    await renderLibrary();
+    showToast("Saved to your learning library!");
 
-        transaction.objectStore("files").add({
-            name: file.name,
-            type: file.type,
-            size: file.size,
-            blob: file,
-            date: new Date().toISOString()
-        });
-
-        transaction.oncomplete = () => {
-            $("libraryFile").value = "";
-            renderLibrary();
-            showToast("Resource added to this device.");
-        };
-    } catch (error) {
-        showToast("Could not save this resource.");
-        console.error(error);
-    }
-});
-
-$("libraryList").addEventListener("click", async event => {
-    const openButton = event.target.closest(".open-library-file");
-    const deleteButton = event.target.closest(".delete-library-file");
-
-    if (openButton) {
-        const files = await getLibraryFiles();
-        const file = files.find(item => item.id === Number(openButton.dataset.id));
-
-        if (file) {
-            const url = URL.createObjectURL(file.blob);
-            const link = document.createElement("a");
-
-            link.href = url;
-            link.download = file.name;
-            link.target = "_blank";
-            link.click();
-
-            setTimeout(() => URL.revokeObjectURL(url), 60000);
-        }
-    }
-
-    if (deleteButton) {
-        const transaction = libraryDB.transaction("files", "readwrite");
-        transaction.objectStore("files").delete(Number(deleteButton.dataset.id));
-        transaction.oncomplete = renderLibrary;
-    }
-});
-
-/* =====================================================
-   STORAGE REPORT
-===================================================== */
-
-async function refreshStorage() {
-    try {
-        if (navigator.storage && navigator.storage.estimate) {
-            const estimate = await navigator.storage.estimate();
-            const used = estimate.usage || 0;
-
-            $("storageUsage").textContent =
-                used < 1024 * 1024
-                    ? (used / 1024).toFixed(1) + " KB"
-                    : (used / 1024 / 1024).toFixed(2) + " MB";
-        } else {
-            $("storageUsage").textContent = "Storage information unavailable";
-        }
-    } catch {
-        $("storageUsage").textContent = "Unavailable";
-    }
+  } catch (error) {
+    showToast("Could not save this library item.");
+  }
 }
 
-$("refreshStorage").addEventListener("click", refreshStorage);
+if ($("addLibraryItem")) {
+  $("addLibraryItem").addEventListener("click", addLibraryItem);
+}
 
-/* =====================================================
-   THEME, MENU AND UTILITIES
-===================================================== */
+openLibraryDatabase()
+  .then(database => {
+    dbLibrary = database;
+    renderLibrary();
+  })
+  .catch(error => {
+    console.error("Library database:", error);
+  });
 
-$("themeButton").addEventListener("click", () => {
-    document.body.classList.toggle("light");
 
-    $("themeButton").textContent =
-        document.body.classList.contains("light") ? "🌙" : "☀";
+/* =========================================================
+   22. STORAGE REPORT
+   ========================================================= */
+
+async function updateStorageReport() {
+  if (!navigator.storage || !navigator.storage.estimate) return;
+
+  try {
+    const estimate = await navigator.storage.estimate();
+
+    const used = estimate.usage || 0;
+    const quota = estimate.quota || 0;
+
+    const usedMB = (used / (1024 * 1024)).toFixed(2);
+    const quotaMB = (quota / (1024 * 1024)).toFixed(2);
+
+    setText("storageUsed", usedMB + " MB");
+    setText("storageAvailable", quotaMB + " MB");
+
+  } catch (error) {
+    console.error("Storage report:", error);
+  }
+}
+
+updateStorageReport();
+
+
+/* =========================================================
+   23. THEME TOGGLE
+   ========================================================= */
+
+const themeButton =
+  $("themeToggle") ||
+  $("toggleTheme");
+
+if (themeButton) {
+  themeButton.addEventListener("click", () => {
+    document.body.classList.toggle("light-theme");
+
+    const lightMode =
+      document.body.classList.contains("light-theme");
 
     localStorage.setItem(
-        "uu-theme",
-        document.body.classList.contains("light") ? "light" : "dark"
+      "uu-theme",
+      lightMode ? "light" : "dark"
     );
-});
+  });
+}
 
 if (localStorage.getItem("uu-theme") === "light") {
-    document.body.classList.add("light");
-    $("themeButton").textContent = "🌙";
+  document.body.classList.add("light-theme");
 }
 
-$("menuButton").addEventListener("click", () => {
-    $("navigation").classList.toggle("open");
-});
 
-$("navigation").addEventListener("click", event => {
+/* =========================================================
+   24. MENU TOGGLE
+   ========================================================= */
+
+const menuButton =
+  $("menuToggle") ||
+  $("hamburger");
+
+const navigation =
+  $("navigation") ||
+  $("navMenu");
+
+if (menuButton && navigation) {
+  menuButton.addEventListener("click", () => {
+    navigation.classList.toggle("active");
+  });
+}
+
+if (navigation) {
+  navigation.addEventListener("click", event => {
     if (event.target.closest("a")) {
-        $("navigation").classList.remove("open");
+      navigation.classList.remove("active");
     }
-});
-
-function showToast(message) {
-    const toast = $("toast");
-    toast.textContent = message;
-    toast.classList.add("show");
-
-    clearTimeout(showToast.timeout);
-
-    showToast.timeout = setTimeout(() => {
-        toast.classList.remove("show");
-    }, 2800);
+  });
 }
 
-function escapeHTML(value) {
-    return String(value).replace(/[&<>"']/g, character => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-    })[character]);
-}
 
-/* =====================================================
-   STARFIELD BACKGROUND
-===================================================== */
+/* =========================================================
+   25. STARFIELD BACKGROUND
+   ========================================================= */
 
-const canvas = $("starfield");
-const context = canvas.getContext("2d");
+const starCanvas = $("starfield");
 
-let stars = [];
+if (starCanvas) {
+  const ctx = starCanvas.getContext("2d");
+  let stars = [];
 
-function resizeStarfield() {
-    canvas.width = window.innerWidth * devicePixelRatio;
-    canvas.height = window.innerHeight * devicePixelRatio;
+  function resizeStarfield() {
+    starCanvas.width = window.innerWidth;
+    starCanvas.height = window.innerHeight;
 
-    canvas.style.width = window.innerWidth + "px";
-    canvas.style.height = window.innerHeight + "px";
-
-    context.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
-
-    stars = Array.from({length: Math.min(180, Math.floor(window.innerWidth / 7))}, () => ({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        radius: Math.random() * 1.5,
-        alpha: Math.random()
+    stars = Array.from({
+      length: Math.min(
+        180,
+        Math.floor(
+          window.innerWidth * window.innerHeight / 7000
+        )
+      )
+    }, () => ({
+      x: Math.random() * starCanvas.width,
+      y: Math.random() * starCanvas.height,
+      radius: Math.random() * 1.5 + 0.3,
+      alpha: Math.random() * 0.7 + 0.2,
+      speed: Math.random() * 0.15 + 0.03
     }));
+  }
+
+  function animateStars() {
+    ctx.clearRect(
+      0,
+      0,
+      starCanvas.width,
+      starCanvas.height
+    );
+
+    stars.forEach(star => {
+      star.y += star.speed;
+
+      if (star.y > starCanvas.height) {
+        star.y = 0;
+        star.x = Math.random() * starCanvas.width;
+      }
+
+      ctx.beginPath();
+      ctx.arc(
+        star.x,
+        star.y,
+        star.radius,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.fillStyle = `rgba(255,255,255,${star.alpha})`;
+      ctx.fill();
+    });
+
+    requestAnimationFrame(animateStars);
+  }
+
+  resizeStarfield();
+  animateStars();
+
+  window.addEventListener("resize", resizeStarfield);
 }
 
-function drawStars() {
-    context.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-    for (const star of stars) {
-        context.beginPath();
-        context.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        context.fillStyle = `rgba(210,225,255,${star.alpha})`;
-        context.fill();
+/* =========================================================
+   26. DISCOVERY OF THE DAY
+   ========================================================= */
 
-        star.alpha += (Math.random() - 0.5) * 0.025;
-        star.alpha = Math.max(0.15, Math.min(1, star.alpha));
-    }
+const discoveries = [
+  "A day on Venus is longer than its year.",
+  "Jupiter has a huge storm called the Great Red Spot.",
+  "Light from the Sun takes about 8 minutes to reach Earth.",
+  "Saturn is less dense than water.",
+  "There are billions of galaxies in the observable universe.",
+  "Octopuses have three hearts.",
+  "Some stars are much larger than our Sun.",
+  "The Pacific Ocean is the largest ocean on Earth.",
+  "Earth's atmosphere helps protect life from harmful radiation.",
+  "The Moon is slowly moving away from Earth."
+];
 
-    requestAnimationFrame(drawStars);
+function showDailyDiscovery() {
+  const today = new Date();
+  const dayNumber = Math.floor(
+    today.getTime() / (1000 * 60 * 60 * 24)
+  );
+
+  const discovery =
+    discoveries[dayNumber % discoveries.length];
+
+  setText("dailyDiscovery", discovery);
+  setText("discoveryOfTheDay", discovery);
 }
 
-window.addEventListener("resize", resizeStarfield);
-resizeStarfield();
-drawStars();
+showDailyDiscovery();
 
-/* =====================================================
-   PAGE INITIALIZATION
-===================================================== */
 
-$("year").textContent = new Date().getFullYear();
+/* =========================================================
+   27. CURRENT YEAR
+   ========================================================= */
 
-let visits = Number(localStorage.getItem("uu-visits") || 0) + 1;
-localStorage.setItem("uu-visits", visits);
-$("visitCount").textContent = visits;
+setText("currentYear", new Date().getFullYear());
 
-renderTopics();
-renderQuestion();
-renderMissions();
-renderBadges();
+
+/* =========================================================
+   28. INITIAL DISPLAY
+   ========================================================= */
+
+updateAllDisplays();
 renderNotes();
-updateTimerDisplay();
-refreshStorage();
 renderLibrary();
 
-$("topicGrid").addEventListener("click", event => {
-    const button = event.target.closest(".topic-learn");
-    if (button) {
-        saveProgress("learnTopics");
-        totalPoints += 2;
-        updateAllDisplays();
-        scheduleCloudSave();
-    }
-});
-
-$("articleGrid").addEventListener("click", event => {
-    if (event.target.closest(".card")) {
-        saveProgress("readGuide");
-        totalPoints += 2;
-        updateAllDisplays();
-        scheduleCloudSave();
-    }
-});
-
-document.querySelector('a[href="#explore"]').addEventListener("click", () => {
-    saveProgress("firstVisit");
-});
+console.log("Universe Unlocked JavaScript loaded successfully.");
 
 </script>
-</body>
-</html>
